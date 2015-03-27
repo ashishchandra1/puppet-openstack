@@ -18,6 +18,15 @@ class openstack_packages {
      provider => rpm,
      source => "http://rdo.fedorapeople.org/openstack-juno/rdo-release-juno.rpm",
      allow_virtual => false,
-  }
+  } -> 
+
+  notify {"Upgrading installed packages":} ->
+  exec {'yum -y upgrade':} ->
+ 
+  notify {"Install openstack SELinux package":} ->
+  package { 'openstack-selinux':
+       ensure => installed,
+   }
+  
    
 }
