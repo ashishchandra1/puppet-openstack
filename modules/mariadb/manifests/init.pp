@@ -1,4 +1,5 @@
 class mariadb {
+     #TODO:hard coded password sucks
      $mysql_password = 'ashish'
      notify {"Installing MariaDB packages":} ->
      package { ['mariadb', 'mariadb-server', 'MySQL-python']:
