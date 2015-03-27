@@ -1,10 +1,12 @@
-include ntp
+include ntp 
 
+Exec {
+      path => [
+              '/usr/local/bin', '/usr/bin',
+              '/usr/sbin', '/bin'],
+              logoutput => true,
+     }
 
-node 'controller1' {
-   include openstack_packages
-}
+include openstack_packages
+include mariadb
 
-node 'controller2' {
-   include openstack_packages
-}
