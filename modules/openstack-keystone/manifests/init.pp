@@ -59,10 +59,9 @@ class openstack-keystone {
 
    #Variables for keystone.conf file
    $conf_name = 'keystone.conf'
-   #$ADMIN_TOKEN = '@dmin123'
    $KEYSTONE_DBPASS = '@dmin123'
    #TODO USING PUPPET FACTER FOR GETTING HOSTNAME
-   $CONTROLLER_HNAME = 'controller02'
+   $CONTROLLER_HNAME = $hostname
    $REVOCATION_DRIVER = 'sql'
    $BOOL_VALUE = "True"
    
