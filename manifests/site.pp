@@ -10,3 +10,4 @@ Exec {
 include openstack_packages
 include mariadb
 include rabbitmq
+include openstack-keystone
