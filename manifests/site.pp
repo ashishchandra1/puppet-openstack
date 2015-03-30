@@ -1,4 +1,3 @@
-include ntp 
 
 Exec {
       path => [
@@ -7,7 +6,9 @@ Exec {
               logoutput => true,
      }
 
-include openstack_packages
-include mariadb
-include rabbitmq
-include openstack-keystone
+class openstack-install {
+   class {'ntp':} -> class{'openstack-packages':} -> class{'mariadb':} -> class{'rabbitmq':} -> class{'openstack-keystone':} -> class{'openstack-glance':}
+
+}
+
+include openstack-install
