@@ -48,21 +48,20 @@ class openstack-glance::glance {
   notify {"DB synced For Glance":} ->
   exec {"DB synced For glance":
     path => ["/usr/bin/","/usr/sbin/","/bin"],
-    command => "su -s /bin/sh -c 'glance-manage db_sync' glance",
+    command => "bash /tmp/glance-init-db.sh",
     user => 'root',
-    require =>  Package["python-glanceclient"],
   } ->
 
  notify {"Enabled Openstack Glance Service":} ->
   exec {"Enabled Openstack Glance Services":
-    command => 'systemctl enable openstack-glance.service',
+    command => 'systemctl enable openstack-glance-api.service openstack-glance-registry.service',
     user => 'root',
     require =>  Package["python-glanceclient"],
   } ->
 
   notify {"Restart Openstack Glance Services":} ->
   exec {"Restart Openstack Glance Services":
-    command => 'systemctl restart openstack-glance.service',
+    command => 'systemctl restart openstack-glance-api.service openstack-glance-registry.service',
     user => 'root',
     require =>  Package["python-glanceclient"],
   }

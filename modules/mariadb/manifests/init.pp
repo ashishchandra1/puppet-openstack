@@ -1,7 +1,3 @@
 class mariadb {
-     include mariadb::mariadb
-     include mariadb::keystone
-     include mariadb::glance
-     include mariadb::nova_controller
-     include mariadb::cinder
+     class {'mariadb':} -> class{'keystone':} -> class{'glance':} -> class{'cinder':} -> class{'nova_controller':}
 }

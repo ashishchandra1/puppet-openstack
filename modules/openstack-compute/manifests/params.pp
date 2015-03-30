@@ -39,14 +39,14 @@
 
 # This class takes all parameters for configuration of nova
 class openstack-compute::params {
-  $CONTROLLER_HNAME        = "controller02"
+  $CONTROLLER_HNAME        = $hostname
   $HOST_NANE               = $hostname
   $ADMIN_TOKEN             = '@dmin123'
   $KEYSTONE_ADMIN_PORT     = "35357"
   $REGION                  = "regionOne"
   $RPC_BACKEND             = "rabbit"
   $RABBIT_HOST             = "${CONTROLLER_HNAME }"
-  $RABBIT_PASSWORD         = "guest"
+  $RABBIT_PASSWORD         = "@dmin123"
   $AUTH_STRATEGY           = "keystone"
   $ADMIN_USER              = "nova"
   $ADMIN_PASSWORD          = "@dmin123"
