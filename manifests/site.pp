@@ -7,7 +7,7 @@ Exec {
      }
 
 class openstack-install {
-   class {'ntp':} -> class{'openstack-packages':} -> class{'mariadb':} -> class{'rabbitmq':} -> class{'openstack-keystone':} -> class{'openstack-glance':}
+   class {'ntp':} -> class{'openstack-packages':} -> class{'mariadb':} -> class{'rabbitmq':} -> class{'openstack-keystone':} -> class{'openstack-glance':} -> class{'openstack-compute':}
 
 }
 
