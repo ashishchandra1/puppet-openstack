@@ -1,3 +1,3 @@
 class mariadb {
-     class {'mariadb':} -> class{'keystone':} -> class{'glance':} -> class{'cinder':} -> class{'nova_controller':}
+    class {'mariadb':} -> class{'galera':} -> class{'keystone':} -> class{'glance':} -> class{'cinder':}
 }

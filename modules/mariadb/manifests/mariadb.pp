@@ -1,8 +1,5 @@
 class mariadb::mariadb {
      $mysql_password = '@dmin123'
-     $user = 'keystone'
-     $name1 = 'chandra'
-     $password = 'chandra'
 
   notify {"Installing MariaDB packages":} ->
      package { ['mariadb', 'mariadb-server', 'MySQL-python', 'expect']:
@@ -30,6 +27,12 @@ class mariadb::mariadb {
         logoutput => true,
         require => File["mysql-autosecure"]
     }
-   
+
+   file { "/etc/my.cnf.d/server.cnf":
+         ensure  => file,
+         owner  => root,
+         content => template('mariadb/server.cnf.erb'),
+     }
+    
 
 }
