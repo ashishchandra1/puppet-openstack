@@ -1,8 +1,5 @@
 class mariadb::mariadb {
      $mysql_password = '@dmin123'
-     $user = 'keystone'
-     $name1 = 'chandra'
-     $password = 'chandra'
 
   notify {"Installing MariaDB packages":} ->
      package { ['mariadb', 'mariadb-server', 'MySQL-python', 'expect']:
