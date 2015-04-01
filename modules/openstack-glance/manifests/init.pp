@@ -1,9 +1,7 @@
-#class openstack-glance {
-#    include openstack-glance::keystone
-#    include openstack-glance::glance
-#}
-
 class openstack-glance {
    class {'keystone':} -> 
-   class {'glance':}
+   class {'glance-installation':} ->
+   class {'glance-db-sync.pp'} ->
+   class {'glance-operations:'}
+
 }
