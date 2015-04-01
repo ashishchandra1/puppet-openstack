@@ -19,7 +19,8 @@ class mariadb-galera::packages inherits  mariadb-galera::repo {
         "rsync",
         "galera",
         "MariaDB-Galera-server",
-        "MariaDB-client"
+        "MariaDB-client",
+        "expect"
      ]
   #Packages for galera and rysnc
   $packages = [

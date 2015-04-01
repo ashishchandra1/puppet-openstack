@@ -7,12 +7,13 @@
 # === Copyright
 #
 #
-class mariadb-galera::members {
+class mariadb-galera::stop_maria {
 
   #It runs mysql service on member of clustered nodes  except primary node
-  notify {"Starting mariadb Service on member Nodes": } ->
-# service { "mysql ":
-  #ensure => "running",
-  exec{"/etc/init.d/mysql start":}
+  notify {"Stoping mariadb Service on member Nodes": } ->
+  #service { "mysql ":
+  #ensure => "stopped",
+  exec{"/etc/init.d/mysql stop":}
+  
 
 }

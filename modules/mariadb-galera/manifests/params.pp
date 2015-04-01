@@ -17,6 +17,6 @@ class mariadb-galera::params {
   $HOST_IP                = $ipaddress 
   $HOSTNAME               = $hostname
   $DBPASS                 = "@dmin123"
-  $CLUSTER_MEMBERS_LIST   = "$ipaddress,2.2.2.2,3.3.3." 
+  $CLUSTER_MEMBERS_LIST   = "192.168.0.59,192.168.0.58,192.168.0.57" 
  
 }
