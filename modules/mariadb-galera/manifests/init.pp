@@ -36,7 +36,6 @@ class mariadb-galera {
    class  {'mariadb-galera::setting' :} ->
    class  {'mariadb-galera::params' :} ->
    class {'mariadb-galera::packages' :} ->
-   class {'mariadb-galera::stop_maria':}->
    class {'mariadb-galera::members':} ->
    class {'mariadb-galera::set_pass':} ->
    class {'mariadb-galera::galera':} ->
