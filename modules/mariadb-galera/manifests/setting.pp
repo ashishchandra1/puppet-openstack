@@ -12,9 +12,9 @@
 class mariadb-galera::setting {
 
 
- #SELINUX DISABLED MODE
- notify {"Disbaled SELINUX": } ->
- exec {"selinux disabled":
+ #SELINUX PERMISSIVE  MODE
+ notify {"SELINUX PERMISSIVE MODE": } ->
+ exec {"selinux permissive":
   path => ["/usr/bin/","/usr/sbin/","/bin"],
   command => "setenforce 0",
   user => 'root',
