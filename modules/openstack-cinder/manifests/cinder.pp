@@ -36,13 +36,13 @@ class openstack-cinder::cinder {
     mode    => 0755,
   } ->
 
-  notify {"Syncing DB For Cinder":} ->
-  exec {"Cinder DB Syncing":
-    path => ["/usr/bin/","/usr/sbin/","/bin"],
-    command => "su -s /bin/sh -c 'cinder-manage db sync' cinder",
-    user => 'root',
-    require =>  Package["python-cinderclient"],
-  } ->
+  #notify {"Syncing DB For Cinder":} ->
+  #exec {"Cinder DB Syncing":
+  #  path => ["/usr/bin/","/usr/sbin/","/bin"],
+  #  command => "su -s /bin/sh -c 'cinder-manage db sync' cinder",
+  #  user => 'root',
+  # require =>  Package["python-cinderclient"],
+  #} ->
 
  notify {"Enable Cinder Service":} ->
   exec {"Enabled Cinder Services":
