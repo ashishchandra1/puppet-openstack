@@ -1,5 +1,5 @@
 class mariadb-galera {
-    notify {"MariaDB Galera Cluster Primary Node Installation and Initialization": } ->
+    notify {"MariaDB Galera Cluster Primary Node Installation and Initialization": }
     case $hostname {
         controller1: {
                class  {'mariadb-galera::disable-selinux':} ->
