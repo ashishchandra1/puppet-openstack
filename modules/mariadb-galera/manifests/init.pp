@@ -9,8 +9,13 @@ class mariadb-galera {
                class {'mariadb-galera::set-pass':}->
                class {'mariadb-galera::galera':} ->
                class {'mariadb-galera::stop-maria':}->
-               class {'mariadb-galera::config' :} ->
-               class {'mariadb-galera::start-maria-again' :}
+               class {'mariadb-galera::config':} ->
+               class {'mariadb-galera::start-maria-again':}
+               class {'mariadb-galera::keystone':}->
+               class {'mariadb-galera::glance':}->
+               class {'mariadb-galera::cinder':}->
+               class {'mariadb-galera::nova-controller':}
+  
        }
      }
 
