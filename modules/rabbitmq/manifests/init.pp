@@ -1,6 +1,6 @@
 class rabbitmq {
      #TODO:hard coded password sucks
-     $rabbit_password = 'ashish'
+     $rabbit_password = '@dmin123'
      notify {"Installing RabbitMQ Server":} ->
      package { ['rabbitmq-server']:
           ensure => present,
