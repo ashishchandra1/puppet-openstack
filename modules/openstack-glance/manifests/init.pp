@@ -10,7 +10,6 @@ class openstack-glance {
              }
 
           controller2,controller3: {
-                class {'keystone':} ->
                 class {'glance-installation':} ->
                 class {'glance-operations':}                    
               }
