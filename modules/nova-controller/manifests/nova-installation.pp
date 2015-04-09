@@ -25,4 +25,3 @@ class nova-controller::nova-installation {
    }
 
 }
-
