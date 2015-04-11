@@ -255,7 +255,7 @@ auth_strategy=keystone
 
 notify_nova_on_port_status_changes = True
 notify_nova_on_port_data_changes = True
-nova_url = http://<%= @CONTROLLER_HNAME>:8774/v2
+nova_url = http://<%= @CONTROLLER_HNAME %>:8774/v2
 nova_admin_auth_url = http://<%= @CONTROLLER_HNAME %>:35357/v2.0
 nova_region_name = <%= @REGION %>
 nova_admin_username = <%= @NOVA_ADMIN_USERNAME %>

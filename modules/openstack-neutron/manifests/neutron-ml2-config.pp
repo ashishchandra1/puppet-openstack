@@ -10,13 +10,18 @@ class openstack-neutron::neutron-ml2-config {
      $region = "regionOne"
 
      
-     notify {"CREATING neutron.conf FILE":} ->
+     notify {"CREATING ml2_conf.ini FILE":} ->
         file { "/etc/neutron/plugins/ml2/ml2_conf.ini":
         ensure  => file,
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-controller/ml2.conf.erb') 
-   }
+   } ->
 
+    notify {"Creating Symbolic link":} ->
+    exec {"Creating Symbolic Link":
+          command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
+          user =>'root',
+     } 
 }
 
