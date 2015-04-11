@@ -10,7 +10,7 @@ class openstack-neutron {
              }
 
           controller2,controller3: {
-                class {'neutron-controller-installation':} ->
+                class {'neutron-network-installation':} ->
                 class {'neutron-ml2-config'} ->
                 class {'configure-compute'} ->
                 class {'neutron-controller-operations':}

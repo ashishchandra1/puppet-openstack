@@ -1,9 +1,9 @@
-class openstack-nova::nova-compute-installation {
+class openstack-neutron::neutron-network-installation {
 
-     $NOVA_DBPASS = '@dmin123'
+     $NEUTRON_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
-     $NOVA_ADMIN_PORT = '8774'
-     $ADMIN_USER = 'nova'
+     $NEUTRON_ADMIN_PORT = '9696'
+     $ADMIN_USER = 'neutron'
      $ADMIN_PASSWORD = '@dmin123'
      $RABBIT_PASSWORD = '@dmin123'
  
@@ -12,8 +12,9 @@ class openstack-nova::nova-compute-installation {
      $MY_IP = $ipaddress
     
      $packages = [
-              "openstack-nova-compute",
-              "sysfsutils"
+              "openstack-neutron",
+              "openstack-neutron-ml2",
+              "openstack-neutron-openvswitch"
      ]
    
      notify {"Installing Openstack Nova on Compute Nodes":} ->
@@ -23,12 +24,12 @@ class openstack-nova::nova-compute-installation {
           ensure =>installed,
     } -> 
 
-   notify {"CREATING nova.conf FILE":} ->
-   file { "/etc/nova/nova.conf":
+   notify {"CREATING neutron.conf FILE":} ->
+   file { "/etc/neutron/neutron.conf":
        ensure  => file,
        owner  => root,
-       group  => nova,
-       content => template('openstack-nova/nova-compute/nova.conf.erb'),
+       group  => neutron,
+       content => template('openstack-neutron/neutron-network/neutron.conf.erb'),
    }
 
 }
