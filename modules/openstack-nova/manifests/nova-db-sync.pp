@@ -13,7 +13,7 @@ class openstack-nova::nova-db-sync {
     mode    => 0755,
   } ->
 
-  notify {"Syncing DB For Cinder":} ->
+  notify {"Syncing DB For Nova":} ->
   exec {"Cinder DB Syncing":
      command => "su -s /bin/sh -c 'nova-manage db sync' nova",
      user => 'root',
