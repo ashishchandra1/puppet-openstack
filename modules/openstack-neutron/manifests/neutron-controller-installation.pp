@@ -7,6 +7,10 @@ class openstack-neutron::neutron-controller-installation {
      $ADMIN_PASSWORD = '@dmin123'
      $RABBIT_PASSWORD = '@dmin123' 
 
+     $KEYSTONE_HOST = "controller"
+     $KEYSTONE_ADMIN_PORT = '35357'
+     $ADMIN_TOKEN = '@dmin123'
+    
      $LOG_BOOL_VALUE = "True"
      $RABBIT_HOST = "controller"
      $MY_IP = "10.0.131.20"
@@ -34,5 +38,19 @@ class openstack-neutron::neutron-controller-installation {
        owner  => root,
        group  => neutron,
        content => template('openstack-neutron/neutron-controller/neutron.conf.erb'),
-   }
+   } ->
+
+   notify {"Putting Service ID in neutron.conf file":} ->
+   file {"/tmp/get-nova-admin-tenant-id.sh":
+        ensure =>file,
+        owner =>root,
+        content => template('openstack-neutron/neutron-controller/get-nova-tenant-service-id.sh'),
+        mode => 755,
+   } -> 
+
+   notify {"Getting nova admin tenant id":} ->
+   exec {"Nova admin tenant id":
+             command => "bash /tmp/get-nova-admin-tenant-id.sh",
+             user => 'root',
+       }
 }
