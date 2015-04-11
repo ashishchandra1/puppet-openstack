@@ -10,7 +10,7 @@ class openstack-neutron::neutron-ml2-config {
      $region = "regionOne"
 
      
-     notify {"CREATING neutron.conf FILE":} ->
+     notify {"CREATING ml2_conf.ini FILE":} ->
         file { "/etc/neutron/plugins/ml2/ml2_conf.ini":
         ensure  => file,
         owner  => root,
