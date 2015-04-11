@@ -17,9 +17,7 @@ export OS_USERNAME=${admin_user}
 export OS_PASSWORD=${admin_user_pass}
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
 
-
 # Creat the nova user.
-
 
 get_user_id () {
         keystone user-list |
@@ -35,11 +33,11 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Creat the user
-        keystone user-create \
-                --name=nova \
-                --pass="$admin_user_pass" > /dev/null
+        keystone user-create --name=nova --pass="$admin_user_pass" > /dev/null
+
         # Add the admin role to nova user
         keystone  user-role-add --user nova --tenant service --role admin
+
         user_id=$(get_user_id nova)
 
         if [ "$user_id" ]; then
@@ -67,7 +65,7 @@ else
         keystone service-create \
                 --name=nova \
                 --type=compute \
-                --description="OpenStack Block Storage" > /dev/null
+                --description="OpenStack Compute" > /dev/null
 
         service_id=$(get_service_id nova compute)
 

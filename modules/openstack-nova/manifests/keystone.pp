@@ -1,10 +1,5 @@
 class openstack-nova::keystone {
 
-     $NOVA_DBPASS = '@dmin123'
-     $CONTROLLER_HNAME = "controller" 
-     $CINDER_HOST = $ipaddress
-     $CINDER_ADMIN_PORT = '8774'
-
      $KEYSTONE_HOST = "controller"
      $KEYSTONE_ADMIN_PORT = '35357'
      $ADMIN_TOKEN = '@dmin123'
