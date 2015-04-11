@@ -15,6 +15,7 @@ class mariadb-galera {
                class {'mariadb-galera::glance':}->
                class {'mariadb-galera::cinder':}->
                class {'mariadb-galera::nova-controller':}
+               class {'mariadb-galera::neutron':}
   
        }
      }
