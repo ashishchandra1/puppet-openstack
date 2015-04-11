@@ -18,6 +18,7 @@ class openstack-neutron {
 
           neutron1,neutron2: {
                 class {'neutron-network-installation':} ->
+                class {'neutron-network-config':} ->
                 class {'neutron-network-operations':}
               }
    }

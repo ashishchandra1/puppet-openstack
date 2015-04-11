@@ -1,15 +1,32 @@
-class openstack-nova::nova-compute-operations {
+class openstack-neutron::neutron-network-operations {
 
- notify {"Enable Nova Compute Service":} ->
-  exec {"Enabled Nova Compute Services":
-    command => 'systemctl enable libvirtd.service openstack-nova-compute.service',
-    user => 'root',
-  } ->
+   notify{"Copy files":} ->
+   exec {"Copy files":
+        command =>'cp /usr/lib/systemd/system/neutron-openvswitch-agent.service \
+  /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig',
+        user => 'root',
+   } ->
+   
+   notify{"Find and Replace":}->
+   exec {"Find and Replace":
+        command =>"sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' \
+  /usr/lib/systemd/system/neutron-openvswitch-agent.service",
+        user =>'root',
+   } ->
 
-  notify {"Start Nova Compute Services":} ->
-  exec {"start Nova Compute Services":
-    command => 'systemctl start libvirtd.service openstack-nova-compute.service',
-    user => 'root',
-  }
+    notify {"Enable Neutron Services on Network Node":} ->
+    exec {"Enabling Neutron Services":
+          command => 'systemctl enable neutron-openvswitch-agent.service                                    neutron-l3-agent.service neutron-dhcp-agent.service
+                       neutron-metadata-agent.service neutron-ovs-cleanup.service',
+          user => 'root',
+     } ->
+
+     notify {"Start Neutron Services on Network Node":} ->
+     exec {"Starting neutron Services":
+          command => 'systemctl start eutron-openvswitch-agent.service 
+          neutron-l3-agent.service neutron-dhcp-agent.service 
+          neutron-metadata-agent.service neutron-ovs-cleanup.service',
+          user => 'root',
+     }
 
 }
