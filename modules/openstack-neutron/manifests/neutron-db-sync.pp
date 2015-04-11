@@ -1,23 +1,23 @@
-class openstack-nova::nova-db-sync {
+class openstack-neutron::neutron-db-sync {
 
-     $NOVA_DBPASS = '@dmin123'
+     $NEUTRON_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
-     $NOVA_HOST = $ipaddress
-     $NOVA_ADMIN_PORT = '8774'
+     $NEUTRON_HOST = $ipaddress
+     $NEUTRON_ADMIN_PORT = '9696'
      $ADMIN_TOKEN = '@dmin123'
      $RABBIT_PASS = '@dmin123' 
 
-  notify {"CREATE SHELL SCRIPT TO SYNC NOVA DB ":} ->
-  file { '/tmp/nova-init-db.sh':
-    content => template('openstack-nova/nova-controller/nova-init-db.sh'),
-    mode    => 0755,
-  } ->
+#  notify {"CREATE SHELL SCRIPT TO SYNC NEUTRON DB ":} ->
+#  file { '/tmp/neutron-init-db.sh':
+#    content => template('openstack-neutron/neutron-controller/neutron-init-db.sh'),
+#    mode    => 0755,
+#  } ->
 
-  notify {"Syncing DB For Nova":} ->
+  notify {"Syncing DB For Neutron":} ->
   exec {"Nova DB Syncing":
-     command => "su -s /bin/sh -c 'nova-manage db sync' nova",
+     command => "su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade juno" neutron",
      user => 'root',
-   require =>  Package["python-novaclient"],
+   require =>  Package["python-neutronclient"],
   } 
 
 

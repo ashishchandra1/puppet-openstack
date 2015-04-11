@@ -1,14 +1,22 @@
-class openstack-nova::nova-controller-operations {
+class openstack-neutron::neutron-controller-operations {
 
- notify {"Enable Nova Service":} ->
-  exec {"Enabled Nova Services":
-    command => 'systemctl enable openstack-nova-api.service openstack-nova-cert.service  openstack-nova-consoleauth.service openstack-nova-scheduler.service  openstack-nova-conductor.service openstack-nova-novncproxy.service',
+    notify {"Restart compute services":}->
+    exec {"Restarting compute services":
+    command => 'systemctl restart openstack-nova-api.service 
+                openstack-nova-scheduler.service openstack-nova-conductor.service',
+    user => 'root',
+ }
+
+
+ notify {"Enable Neutron Service":} ->
+  exec {"Enabling Neutron Services":
+    command => 'systemctl enable neutron-server.service',
     user => 'root',
   } ->
 
-  notify {"Start Nova Services":} ->
-  exec {"start Nova Services":
-    command => 'systemctl start openstack-nova-api.service openstack-nova-cert.service openstack-nova-consoleauth.service openstack-nova-scheduler.service  openstack-nova-conductor.service openstack-nova-novncproxy.service',
+  notify {"Start Neutron Services":} ->
+  exec {"Starting Neutron Services":
+    command => 'systemctl start neutron-server.service',
     user => 'root',
   }
 

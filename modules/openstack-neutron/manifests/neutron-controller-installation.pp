@@ -1,8 +1,8 @@
 class openstack-neutron::neutron-controller-installation {
 
-     $NOVA_DBPASS = '@dmin123'
+     $NEUTRON_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
-     $NOVA_ADMIN_PORT = '8774'
+     $NEUTRON_ADMIN_PORT = '9696'
      $ADMIN_USER = 'neutron'
      $ADMIN_PASSWORD = '@dmin123'
      $RABBIT_PASSWORD = '@dmin123' 
@@ -12,16 +12,11 @@ class openstack-neutron::neutron-controller-installation {
      $MY_IP = "10.0.131.20"
 
      $packages = [ 
-                 "openstack-neutron-api",
-                 "openstack-neutron-cert",
-                 "openstack-neutron-conductor",
-                 "openstack-neutron-console",
-                 "openstack-neutron-novncproxy",
-                 "openstack-neutron-scheduler",
-                 "python-neutronclient"
+                 "openstack-neutron",
+                 "openstack-neutron-ml2",
+                 "python-neutronclient",
+                 "which"
     ]
-
-
     
      notify {"Installing Openstack Nova on Controller Nodes":} ->
 #Installing Packages
@@ -37,5 +32,4 @@ class openstack-neutron::neutron-controller-installation {
        group  => neutron,
        content => template('openstack-neutron/neutron-controller/neutron.conf.erb'),
    }
-
 }
