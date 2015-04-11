@@ -2,10 +2,15 @@ class openstack-nova::nova-compute-installation {
 
      $NOVA_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
-     $NOVA_HOST = $ipaddress
      $NOVA_ADMIN_PORT = '8774'
-     $ADMIN_TOKEN = '@dmin123'
-     $RABBIT_PASS = '@dmin123' 
+     $ADMIN_USER = 'nova'
+     $ADMIN_PASSWORD = '@dmin123'
+     $RABBIT_PASSWORD = '@dmin123'
+ 
+     $LOG_BOOL_VALUE = "True"
+     $RABBIT_HOST = "controller"
+     $MY_IP = $ipaddress
+    
      notify {"Installing Openstack Nova on Compute Nodes":} ->
 
      $packages = [ "openstack-nova-compute", "sysfsutils"]
