@@ -10,7 +10,10 @@ class openstack-neutron::neutron-controller-installation {
      $LOG_BOOL_VALUE = "True"
      $RABBIT_HOST = "controller"
      $MY_IP = "10.0.131.20"
-
+     $REGION = "regionOne"
+     $NOVA_ADMIN_USERNAME  = "nova"
+     $NOVA_ADMIN_PASSWORD  = "nova"
+     
      $packages = [ 
                  "openstack-neutron",
                  "openstack-neutron-ml2",
