@@ -1,4 +1,4 @@
-class nova-controller {
+class openstack-nova {
    case $hostname {
          controller1: {
                 class {'keystone':} ->

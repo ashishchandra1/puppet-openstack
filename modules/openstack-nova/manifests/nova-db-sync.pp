@@ -1,4 +1,4 @@
-class nova-controller::nova-db-sync {
+class openstack-nova::nova-db-sync {
 
      $NOVA_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
@@ -9,7 +9,7 @@ class nova-controller::nova-db-sync {
 
   notify {"CREATE SHELL SCRIPT TO SYNC NOVA DB ":} ->
   file { '/tmp/nova-init-db.sh':
-    content => template('nova-controller/nova-init-db.sh'),
+    content => template('openstack-nova/nova-init-db.sh'),
     mode    => 0755,
   } ->
 

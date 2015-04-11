@@ -1,4 +1,4 @@
-class nova-controller::nova-operations {
+class openstack-nova::nova-operations {
 
  notify {"Enable Nova Service":} ->
   exec {"Enabled Nova Services":

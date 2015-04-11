@@ -1,4 +1,4 @@
-class nova-controller::nova-installation {
+class openstack-nova::nova-installation {
 
      $NOVA_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
@@ -21,7 +21,7 @@ class nova-controller::nova-installation {
        ensure  => file,
        owner  => root,
        group  => nova,
-       content => template('nova-controller/nova.conf.erb'),
+       content => template('openstack-nova/nova.conf.erb'),
    }
 
 }
