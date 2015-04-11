@@ -2,7 +2,6 @@ class openstack-nova::nova-controller-installation {
 
      $NOVA_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
-     $NOVA_HOST = $ipaddress
      $NOVA_ADMIN_PORT = '8774'
      $ADMIN_USER = 'nova'
      $ADMIN_PASSWORD = '@dmin123'
