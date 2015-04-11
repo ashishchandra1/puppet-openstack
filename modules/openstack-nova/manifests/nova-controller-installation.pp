@@ -4,8 +4,15 @@ class openstack-nova::nova-controller-installation {
      $CONTROLLER_HNAME = "controller"
      $NOVA_HOST = $ipaddress
      $NOVA_ADMIN_PORT = '8774'
-     $ADMIN_TOKEN = '@dmin123'
-     $RABBIT_PASS = '@dmin123' 
+     $ADMIN_USER = 'nova'
+     $ADMIN_PASSWORD = '@dmin123'
+     $RABBIT_PASSWORD = '@dmin123' 
+
+     $LOG_BOOL_VALUE = "True"
+     $RABBIT_HOST = "controller"
+     $MY_IP = "10.0.131.20"
+
+
      notify {"Installing Openstack Nova on Controller Nodes":} ->
 
      $packages = [ "openstack-nova-api", "openstack-nova-cert", "openstack-nova-conductor", "openstack-nova-console", "openstack-nova-novncproxy", "openstack-nova-scheduler", "python-novaclient"]

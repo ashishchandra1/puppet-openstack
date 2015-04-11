@@ -4,11 +4,14 @@
 # Options defined in oslo.messaging
 #
 
-# Use durable queues in AMQP. (boolean value)
-# Deprecated group/name - [DEFAULT]/rabbit_durable_queues
+verbose = <%= @LOG_BOOL_VALUE %>
+
+sql_connection=mysql://nova:<%= @NOVA_DBPASS %>@<%= @CONTROLLER_HNAME %>/nova
+# Use durable queues in amqp. (boolean value)
+# Deprecated group;name - DEFAULT;rabbit_durable_queues
 #amqp_durable_queues=false
 
-# Auto-delete queues in AMQP. (boolean value)
+# Auto-delete queues in amqp. (boolean value)
 #amqp_auto_delete=false
 
 # Size of RPC connection pool. (integer value)
@@ -56,8 +59,8 @@
 #qpid_topology_version=1
 
 # SSL version to use (valid only if SSL enabled). valid values
-# are TLSv1 and SSLv23. SSLv2 and SSLv3 may be available on
-# some distributions. (string value)
+# are TLSv1, SSLv23 and SSLv3. SSLv2 may be available on some
+# distributions. (string value)
 #kombu_ssl_version=
 
 # SSL key file (valid only if SSL enabled). (string value)
@@ -76,7 +79,7 @@
 
 # The RabbitMQ broker address where a single node is used.
 # (string value)
-rabbit_host=<%= @CONTROLLER_HNAME%>
+rabbit_host= <%= @RABBIT_HOST %>
 
 # The RabbitMQ broker port where a single node is used.
 # (integer value)
@@ -92,9 +95,9 @@ rabbit_host=<%= @CONTROLLER_HNAME%>
 #rabbit_userid=guest
 
 # The RabbitMQ password. (string value)
-rabbit_password=<%= @RABBIT_PASS%>
+rabbit_password= <%= @RABBIT_PASSWORD %>
 
-# The RabbitMQ login method. (string value)
+# the RabbitMQ login method (string value)
 #rabbit_login_method=AMQPLAIN
 
 # The RabbitMQ virtual host. (string value)
@@ -117,8 +120,7 @@ rabbit_password=<%= @RABBIT_PASS%>
 # value)
 #rabbit_ha_queues=false
 
-# Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake
-# (boolean value)
+# If passed, use a fake RabbitMQ provider. (boolean value)
 #fake_rabbit=false
 
 # ZeroMQ bind address. Should be a wildcard (*), an ethernet
@@ -145,7 +147,7 @@ rabbit_password=<%= @RABBIT_PASS%>
 # Name of this node. Must be a valid hostname, FQDN, or IP
 # address. Must match "host" option, if running Nova. (string
 # value)
-#rpc_zmq_host=cinder
+#rpc_zmq_host=nova
 
 # Seconds to wait before a cast expires (TTL). Only supported
 # by impl_zmq. (integer value)
@@ -165,7 +167,7 @@ rabbit_password=<%= @RABBIT_PASS%>
 #notification_driver=
 
 # AMQP topic used for OpenStack notifications. (list value)
-# Deprecated group/name - [rpc_notifier2]/topics
+# Deprecated group;name - [rpc_notifier2]/topics
 #notification_topics=notifications
 
 # Seconds to wait for a response from a call. (integer value)
@@ -178,7 +180,7 @@ rabbit_password=<%= @RABBIT_PASS%>
 
 # The messaging driver to use, defaults to rabbit. Other
 # drivers include qpid and zmq. (string value)
-rpc_backend=rabbit
+rpc_backend= rabbit
 
 # The default exchange under which topics are scoped. May be
 # overridden by an exchange name specified in the
@@ -187,38 +189,162 @@ rpc_backend=rabbit
 
 
 #
-# Options defined in cinder.exception
+# Options defined in nova.availability_zones
 #
 
-# Make exception message format errors fatal. (boolean value)
+# The availability_zone to show internal services under
+# (string value)
+#internal_service_availability_zone=internal
+
+# Default compute node availability_zone (string value)
+#default_availability_zone=nova
+
+
+#
+# Options defined in nova.crypto
+#
+
+# Filename of root CA (string value)
+#ca_file=cacert.pem
+
+# Filename of private key (string value)
+#key_file=private/cakey.pem
+
+# Filename of root Certificate Revocation List (string value)
+#crl_file=crl.pem
+
+# Where we keep our keys (string value)
+#keys_path=$state_path/keys
+
+# Where we keep our root CA (string value)
+#ca_path=$state_path/CA
+
+# Should we use a CA for each project? (boolean value)
+#use_project_ca=false
+
+# Subject for certificate for users, %s for project, user,
+# timestamp (string value)
+#user_cert_subject=/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s
+
+# Subject for certificate for projects, %s for project,
+# timestamp (string value)
+#project_cert_subject=/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=project-ca-%.16s-%s
+
+
+#
+# Options defined in nova.exception
+#
+
+# Make exception message format errors fatal (boolean value)
 #fatal_exception_format_errors=false
 
 
 #
-# Options defined in cinder.quota
+# Options defined in nova.netconf
 #
 
-# Number of volumes allowed per project (integer value)
-#quota_volumes=10
+# IP address of this host (string value)
+my_ip= <%= @MY_IP %>
 
-# Number of volume snapshots allowed per project (integer
+# Name of this node.  This can be an opaque identifier.  It is
+# not necessarily a hostname, FQDN, or IP address. However,
+# the node name must be valid within an AMQP key, and if using
+# ZeroMQ, a valid hostname, FQDN, or IP address (string value)
+#host=nova
+
+# Use IPv6 (boolean value)
+#use_ipv6=false
+
+
+#
+# Options defined in nova.notifications
+#
+
+# If set, send compute.instance.update notifications on
+# instance state changes.  Valid values are None for no
+# notifications, "vm_state" for notifications on VM state
+# changes, or "vm_and_task_state" for notifications on VM and
+# task state changes. (string value)
+#notify_on_state_change=<None>
+
+# If set, send api.fault notifications on caught exceptions in
+# the API service. (boolean value)
+#notify_api_faults=false
+
+# Default notification level for outgoing notifications
+# (string value)
+#default_notification_level=INFO
+
+# Default publisher_id for outgoing notifications (string
 # value)
-#quota_snapshots=10
+#default_publisher_id=<None>
 
-# Number of consistencygroups allowed per project (integer
+
+#
+# Options defined in nova.paths
+#
+
+# Directory where the nova python module is installed (string
 # value)
-#quota_consistencygroups=10
+#pybasedir=/usr/lib/python/site-packages
 
-# Total amount of storage, in gigabytes, allowed for volumes
-# and snapshots per project (integer value)
-#quota_gigabytes=1000
+# Directory where nova binaries are installed (string value)
+#bindir=/usr/local/bin
 
-# Number of volume backups allowed per project (integer value)
-#quota_backups=10
+# Top-level directory for maintaining nova's state (string
+# value)
+#state_path=/var/lib/nova
 
-# Total amount of storage, in gigabytes, allowed for backups
-# per project (integer value)
-#quota_backup_gigabytes=1000
+
+#
+# Options defined in nova.quota
+#
+
+# Number of instances allowed per project (integer value)
+#quota_instances=10
+
+# Number of instance cores allowed per project (integer value)
+#quota_cores=20
+
+# Megabytes of instance RAM allowed per project (integer
+# value)
+#quota_ram=51200
+
+# Number of floating IPs allowed per project (integer value)
+#quota_floating_ips=10
+
+# Number of fixed IPs allowed per project (this should be at
+# least the number of instances allowed) (integer value)
+#quota_fixed_ips=-1
+
+# Number of metadata items allowed per instance (integer
+# value)
+#quota_metadata_items=128
+
+# Number of injected files allowed (integer value)
+#quota_injected_files=5
+
+# Number of bytes allowed per injected file (integer value)
+#quota_injected_file_content_bytes=10240
+
+# Length of injected file path (integer value)
+# Deprecated group;name - DEFAULT;quota_injected_file_path_bytes
+#quota_injected_file_path_length=255
+
+# Number of security groups per project (integer value)
+#quota_security_groups=10
+
+# Number of security rules per security group (integer value)
+#quota_security_group_rules=20
+
+# Number of key pairs per user (integer value)
+#quota_key_pairs=100
+
+# Number of server groups per project (integer value)
+#quota_server_groups=10
+
+# Number of servers per server group (integer value)
+#quota_server_group_members=10
 
 # Number of seconds until a reservation expires (integer
 # value)
@@ -233,63 +359,95 @@ rpc_backend=rabbit
 #max_age=0
 
 # Default driver to use for quota checks (string value)
-#quota_driver=cinder.quota.DbQuotaDriver
-
-# Enables or disables use of default quota class with default
-# quota. (boolean value)
-#use_default_quota_class=true
+#quota_driver=nova.quota.DbQuotaDriver
 
 
 #
-# Options defined in cinder.service
+# Options defined in nova.service
 #
 
-# Interval, in seconds, between nodes reporting state to
-# datastore (integer value)
+# Seconds between nodes reporting state to datastore (integer
+# value)
 #report_interval=10
 
-# Interval, in seconds, between running periodic tasks
-# (integer value)
-#periodic_interval=60
+# Enable periodic tasks (boolean value)
+#periodic_enable=true
 
-# Range, in seconds, to randomly delay when starting the
+# Range of seconds to randomly delay when starting the
 # periodic task scheduler to reduce stampeding. (Disable by
 # setting to 0) (integer value)
 #periodic_fuzzy_delay=60
 
-# IP address on which OpenStack Volume API listens (string
-# value)
-#osapi_volume_listen=0.0.0.0
+# A list of APIs to enable by default (list value)
+#enabled_apis=ec2,osapi_compute,metadata
 
-# Port on which OpenStack Volume API listens (integer value)
-#osapi_volume_listen_port=8776
+# A list of APIs with enabled SSL (list value)
+#enabled_ssl_apis=
 
-# Number of workers for OpenStack Volume API service. The
-# default is equal to the number of CPUs available. (integer
+# The IP address on which the EC2 API will listen. (string
 # value)
-#osapi_volume_workers=<None>
+#ec2_listen=0.0.0.0
+
+# The port on which the EC2 API will listen. (integer value)
+#ec2_listen_port=8773
+
+# Number of workers for EC2 API service. The default will be
+# equal to the number of CPUs available. (integer value)
+#ec2_workers=<None>
+
+# The IP address on which the OpenStack API will listen.
+# (string value)
+#osapi_compute_listen=0.0.0.0
+
+# The port on which the OpenStack API will listen. (integer
+# value)
+#osapi_compute_listen_port=8774
+
+# Number of workers for OpenStack API service. The default
+# will be the number of CPUs available. (integer value)
+#osapi_compute_workers=<None>
+
+# OpenStack metadata service manager (string value)
+#metadata_manager=nova.api.manager.MetadataManager
+
+# The IP address on which the metadata API will listen.
+# (string value)
+#metadata_listen=0.0.0.0
+
+# The port on which the metadata API will listen. (integer
+# value)
+#metadata_listen_port=8775
+
+# Number of workers for metadata service. The default will be
+# the number of CPUs available. (integer value)
+#metadata_workers=<None>
+
+# Full class name for the Manager for compute (string value)
+#compute_manager=nova.compute.manager.ComputeManager
+
+# Full class name for the Manager for console proxy (string
+# value)
+#console_manager=nova.console.manager.ConsoleProxyManager
+
+# Manager for console auth (string value)
+#consoleauth_manager=nova.consoleauth.manager.ConsoleAuthManager
+
+# Full class name for the Manager for cert (string value)
+#cert_manager=nova.cert.manager.CertManager
+
+# Full class name for the Manager for network (string value)
+#network_manager=nova.network.manager.FlatDHCPManager
+
+# Full class name for the Manager for scheduler (string value)
+#scheduler_manager=nova.scheduler.manager.SchedulerManager
+
+# Maximum time since last check-in for up service (integer
+# value)
+#service_down_time=60
 
 
 #
-# Options defined in cinder.ssh_utils
-#
-
-# Option to enable strict host key checking.  When set to
-# "True" Cinder will only connect to systems with a host key
-# present in the configured "ssh_hosts_key_file".  When set to
-# "False" the host key will be saved upon first connection and
-# used for subsequent connections.  Default=False (boolean
-# value)
-#strict_ssh_host_key_policy=false
-
-# File containing SSH host keys for the systems with which
-# Cinder needs to communicate.  OPTIONAL:
-# Default=$state_path/ssh_known_hosts (string value)
-#ssh_hosts_key_file=$state_path/ssh_known_hosts
-
-
-#
-# Options defined in cinder.test
+# Options defined in nova.test
 #
 
 # File name of clean sqlite db (string value)
@@ -297,8 +455,62 @@ rpc_backend=rabbit
 
 
 #
-# Options defined in cinder.wsgi
+# Options defined in nova.utils
 #
+
+# Whether to log monkey patching (boolean value)
+#monkey_patch=false
+
+# List of modules/decorators to monkey patch (list value)
+#monkey_patch_modules=nova.api.ec2.cloud:nova.notifications.notify_decorator,nova.compute.api:nova.notifications.notify_decorator
+
+# Length of generated instance admin passwords (integer value)
+#password_length=12
+
+# Time period to generate instance usages for.  Time period
+# must be hour, day, month or year (string value)
+#instance_usage_audit_period=month
+
+# Path to the rootwrap configuration file to use for running
+# commands as root (string value)
+#rootwrap_config=/etc/nova/rootwrap.conf
+
+# Explicitly specify the temporary working directory (string
+# value)
+#tempdir=<None>
+
+
+#
+# Options defined in nova.wsgi
+#
+
+# File name for the paste.deploy config for nova-api (string
+# value)
+#api_paste_config=api-paste.ini
+
+# A python format string that is used as the template to
+# generate log lines. The following values can be formatted
+# into it: client_ip, date_time, request_line, status_code,
+# body_length, wall_seconds. (string value)
+#wsgi_log_format=%(client_ip)s "%(request_line)s" status: %(status_code)s len: %(body_length)s time: %(wall_seconds).7f
+
+# CA certificate file to use to verify connecting clients
+# (string value)
+#ssl_ca_file=<None>
+
+# SSL certificate of API server (string value)
+#ssl_cert_file=<None>
+
+# SSL private key of API server (string value)
+#ssl_key_file=<None>
+
+# Sets the value of TCP_KEEPIDLE in seconds for each server
+# socket. Not supported on OS X. (integer value)
+#tcp_keepidle=600
+
+# Size of the pool of greenthreads used by wsgi (integer
+# value)
+#wsgi_default_pool_size=1000
 
 # Maximum line size of message headers to be accepted.
 # max_header_line may need to be increased when using large
@@ -306,63 +518,19 @@ rpc_backend=rabbit
 # with big service catalogs). (integer value)
 #max_header_line=16384
 
-# If False, closes the client socket connection explicitly.
-# Setting it to True to maintain backward compatibility.
-# Recommended setting is set it to False. (boolean value)
-#wsgi_keep_alive=true
 
-# Timeout for client connections' socket operations. If an
-# incoming connection is idle for this number of seconds it
-# will be closed. A value of '0' means wait forever. (integer
+#
+# Options defined in nova.api.auth
+#
+
+# Whether to use per-user rate limiting for the api. This
+# option is only used by v2 api. Rate limiting is removed from
+# v3 api. (boolean value)
+#api_rate_limit=false
+
+# The strategy to use for auth: noauth or keystone. (string
 # value)
-#client_socket_timeout=0
-
-# Sets the value of TCP_KEEPALIVE (True/False) for each server
-# socket. (boolean value)
-#tcp_keepalive=true
-
-# Sets the value of TCP_KEEPIDLE in seconds for each server
-# socket. Not supported on OS X. (integer value)
-#tcp_keepidle=600
-
-# Sets the value of TCP_KEEPINTVL in seconds for each server
-# socket. Not supported on OS X. (integer value)
-#tcp_keepalive_interval=<None>
-
-# Sets the value of TCP_KEEPCNT for each server socket. Not
-# supported on OS X. (integer value)
-#tcp_keepalive_count=<None>
-
-# CA certificate file to use to verify connecting clients
-# (string value)
-#ssl_ca_file=<None>
-
-# Certificate file to use when starting the server securely
-# (string value)
-#ssl_cert_file=<None>
-
-# Private key file to use when starting the server securely
-# (string value)
-#ssl_key_file=<None>
-
-
-#
-# Options defined in cinder.api.common
-#
-
-# The maximum number of items that a collection resource
-# returns in a single response (integer value)
-#osapi_max_limit=1000
-
-# Base URL that will be presented to users in links to the
-# OpenStack Volume API (string value)
-# Deprecated group/name - [DEFAULT]/osapi_compute_link_prefix
-#osapi_volume_base_URL=<None>
-
-
-#
-# Options defined in cinder.api.middleware.auth
-#
+auth_strategy=keystone
 
 # Treat X-Forwarded-For as the canonical remote address. Only
 # enable this if you have a sanitizing proxy. (boolean value)
@@ -370,384 +538,922 @@ rpc_backend=rabbit
 
 
 #
-# Options defined in cinder.api.middleware.sizelimit
+# Options defined in nova.api.ec2
 #
 
-# Max size for body of a request (integer value)
+# Number of failed auths before lockout. (integer value)
+#lockout_attempts=5
+
+# Number of minutes to lockout if triggered. (integer value)
+#lockout_minutes=15
+
+# Number of minutes for lockout window. (integer value)
+#lockout_window=15
+
+# URL to get token from ec2 request. (string value)
+#keystone_ec2_url=http://localhost:5000/v2.0/ec2tokens
+
+# Return the IP address as private dns hostname in describe
+# instances (boolean value)
+#ec2_private_dns_show_ip=false
+
+# Validate security group names according to EC2 specification
+# (boolean value)
+#ec2_strict_validation=true
+
+# Time in seconds before ec2 timestamp expires (integer value)
+#ec2_timestamp_expiry=300
+
+
+#
+# Options defined in nova.api.ec2.cloud
+#
+
+# The IP address of the EC2 API server (string value)
+#ec2_host=$my_ip
+
+# The internal IP address of the EC2 API server (string value)
+#ec2_dmz_host=$my_ip
+
+# The port of the EC2 API server (integer value)
+#ec2_port=8773
+
+# The protocol to use when connecting to the EC2 API server
+# (http, https) (string value)
+#ec2_scheme=http
+
+# The path prefix used to call the ec2 API server (string
+# value)
+#ec2_path=/services/Cloud
+
+# List of region=fqdn pairs separated by commas (list value)
+#region_list=
+
+
+#
+# Options defined in nova.api.metadata.base
+#
+
+# List of metadata versions to skip placing into the config
+# drive (string value)
+#config_drive_skip_versions=1.0 2007-01-19 2007-03-01 2007-08-29 2007-10-10 2007-12-15 2008-02-01 2008-09-01
+
+# Driver to use for vendor data (string value)
+#vendordata_driver=nova.api.metadata.vendordata_json.JsonFileVendorData
+
+
+#
+# Options defined in nova.api.metadata.vendordata_json
+#
+
+# File to load JSON formatted vendor data from (string value)
+#vendordata_jsonfile_path=<None>
+
+
+#
+# Options defined in nova.api.openstack.common
+#
+
+# The maximum number of items returned in a single response
+# from a collection resource (integer value)
+#osapi_max_limit=1000
+
+# Base URL that will be presented to users in links to the
+# OpenStack Compute API (string value)
+#osapi_compute_link_prefix=<None>
+
+# Base URL that will be presented to users in links to glance
+# resources (string value)
+#osapi_glance_link_prefix=<None>
+
+
+#
+# Options defined in nova.api.openstack.compute
+#
+
+# Permit instance snapshot operations. (boolean value)
+#allow_instance_snapshots=true
+
+
+#
+# Options defined in nova.api.openstack.compute.contrib
+#
+
+# Specify list of extensions to load when using
+# osapi_compute_extension option with
+# nova.api.openstack.compute.contrib.select_extensions (list
+# value)
+#osapi_compute_ext_list=
+
+
+#
+# Options defined in nova.api.openstack.compute.contrib.fping
+#
+
+# Full path to fping. (string value)
+#fping_path=/usr/sbin/fping
+
+
+#
+# Options defined in nova.api.openstack.compute.contrib.os_tenant_networks
+#
+
+# Enables or disables quota checking for tenant networks
+# (boolean value)
+#enable_network_quota=false
+
+# Control for checking for default networks (string value)
+#use_neutron_default_nets=False
+
+# Default tenant id when creating neutron networks (string
+# value)
+#neutron_default_tenant_id=default
+
+
+#
+# Options defined in nova.api.openstack.compute.extensions
+#
+
+# osapi compute extension to load (multi valued)
+#osapi_compute_extension=nova.api.openstack.compute.contrib.standard_extensions
+
+
+#
+# Options defined in nova.api.openstack.compute.plugins.v3.hide_server_addresses
+#
+
+# List of instance states that should hide network info (list
+# value)
+#osapi_hide_server_address_states=building
+
+
+#
+# Options defined in nova.api.openstack.compute.servers
+#
+
+# Enables returning of the instance password by the relevant
+# server API calls such as create, rebuild or rescue, If the
+# hypervisor does not support password injection then the
+# password returned will not be correct (boolean value)
+#enable_instance_password=true
+
+
+#
+# Options defined in nova.api.sizelimit
+#
+
+# The maximum body size per each osapi request(bytes) (integer
+# value)
 #osapi_max_request_body_size=114688
 
 
 #
-# Options defined in cinder.backup.driver
+# Options defined in nova.cert.rpcapi
 #
 
-# Backup metadata version to be used when backing up volume
-# metadata. If this number is bumped, make sure the service
-# doing the restore supports the new version. (integer value)
-#backup_metadata_version=1
+# The topic cert nodes listen on (string value)
+#cert_topic=cert
 
 
 #
-# Options defined in cinder.backup.drivers.ceph
+# Options defined in nova.cloudpipe.pipelib
 #
 
-# Ceph configuration file to use. (string value)
-#backup_ceph_conf=/etc/ceph/ceph.conf
-
-# The Ceph user to connect with. Default here is to use the
-# same user as for Cinder volumes. If not using cephx this
-# should be set to None. (string value)
-#backup_ceph_user=cinder
-
-# The chunk size, in bytes, that a backup is broken into
-# before transfer to the Ceph object store. (integer value)
-#backup_ceph_chunk_size=134217728
-
-# The Ceph pool where volume backups are stored. (string
-# value)
-#backup_ceph_pool=backups
-
-# RBD stripe unit to use when creating a backup image.
-# (integer value)
-#backup_ceph_stripe_unit=0
-
-# RBD stripe count to use when creating a backup image.
-# (integer value)
-#backup_ceph_stripe_count=0
-
-# If True, always discard excess bytes when restoring volumes
-# i.e. pad with zeroes. (boolean value)
-#restore_discard_excess_bytes=true
-
-
-#
-# Options defined in cinder.backup.drivers.swift
-#
-
-# The URL of the Swift endpoint (string value)
-#backup_swift_url=<None>
-
-# Info to match when looking for swift in the service catalog.
-# Format is: separated values of the form:
-# <service_type>:<service_name>:<endpoint_type> - Only used if
-# backup_swift_url is unset (string value)
-#swift_catalog_info=object-store:swift:publicURL
-
-# Swift authentication mechanism (string value)
-#backup_swift_auth=per_user
-
-# Swift authentication version. Specify "1" for auth 1.0, or
-# "2" for auth 2.0 (string value)
-#backup_swift_auth_version=1
-
-# Swift tenant/account name. Required when connecting to an
-# auth 2.0 system (string value)
-#backup_swift_tenant=<None>
-
-# Swift user name (string value)
-#backup_swift_user=<None>
-
-# Swift key for authentication (string value)
-#backup_swift_key=<None>
-
-# The default Swift container to use (string value)
-#backup_swift_container=volumebackups
-
-# The size in bytes of Swift backup objects (integer value)
-#backup_swift_object_size=52428800
-
-# The number of retries to make for Swift operations (integer
-# value)
-#backup_swift_retry_attempts=3
-
-# The backoff time in seconds between Swift retries (integer
-# value)
-#backup_swift_retry_backoff=2
-
-# Compression algorithm (None to disable) (string value)
-#backup_compression_algorithm=zlib
-
-
-#
-# Options defined in cinder.backup.drivers.tsm
-#
-
-# Volume prefix for the backup id when backing up to TSM
+# Image ID used when starting up a cloudpipe vpn server
 # (string value)
-#backup_tsm_volume_prefix=backup
+#vpn_image_id=0
 
-# TSM password for the running username (string value)
-#backup_tsm_password=password
+# Flavor for vpn instances (string value)
+#vpn_flavor=m1.tiny
 
-# Enable or Disable compression for backups (boolean value)
-#backup_tsm_compression=true
+# Template for cloudpipe instance boot script (string value)
+#boot_script_template=$pybasedir/nova/cloudpipe/bootscript.template
+
+# Network to push into openvpn config (string value)
+#dmz_net=10.0.0.0
+
+# Netmask to push into openvpn config (string value)
+#dmz_mask=255.255.255.0
+
+# Suffix to add to project name for vpn key and secgroups
+# (string value)
+#vpn_key_suffix=-vpn
 
 
 #
-# Options defined in cinder.backup.manager
+# Options defined in nova.cmd.novnc
 #
 
-# Driver to use for backups. (string value)
-# Deprecated group/name - [DEFAULT]/backup_service
-#backup_driver=cinder.backup.drivers.swift
+# Record sessions to FILE.[session_number] (boolean value)
+#record=false
 
+# Become a daemon (background process) (boolean value)
+#daemon=false
 
-#
-# Options defined in cinder.common.config
-#
+# Disallow non-encrypted connections (boolean value)
+#ssl_only=false
 
-# File name for the paste.deploy config for cinder-api (string
+# Source is ipv6 (boolean value)
+#source_is_ipv6=false
+
+# SSL certificate file (string value)
+#cert=self.pem
+
+# SSL key file (if separate from cert) (string value)
+#key=<None>
+
+# Run webserver on same port. Serve files from DIR. (string
 # value)
-#api_paste_config=api-paste.ini
+#web=/usr/share/spice-html5
 
-# Top-level directory for maintaining cinder's state (string
+
+#
+# Options defined in nova.cmd.novncproxy
+#
+
+# Host on which to listen for incoming requests (string value)
+#novncproxy_host=0.0.0.0
+
+# Port on which to listen for incoming requests (integer
 # value)
-# Deprecated group/name - [DEFAULT]/pybasedir
-#state_path=/var/lib/cinder
+#novncproxy_port=6080
 
-# IP address of this host (string value)
-#my_ip=10.0.0.1
 
-# Default glance host name or IP (string value)
-#glance_host=$my_ip
+#
+# Options defined in nova.compute.api
+#
 
-# Default glance port (integer value)
-#glance_port=9292
+# Allow destination machine to match source for resize. Useful
+# when testing in single-host environments. (boolean value)
+#allow_resize_to_same_host=false
 
-# A list of the glance API servers available to cinder
-# ([hostname|ip]:port) (list value)
-#glance_api_servers=$glance_host:$glance_port
+# Allow migrate machine to the same host. Useful when testing
+# in single-host environments. (boolean value)
+#allow_migrate_to_same_host=false
 
-# Version of the glance API to use (integer value)
-#glance_api_version=1
+# Availability zone to use when user doesn't specify one
+# (string value)
+#default_schedule_zone=<None>
 
-# Number retries when downloading an image from glance
-# (integer value)
-#glance_num_retries=0
+# These are image properties which a snapshot should not
+# inherit from an instance (list value)
+#non_inheritable_image_properties=cache_in_nova,bittorrent
 
-# Allow to perform insecure SSL (https) requests to glance
+# Kernel image that indicates not to use a kernel, but to use
+# a raw disk image instead (string value)
+#null_kernel=nokernel
+
+# When creating multiple instances with a single request using
+# the os-multiple-create API extension, this template will be
+# used to build the display name for each instance. The
+# benefit is that the instances end up with different
+# hostnames. To restore legacy behavior of every instance
+# having the same name, set this option to "%(name)s".  Valid
+# keys for the template are: name, uuid, count. (string value)
+#multi_instance_display_name_template=%(name)s-%(uuid)s
+
+# Maximum number of devices that will result in a local image
+# being created on the hypervisor node. Setting this to 0
+# means nova will allow only boot from volume. A negative
+# number means unlimited. (integer value)
+#max_local_block_devices=3
+
+
+#
+# Options defined in nova.compute.flavors
+#
+
+# Default flavor to use for the EC2 API only. The Nova API
+# does not support a default flavor. (string value)
+#default_flavor=m1.small
+
+
+#
+# Options defined in nova.compute.manager
+#
+
+# Console proxy host to use to connect to instances on this
+# host. (string value)
+#console_host=nova
+
+# Name of network to use to set access IPs for instances
+# (string value)
+#default_access_ip_network_name=<None>
+
+# Whether to batch up the application of IPTables rules during
+# a host restart and apply all at the end of the init phase
 # (boolean value)
-#glance_api_insecure=false
+#defer_iptables_apply=false
 
-# Enables or disables negotiation of SSL layer compression. In
-# some cases disabling compression can improve data
-# throughput, such as when high network bandwidth is available
-# and you use compressed image formats like qcow2. (boolean
+# Where instances are stored on disk (string value)
+#instances_path=$state_path/instances
+
+# Generate periodic compute.instance.exists notifications
+# (boolean value)
+#instance_usage_audit=false
+
+# Number of 1 second retries needed in live_migration (integer
 # value)
-#glance_api_ssl_compression=false
+#live_migration_retry_count=30
 
-# Location of ca certificates file to use for glance client
-# requests. (string value)
-#glance_ca_certificates_file=<None>
+# Whether to start guests that were running before the host
+# rebooted (boolean value)
+#resume_guests_state_on_host_boot=false
 
-# http/https timeout value for glance operations. If no value
-# (None) is supplied here, the glanceclient default value is
-# used. (integer value)
-#glance_request_timeout=<None>
+# Number of times to retry network allocation on failures
+# (integer value)
+#network_allocate_retries=0
 
-# The topic that scheduler nodes listen on (string value)
-#scheduler_topic=cinder-scheduler
+# Number of times to retry block device allocation on failures
+# (integer value)
+#block_device_allocate_retries=60
 
-# The topic that volume nodes listen on (string value)
-#volume_topic=cinder-volume
+# The number of times to attempt to reap an instance's files.
+# (integer value)
+#maximum_instance_delete_attempts=5
 
-# The topic that volume backup nodes listen on (string value)
-#backup_topic=cinder-backup
+# Interval to pull network bandwidth usage info. Not supported
+# on all hypervisors. Set to -1 to disable. Setting this to 0
+# will disable, but this will change in the K release to mean
+# "run at the default rate". (integer value)
+#bandwidth_poll_interval=600
 
-# DEPRECATED: Deploy v1 of the Cinder API. (boolean value)
-#enable_v1_api=true
+# Interval to sync power states between the database and the
+# hypervisor. Set to -1 to disable. Setting this to 0 will
+# disable, but this will change in Juno to mean "run at the
+# default rate". (integer value)
+#sync_power_state_interval=600
 
-# Deploy v2 of the Cinder API. (boolean value)
-#enable_v2_api=true
+# Number of seconds between instance info_cache self healing
+# updates (integer value)
+#heal_instance_info_cache_interval=60
 
-# Enables or disables rate limit of the API. (boolean value)
-#api_rate_limit=true
+# Interval in seconds for reclaiming deleted instances
+# (integer value)
+#reclaim_instance_interval=0
 
-# Specify list of extensions to load when using
-# osapi_volume_extension option with
-# cinder.api.contrib.select_extensions (list value)
-#osapi_volume_ext_list=
-
-# osapi volume extension to load (multi valued)
-#osapi_volume_extension=cinder.api.contrib.standard_extensions
-
-# Full class name for the Manager for volume (string value)
-#volume_manager=cinder.volume.manager.VolumeManager
-
-# Full class name for the Manager for volume backup (string
+# Interval in seconds for gathering volume usages (integer
 # value)
-#backup_manager=cinder.backup.manager.BackupManager
+#volume_usage_poll_interval=0
 
-# Full class name for the Manager for scheduler (string value)
-#scheduler_manager=cinder.scheduler.manager.SchedulerManager
+# Interval in seconds for polling shelved instances to
+# offload. Set to -1 to disable.Setting this to 0 will
+# disable, but this will change in Juno to mean "run at the
+# default rate". (integer value)
+#shelved_poll_interval=3600
 
-# Name of this node.  This can be an opaque identifier. It is
-# not necessarily a host name, FQDN, or IP address. (string
+# Time in seconds before a shelved instance is eligible for
+# removing from a host.  -1 never offload, 0 offload when
+# shelved (integer value)
+#shelved_offload_time=0
+
+# Interval in seconds for retrying failed instance file
+# deletes (integer value)
+#instance_delete_interval=300
+
+# Waiting time interval (seconds) between block device
+# allocation retries on failures (integer value)
+#block_device_allocate_retries_interval=3
+
+# Action to take if a running deleted instance is
+# detected.Valid options are 'noop', 'log', 'shutdown', or
+# 'reap'. Set to 'noop' to take no action. (string value)
+#running_deleted_instance_action=reap
+
+# Number of seconds to wait between runs of the cleanup task.
+# (integer value)
+#running_deleted_instance_poll_interval=1800
+
+# Number of seconds after being deleted when a running
+# instance should be considered eligible for cleanup. (integer
 # value)
-#host=cinder
+#running_deleted_instance_timeout=0
 
-# Availability zone of this node (string value)
-#storage_availability_zone=nova
+# Automatically hard reboot an instance if it has been stuck
+# in a rebooting state longer than N seconds. Set to 0 to
+# disable. (integer value)
+#reboot_timeout=0
 
-# Default availability zone for new volumes. If not set, the
-# storage_availability_zone option value is used as the
-# default for new volumes. (string value)
-#default_availability_zone=<None>
+# Amount of time in seconds an instance can be in BUILD before
+# going into ERROR status.Set to 0 to disable. (integer value)
+#instance_build_timeout=0
 
-# Default volume type to use (string value)
-#default_volume_type=<None>
+# Automatically unrescue an instance after N seconds. Set to 0
+# to disable. (integer value)
+#rescue_timeout=0
 
-# Time period for which to generate volume usages. The options
-# are hour, day, month, or year. (string value)
-#volume_usage_audit_period=month
+# Automatically confirm resizes after N seconds. Set to 0 to
+# disable. (integer value)
+#resize_confirm_window=0
 
-# Path to the rootwrap configuration file to use for running
-# commands as root (string value)
-#rootwrap_config=/etc/cinder/rootwrap.conf
+# Total amount of time to wait in seconds for an instance to
+# perform a clean shutdown. (integer value)
+#shutdown_timeout=60
 
-# Enable monkey patching (boolean value)
-#monkey_patch=false
 
-# List of modules/decorators to monkey patch (list value)
-#monkey_patch_modules=
+#
+# Options defined in nova.compute.monitors
+#
 
-# Maximum time since last check-in for a service to be
-# considered up (integer value)
-#service_down_time=60
+# Monitor classes available to the compute which may be
+# specified more than once. (multi valued)
+#compute_available_monitors=nova.compute.monitors.all_monitors
 
-# The full class name of the volume API class to use (string
+# A list of monitors that can be used for getting compute
+# metrics. (list value)
+#compute_monitors=
+
+
+#
+# Options defined in nova.compute.resource_tracker
+#
+
+# Amount of disk in MB to reserve for the host (integer value)
+#reserved_host_disk_mb=0
+
+# Amount of memory in MB to reserve for the host (integer
 # value)
-#volume_api_class=cinder.volume.api.API
+#reserved_host_memory_mb=512
 
-# The full class name of the volume backup API class (string
-# value)
-#backup_api_class=cinder.backup.api.API
-
-# The strategy to use for auth. Supports noauth, keystone, and
-# deprecated. (string value)
-auth_strategy=keystone
-
-# A list of backend names to use. These backend names should
-# be backed by a unique [CONFIG] group with its options (list
-# value)
-#enabled_backends=<None>
-
-# Whether snapshots count against GigaByte quota (boolean
-# value)
-#no_snapshot_gb_quota=false
-
-# The full class name of the volume transfer API class (string
-# value)
-#transfer_api_class=cinder.transfer.api.API
-
-# The full class name of the volume replication API class
+# Class that will manage stats for the local compute host
 # (string value)
-#replication_api_class=cinder.replication.api.API
+#compute_stats_class=nova.compute.stats.Stats
 
-# The full class name of the consistencygroup API class
-# (string value)
-#consistencygroup_api_class=cinder.consistencygroup.api.API
-
-
-#
-# Options defined in cinder.compute
-#
-
-# The full class name of the compute API class to use (string
-# value)
-#compute_api_class=cinder.compute.nova.API
+# The names of the extra resources to track. (list value)
+#compute_resources=vcpu
 
 
 #
-# Options defined in cinder.compute.nova
+# Options defined in nova.compute.rpcapi
 #
 
-# Match this value when searching for nova in the service
-# catalog. Format is: separated values of the form:
-# <service_type>:<service_name>:<endpoint_type> (string value)
-#nova_catalog_info=compute:nova:publicURL
-
-# Same as nova_catalog_info, but for admin endpoint. (string
-# value)
-#nova_catalog_admin_info=compute:nova:adminURL
-
-# Override service catalog lookup with template for nova
-# endpoint e.g. http://localhost:8774/v2/%(project_id)s
-# (string value)
-#nova_endpoint_template=<None>
-
-# Same as nova_endpoint_template, but for admin endpoint.
-# (string value)
-#nova_endpoint_admin_template=<None>
-
-# Region name of this node (string value)
-#os_region_name=<None>
-
-# Location of ca certificates file to use for nova client
-# requests. (string value)
-#nova_ca_certificates_file=<None>
-
-# Allow to perform insecure SSL requests to nova (boolean
-# value)
-#nova_api_insecure=false
+# The topic compute nodes listen on (string value)
+#compute_topic=compute
 
 
 #
-# Options defined in cinder.db.api
+# Options defined in nova.conductor.tasks.live_migrate
 #
 
-# The backend to use for db (string value)
-#db_backend=sqlalchemy
+# Number of times to retry live-migration before failing. If
+# == -1, try until out of hosts. If == 0, only try once, no
+# retries. (integer value)
+#migrate_max_retries=-1
+
+
+#
+# Options defined in nova.console.manager
+#
+
+# Driver to use for the console proxy (string value)
+#console_driver=nova.console.xvp.XVPConsoleProxy
+
+# Stub calls to compute worker for tests (boolean value)
+#stub_compute=false
+
+# Publicly visible name for this console host (string value)
+#console_public_hostname=nova
+
+
+#
+# Options defined in nova.console.rpcapi
+#
+
+# The topic console proxy nodes listen on (string value)
+#console_topic=console
+
+
+#
+# Options defined in nova.console.vmrc
+#
+
+# DEPRECATED. Port for VMware VMRC connections (integer value)
+#console_vmrc_port=443
+
+# DEPRECATED. Number of retries for retrieving VMRC
+# information (integer value)
+#console_vmrc_error_retries=10
+
+
+#
+# Options defined in nova.console.xvp
+#
+
+# XVP conf template (string value)
+#console_xvp_conf_template=$pybasedir/nova/console/xvp.conf.template
+
+# Generated XVP conf file (string value)
+#console_xvp_conf=/etc/xvp.conf
+
+# XVP master process pid file (string value)
+#console_xvp_pid=/var/run/xvp.pid
+
+# XVP log file (string value)
+#console_xvp_log=/var/log/xvp.log
+
+# Port for XVP to multiplex VNC connections on (integer value)
+#console_xvp_multiplex_port=5900
+
+
+#
+# Options defined in nova.consoleauth
+#
+
+# The topic console auth proxy nodes listen on (string value)
+#consoleauth_topic=consoleauth
+
+
+#
+# Options defined in nova.consoleauth.manager
+#
+
+# How many seconds before deleting tokens (integer value)
+#console_token_ttl=600
+
+
+#
+# Options defined in nova.db.api
+#
 
 # Services to be added to the available pool on create
 # (boolean value)
 #enable_new_services=true
 
-# Template string to be used to generate volume names (string
-# value)
-#volume_name_template=volume-%s
+# Template string to be used to generate instance names
+# (string value)
+#instance_name_template=instance-%08x
 
 # Template string to be used to generate snapshot names
 # (string value)
 #snapshot_name_template=snapshot-%s
 
-# Template string to be used to generate backup names (string
-# value)
-#backup_name_template=backup-%s
+
+#
+# Options defined in nova.db.base
+#
+
+# The driver to use for database access (string value)
+#db_driver=nova.db
 
 
 #
-# Options defined in cinder.db.base
+# Options defined in nova.db.sqlalchemy.api
 #
 
-# Driver to use for database access (string value)
-#db_driver=cinder.db
-
-
-#
-# Options defined in cinder.image.glance
-#
-
-# Default core properties of image (list value)
-#glance_core_properties=checksum,container_format,disk_format,image_name,image_id,min_disk,min_ram,name,size
-
-# A list of url schemes that can be downloaded directly via
-# the direct_url.  Currently supported schemes: [file]. (list
-# value)
-#allowed_direct_url_schemes=
+# When set, compute API will consider duplicate hostnames
+# invalid within the specified scope, regardless of case.
+# Should be empty, "project" or "global". (string value)
+#osapi_compute_unique_server_name_scope=
 
 
 #
-# Options defined in cinder.image.image_utils
+# Options defined in nova.image.s3
 #
 
-# Directory used for temporary storage during image conversion
+# Parent directory for tempdir used for image decryption
 # (string value)
-#image_conversion_dir=$state_path/conversion
+#image_decryption_dir=/tmp
+
+# Hostname or IP for OpenStack to use when accessing the S3
+# api (string value)
+#s3_host=$my_ip
+
+# Port used when accessing the S3 api (integer value)
+#s3_port=3333
+
+# Access key to use for S3 server for images (string value)
+#s3_access_key=notchecked
+
+# Secret key to use for S3 server for images (string value)
+#s3_secret_key=notchecked
+
+# Whether to use SSL when talking to S3 (boolean value)
+#s3_use_ssl=false
+
+# Whether to affix the tenant id to the access key when
+# downloading from S3 (boolean value)
+#s3_affix_tenant=false
 
 
 #
-# Options defined in cinder.openstack.common.eventlet_backdoor
+# Options defined in nova.ipv6.api
+#
+
+# Backend to use for IPv6 generation (string value)
+#ipv6_backend=rfc2462
+
+
+#
+# Options defined in nova.network
+#
+
+# The full class name of the network API class to use (string
+# value)
+#network_api_class=nova.network.api.API
+
+
+#
+# Options defined in nova.network.driver
+#
+
+# Driver to use for network creation (string value)
+#network_driver=nova.network.linux_net
+
+
+#
+# Options defined in nova.network.floating_ips
+#
+
+# Default pool for floating IPs (string value)
+#default_floating_pool=nova
+
+# Autoassigning floating IP to VM (boolean value)
+#auto_assign_floating_ip=false
+
+# Full class name for the DNS Manager for floating IPs (string
+# value)
+#floating_ip_dns_manager=nova.network.noop_dns_driver.NoopDNSDriver
+
+# Full class name for the DNS Manager for instance IPs (string
+# value)
+#instance_dns_manager=nova.network.noop_dns_driver.NoopDNSDriver
+
+# Full class name for the DNS Zone for instance IPs (string
+# value)
+#instance_dns_domain=
+
+
+#
+# Options defined in nova.network.ldapdns
+#
+
+# URL for LDAP server which will store DNS entries (string
+# value)
+#ldap_dns_url=ldap://ldap.example.com:389
+
+# User for LDAP DNS (string value)
+#ldap_dns_user=uid=admin,ou=people,dc=example,dc=org
+
+# Password for LDAP DNS (string value)
+#ldap_dns_password=password
+
+# Hostmaster for LDAP DNS driver Statement of Authority
+# (string value)
+#ldap_dns_soa_hostmaster=hostmaster@example.org
+
+# DNS Servers for LDAP DNS driver (multi valued)
+#ldap_dns_servers=dns.example.org
+
+# Base DN for DNS entries in LDAP (string value)
+#ldap_dns_base_dn=ou=hosts,dc=example,dc=org
+
+# Refresh interval (in seconds) for LDAP DNS driver Statement
+# of Authority (string value)
+#ldap_dns_soa_refresh=1800
+
+# Retry interval (in seconds) for LDAP DNS driver Statement of
+# Authority (string value)
+#ldap_dns_soa_retry=3600
+
+# Expiry interval (in seconds) for LDAP DNS driver Statement
+# of Authority (string value)
+#ldap_dns_soa_expiry=86400
+
+# Minimum interval (in seconds) for LDAP DNS driver Statement
+# of Authority (string value)
+#ldap_dns_soa_minimum=7200
+
+
+#
+# Options defined in nova.network.linux_net
+#
+
+# Location of flagfiles for dhcpbridge (multi valued)
+#dhcpbridge_flagfile=/etc/nova/nova.conf
+
+# Location to keep network config files (string value)
+#networks_path=$state_path/networks
+
+# Interface for public IP addresses (string value)
+#public_interface=eth0
+
+# Location of nova-dhcpbridge (string value)
+#dhcpbridge=/usr/bin/nova-dhcpbridge
+
+# Public IP of network host (string value)
+#routing_source_ip=$my_ip
+
+# Lifetime of a DHCP lease in seconds (integer value)
+#dhcp_lease_time=86400
+
+# If set, uses specific DNS server for dnsmasq. Can be
+# specified multiple times. (multi valued)
+#dns_server=
+
+# If set, uses the dns1 and dns2 from the network ref. as dns
+# servers. (boolean value)
+#use_network_dns_servers=false
+
+# A list of dmz range that should be accepted (list value)
+#dmz_cidr=
+
+# Traffic to this range will always be snatted to the fallback
+# ip, even if it would normally be bridged out of the node.
+# Can be specified multiple times. (multi valued)
+#force_snat_range=
+
+# Override the default dnsmasq settings with this file (string
+# value)
+#dnsmasq_config_file=
+
+# Driver used to create ethernet devices. (string value)
+#linuxnet_interface_driver=nova.network.linux_net.LinuxBridgeInterfaceDriver
+
+# Name of Open vSwitch bridge used with linuxnet (string
+# value)
+#linuxnet_ovs_integration_bridge=br-int
+
+# Send gratuitous ARPs for HA setup (boolean value)
+#send_arp_for_ha=false
+
+# Send this many gratuitous ARPs for HA setup (integer value)
+#send_arp_for_ha_count=3
+
+# Use single default gateway. Only first nic of vm will get
+# default gateway from dhcp server (boolean value)
+#use_single_default_gateway=false
+
+# An interface that bridges can forward to. If this is set to
+# all then all traffic will be forwarded. Can be specified
+# multiple times. (multi valued)
+#forward_bridge_interface=all
+
+# The IP address for the metadata API server (string value)
+#metadata_host=$my_ip
+
+# The port for the metadata API port (integer value)
+#metadata_port=8775
+
+# Regular expression to match iptables rule that should always
+# be on the top. (string value)
+#iptables_top_regex=
+
+# Regular expression to match iptables rule that should always
+# be on the bottom. (string value)
+#iptables_bottom_regex=
+
+# The table that iptables to jump to when a packet is to be
+# dropped. (string value)
+#iptables_drop_action=DROP
+
+# Amount of time, in seconds, that ovs_vsctl should wait for a
+# response from the database. 0 is to wait forever. (integer
+# value)
+#ovs_vsctl_timeout=120
+
+# If passed, use fake network devices and addresses (boolean
+# value)
+#fake_network=false
+
+
+#
+# Options defined in nova.network.manager
+#
+
+# Bridge for simple network instances (string value)
+#flat_network_bridge=<None>
+
+# DNS server for simple network (string value)
+#flat_network_dns=8.8.4.4
+
+# Whether to attempt to inject network setup into guest
+# (boolean value)
+#flat_injected=false
+
+# FlatDhcp will bridge into this interface if set (string
+# value)
+#flat_interface=<None>
+
+# First VLAN for private networks (integer value)
+#vlan_start=100
+
+# VLANs will bridge into this interface if set (string value)
+#vlan_interface=<None>
+
+# Number of networks to support (integer value)
+#num_networks=1
+
+# Public IP for the cloudpipe VPN servers (string value)
+#vpn_ip=$my_ip
+
+# First Vpn port for private networks (integer value)
+#vpn_start=1000
+
+# Number of addresses in each private subnet (integer value)
+#network_size=256
+
+# Fixed IPv6 address block (string value)
+#fixed_range_v6=fd00::/48
+
+# Default IPv4 gateway (string value)
+#gateway=<None>
+
+# Default IPv6 gateway (string value)
+#gateway_v6=<None>
+
+# Number of addresses reserved for vpn clients (integer value)
+#cnt_vpn_clients=0
+
+# Seconds after which a deallocated IP is disassociated
+# (integer value)
+#fixed_ip_disassociate_timeout=600
+
+# Number of attempts to create unique mac address (integer
+# value)
+#create_unique_mac_address_attempts=5
+
+# If True, skip using the queue and make local calls (boolean
+# value)
+#fake_call=false
+
+# If True, unused gateway devices (VLAN and bridge) are
+# deleted in VLAN network mode with multi hosted networks
+# (boolean value)
+#teardown_unused_network_gateway=false
+
+# If True, send a dhcp release on instance termination
+# (boolean value)
+#force_dhcp_release=True
+
+# If True, when a DNS entry must be updated, it sends a fanout
+# cast to all network hosts to update their DNS entries in
+# multi host mode (boolean value)
+#update_dns_entries=false
+
+# Number of seconds to wait between runs of updates to DNS
+# entries. (integer value)
+#dns_update_periodic_interval=-1
+
+# Domain to use for building the hostnames (string value)
+#dhcp_domain=novalocal
+
+# Indicates underlying L3 management library (string value)
+#l3_lib=nova.network.l3.LinuxNetL3
+
+
+#
+# Options defined in nova.network.rpcapi
+#
+
+# The topic network nodes listen on (string value)
+#network_topic=network
+
+# Default value for multi_host in networks. Also, if set, some
+# rpc network calls will be sent directly to host. (boolean
+# value)
+#multi_host=false
+
+
+#
+# Options defined in nova.network.security_group.openstack_driver
+#
+
+# The full class name of the security API class (string value)
+#security_group_api=nova
+
+
+#
+# Options defined in nova.objects.network
+#
+
+# DEPRECATED: THIS VALUE SHOULD BE SET WHEN CREATING THE
+# NETWORK. If True in multi_host mode, all compute hosts share
+# the same dhcp address. The same IP address used for DHCP
+# will be added on each nova-network node which is only
+# visible to the vms on the same host. (boolean value)
+#share_dhcp_address=false
+
+# DEPRECATED: THIS VALUE SHOULD BE SET WHEN CREATING THE
+# NETWORK. MTU setting for network interface. (integer value)
+#network_device_mtu=<None>
+
+
+#
+# Options defined in nova.objectstore.s3server
+#
+
+# Path to S3 buckets (string value)
+#buckets_path=$state_path/buckets
+
+# IP address for S3 API to listen (string value)
+#s3_listen=0.0.0.0
+
+# Port for S3 API to listen (integer value)
+#s3_listen_port=3333
+
+
+#
+# Options defined in nova.openstack.common.eventlet_backdoor
 #
 
 # Enable eventlet backdoor.  Acceptable values are 0, <port>,
@@ -762,19 +1468,18 @@ auth_strategy=keystone
 
 
 #
-# Options defined in cinder.openstack.common.lockutils
+# Options defined in nova.openstack.common.lockutils
 #
 
-# Whether to disable inter-process locks (boolean value)
+# Enables or disables inter-process locks. (boolean value)
 #disable_process_locking=false
 
-# Directory to use for lock files. Default to a temp directory
-# (string value)
-#lock_path=<None>
+# Directory to use for lock files. (string value)
+#lock_path=/var/lib/nova/tmp
 
 
 #
-# Options defined in cinder.openstack.common.log
+# Options defined in nova.openstack.common.log
 #
 
 # Print debugging output (set logging level to DEBUG instead
@@ -786,7 +1491,7 @@ auth_strategy=keystone
 #verbose=false
 
 # Log output to standard error. (boolean value)
-#use_stderr=true
+#use_stderr=False
 
 # Format string to use for log messages with context. (string
 # value)
@@ -827,7 +1532,7 @@ auth_strategy=keystone
 # appended to any existing logging configuration files. For
 # details about logging configuration files, see the Python
 # logging module documentation. (string value)
-# Deprecated group/name - [DEFAULT]/log_config
+# Deprecated group;name - DEFAULT;log_config
 #log_config_append=<None>
 
 # DEPRECATED. A logging.Formatter log message format string
@@ -843,13 +1548,13 @@ auth_strategy=keystone
 
 # (Optional) Name of log file to output to. If no default is
 # set, logging will go to stdout. (string value)
-# Deprecated group/name - [DEFAULT]/logfile
+# Deprecated group;name - DEFAULT;logfile
 #log_file=<None>
 
 # (Optional) The base directory used for relative --log-file
 # paths. (string value)
-# Deprecated group/name - [DEFAULT]/logdir
-#log_dir=<None>
+# Deprecated group;name - DEFAULT;logdir
+#log_dir=/var/log/nova
 
 # Use syslog for logging. Existing syslog format is DEPRECATED
 # during I, and will change in J to honor RFC5424. (boolean
@@ -868,7 +1573,15 @@ auth_strategy=keystone
 
 
 #
-# Options defined in cinder.openstack.common.periodic_task
+# Options defined in nova.openstack.common.memorycache
+#
+
+# Memcached servers or None for in process cache. (list value)
+#memcached_servers=<None>
+
+
+#
+# Options defined in nova.openstack.common.periodic_task
 #
 
 # Some periodic tasks can be run in a separate process. Should
@@ -877,7 +1590,7 @@ auth_strategy=keystone
 
 
 #
-# Options defined in cinder.openstack.common.policy
+# Options defined in nova.openstack.common.policy
 #
 
 # The JSON file that defines policies. (string value)
@@ -889,40 +1602,186 @@ auth_strategy=keystone
 
 
 #
-# Options defined in cinder.scheduler.driver
+# Options defined in nova.pci.pci_request
+#
+
+# An alias for a PCI passthrough device requirement. This
+# allows users to specify the alias in the extra_spec for a
+# flavor, without needing to repeat all the PCI property
+# requirements. For example: pci_alias = { "name":
+# "QuicAssist",   "product_id": "0443",   "vendor_id": "8086",
+# "device_type": "ACCEL" } defines an alias for the Intel
+# QuickAssist card. (multi valued) (multi valued)
+#pci_alias=
+
+
+#
+# Options defined in nova.pci.pci_whitelist
+#
+
+# White list of PCI devices available to VMs. For example:
+# pci_passthrough_whitelist =  [{"vendor_id": "8086",
+# "product_id": "0443"}] (multi valued)
+#pci_passthrough_whitelist=
+
+
+#
+# Options defined in nova.scheduler.driver
 #
 
 # The scheduler host manager class to use (string value)
-#scheduler_host_manager=cinder.scheduler.host_manager.HostManager
+#scheduler_host_manager=nova.scheduler.host_manager.HostManager
 
-# Maximum number of attempts to schedule an volume (integer
+
+#
+# Options defined in nova.scheduler.filter_scheduler
+#
+
+# New instances will be scheduled on a host chosen randomly
+# from a subset of the N best hosts. This property defines the
+# subset size that a host is chosen from. A value of 1 chooses
+# the first host returned by the weighing functions. This
+# value must be at least 1. Any value less than 1 will be
+# ignored, and 1 will be used instead (integer value)
+#scheduler_host_subset_size=1
+
+
+#
+# Options defined in nova.scheduler.filters.aggregate_image_properties_isolation
+#
+
+# Force the filter to consider only keys matching the given
+# namespace. (string value)
+#aggregate_image_properties_isolation_namespace=<None>
+
+# The separator used between the namespace and keys (string
 # value)
-#scheduler_max_attempts=3
+#aggregate_image_properties_isolation_separator=.
 
 
 #
-# Options defined in cinder.scheduler.host_manager
+# Options defined in nova.scheduler.filters.core_filter
 #
+
+# Virtual CPU to physical CPU allocation ratio which affects
+# all CPU filters. This configuration specifies a global ratio
+# for CoreFilter. For AggregateCoreFilter, it will fall back
+# to this configuration value if no per-aggregate setting
+# found. (floating point value)
+#cpu_allocation_ratio=16.0
+
+
+#
+# Options defined in nova.scheduler.filters.disk_filter
+#
+
+# Virtual disk to physical disk allocation ratio (floating
+# point value)
+#disk_allocation_ratio=1.0
+
+
+#
+# Options defined in nova.scheduler.filters.io_ops_filter
+#
+
+# Tells filters to ignore hosts that have this many or more
+# instances currently in build, resize, snapshot, migrate,
+# rescue or unshelve task states (integer value)
+#max_io_ops_per_host=8
+
+
+#
+# Options defined in nova.scheduler.filters.isolated_hosts_filter
+#
+
+# Images to run on isolated host (list value)
+#isolated_images=
+
+# Host reserved for specific images (list value)
+#isolated_hosts=
+
+# Whether to force isolated hosts to run only isolated images
+# (boolean value)
+#restrict_isolated_hosts_to_isolated_images=true
+
+
+#
+# Options defined in nova.scheduler.filters.num_instances_filter
+#
+
+# Ignore hosts that have too many instances (integer value)
+#max_instances_per_host=50
+
+
+#
+# Options defined in nova.scheduler.filters.ram_filter
+#
+
+# Virtual ram to physical ram allocation ratio which affects
+# all ram filters. This configuration specifies a global ratio
+# for RamFilter. For AggregateRamFilter, it will fall back to
+# this configuration value if no per-aggregate setting found.
+# (floating point value)
+#ram_allocation_ratio=1.5
+
+
+#
+# Options defined in nova.scheduler.host_manager
+#
+
+# Filter classes available to the scheduler which may be
+# specified more than once.  An entry of
+# "nova.scheduler.filters.standard_filters" maps to all
+# filters included with nova. (multi valued)
+#scheduler_available_filters=nova.scheduler.filters.all_filters
 
 # Which filter class names to use for filtering hosts when not
 # specified in the request. (list value)
-#scheduler_default_filters=AvailabilityZoneFilter,CapacityFilter,CapabilitiesFilter
+#scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter
 
-# Which weigher class names to use for weighing hosts. (list
+# Which weight class names to use for weighing hosts (list
 # value)
-#scheduler_default_weighers=CapacityWeigher
+#scheduler_weight_classes=nova.scheduler.weights.all_weighers
 
 
 #
-# Options defined in cinder.scheduler.manager
+# Options defined in nova.scheduler.ironic_host_manager
 #
 
-# Default scheduler driver to use (string value)
-#scheduler_driver=cinder.scheduler.filter_scheduler.FilterScheduler
+# Which filter class names to use for filtering baremetal
+# hosts when not specified in the request. (list value)
+#baremetal_scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ExactRamFilter,ExactDiskFilter,ExactCoreFilter
+
+# Flag to decide whether to use
+# baremetal_scheduler_default_filters or not. (boolean value)
+#scheduler_use_baremetal_filters=false
 
 
 #
-# Options defined in cinder.scheduler.scheduler_options
+# Options defined in nova.scheduler.manager
+#
+
+# Default driver to use for the scheduler (string value)
+#scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
+
+# How often (in seconds) to run periodic tasks in the
+# scheduler driver of your choice. Please note this is likely
+# to interact with the value of service_down_time, but exactly
+# how they interact will depend on your choice of scheduler
+# driver. (integer value)
+#scheduler_driver_task_period=60
+
+
+#
+# Options defined in nova.scheduler.rpcapi
+#
+
+# The topic scheduler nodes listen on (string value)
+#scheduler_topic=scheduler
+
+
+#
+# Options defined in nova.scheduler.scheduler_options
 #
 
 # Absolute path to scheduler configuration JSON file. (string
@@ -931,1614 +1790,827 @@ auth_strategy=keystone
 
 
 #
-# Options defined in cinder.scheduler.simple
+# Options defined in nova.scheduler.utils
 #
 
-# This configure option has been deprecated along with the
-# SimpleScheduler.  New scheduler is able to gather capacity
-# information for each host, thus setting the maximum number
-# of volume gigabytes for host is no longer needed.  It's safe
-# to remove this configure from cinder.conf. (integer value)
-#max_gigabytes=10000
-
-
-#
-# Options defined in cinder.scheduler.weights.capacity
-#
-
-# Multiplier used for weighing volume capacity. Negative
-# numbers mean to stack vs spread. (floating point value)
-#capacity_weight_multiplier=1.0
-
-# Multiplier used for weighing volume capacity. Negative
-# numbers mean to stack vs spread. (floating point value)
-#allocated_capacity_weight_multiplier=-1.0
-
-
-#
-# Options defined in cinder.scheduler.weights.volume_number
-#
-
-# Multiplier used for weighing volume number. Negative numbers
-# mean to spread vs stack. (floating point value)
-#volume_number_multiplier=-1.0
-
-
-#
-# Options defined in cinder.transfer.api
-#
-
-# The number of characters in the salt. (integer value)
-#volume_transfer_salt_length=8
-
-# The number of characters in the autogenerated auth key.
-# (integer value)
-#volume_transfer_key_length=16
-
-
-#
-# Options defined in cinder.volume.api
-#
-
-# Cache volume availability zones in memory for the provided
-# duration in seconds (integer value)
-#az_cache_duration=3600
-
-# Create volume from snapshot at the host where snapshot
-# resides (boolean value)
-#snapshot_same_host=true
-
-# Ensure that the new volumes are the same AZ as snapshot or
-# source volume (boolean value)
-#cloned_volume_same_az=true
-
-
-#
-# Options defined in cinder.volume.driver
-#
-
-# The maximum number of times to rescan iSER targetto find
-# volume (integer value)
-#num_iser_scan_tries=3
-
-# The maximum number of iSER target IDs per host (integer
+# Maximum number of attempts to schedule an instance (integer
 # value)
-#iser_num_targets=100
+#scheduler_max_attempts=3
 
-# Prefix for iSER volumes (string value)
-#iser_target_prefix=iqn.2010-10.org.iser.openstack:
 
-# The IP address that the iSER daemon is listening on (string
-# value)
-#iser_ip_address=$my_ip
+#
+# Options defined in nova.scheduler.weights.ram
+#
 
-# The port that the iSER daemon is listening on (integer
-# value)
-#iser_port=3260
+# Multiplier used for weighing ram.  Negative numbers mean to
+# stack vs spread. (floating point value)
+#ram_weight_multiplier=1.0
 
-# The name of the iSER target user-land tool to use (string
-# value)
-#iser_helper=tgtadm
 
-# Number of times to attempt to run flakey shell commands
-# (integer value)
-#num_shell_tries=3
+#
+# Options defined in nova.servicegroup.api
+#
 
-# The percentage of backend capacity is reserved (integer
-# value)
-#reserved_percentage=0
+# The driver for servicegroup service (valid options are: db,
+# zk, mc) (string value)
+#servicegroup_driver=db
 
-# The maximum number of iSCSI target IDs per host (integer
-# value)
-#iscsi_num_targets=100
 
-# Prefix for iSCSI volumes (string value)
-#iscsi_target_prefix=iqn.2010-10.org.openstack:
+#
+# Options defined in nova.virt.configdrive
+#
 
-# The IP address that the iSCSI daemon is listening on (string
-# value)
-#iscsi_ip_address=$my_ip
-
-# The port that the iSCSI daemon is listening on (integer
-# value)
-#iscsi_port=3260
-
-# The maximum number of times to rescan targets to find volume
-# (integer value)
-# Deprecated group/name - [DEFAULT]/num_iscsi_scan_tries
-#num_volume_device_scan_tries=3
-
-# The backend name for a given driver implementation (string
-# value)
-#volume_backend_name=<None>
-
-# Do we attach/detach volumes in cinder using multipath for
-# volume to image and image to volume transfers? (boolean
-# value)
-#use_multipath_for_image_xfer=false
-
-# Method used to wipe old volumes (valid options are: none,
-# zero, shred) (string value)
-#volume_clear=zero
-
-# Size in MiB to wipe at start of old volumes. 0 => all
-# (integer value)
-#volume_clear_size=0
-
-# The flag to pass to ionice to alter the i/o priority of the
-# process used to zero a volume after deletion, for example
-# "-c3" for idle only priority. (string value)
-#volume_clear_ionice=<None>
-
-# iSCSI target user-land tool to use. tgtadm is default, use
-# lioadm for LIO iSCSI support, iseradm for the ISER protocol,
-# or fake for testing. (string value)
-#iscsi_helper=tgtadm
-
-# Volume configuration file storage directory (string value)
-#volumes_dir=$state_path/volumes
-
-# IET configuration file (string value)
-#iet_conf=/etc/iet/ietd.conf
-
-# Comma-separated list of initiator IQNs allowed to connect to
-# the iSCSI target. (From Nova compute nodes.) (string value)
-#lio_initiator_iqns=
-
-# Sets the behavior of the iSCSI target to either perform
-# blockio or fileio optionally, auto can be set and Cinder
-# will autodetect type of backing device (string value)
-#iscsi_iotype=fileio
-
-# The default block size used when copying/clearing volumes
+# Config drive format. One of iso9660 (default) or vfat
 # (string value)
-#volume_dd_blocksize=1M
+#config_drive_format=iso9660
 
-# The blkio cgroup name to be used to limit bandwidth of
-# volume copy (string value)
-#volume_copy_blkio_cgroup_name=cinder-volume-copy
+# DEPRECATED (not needed any more):  Where to put temporary
+# files associated with config drive creation (string value)
+#config_drive_tempdir=<None>
 
-# The upper limit of bandwidth of volume copy. 0 => unlimited
+# Set to force injection to take place on a config drive (if
+# set, valid options are: always) (string value)
+#force_config_drive=<None>
+
+# Name and optionally path of the tool used for ISO image
+# creation (string value)
+#mkisofs_cmd=genisoimage
+
+
+#
+# Options defined in nova.virt.disk.api
+#
+
+# Name of the mkfs commands for ephemeral device. The format
+# is <os_type>=<mkfs command> (multi valued)
+#virt_mkfs=
+
+# Attempt to resize the filesystem by accessing the image over
+# a block device. This is done by the host and may not be
+# necessary if the image contains a recent version of cloud-
+# init. Possible mechanisms require the nbd driver (for qcow
+# and raw), or loop (for raw). (boolean value)
+#resize_fs_using_block_device=false
+
+
+#
+# Options defined in nova.virt.disk.mount.nbd
+#
+
+# Amount of time, in seconds, to wait for NBD device start up.
 # (integer value)
-#volume_copy_bps_limit=0
+#timeout_nbd=10
 
-# Sets the behavior of the iSCSI target to either perform
-# write-back(on) or write-through(off). This parameter is
-# valid if iscsi_helper is set to tgtadm or iseradm. (string
+
+#
+# Options defined in nova.virt.driver
+#
+
+# Driver to use for controlling virtualization. Options
+# include: libvirt.LibvirtDriver, xenapi.XenAPIDriver,
+# fake.FakeDriver, baremetal.BareMetalDriver,
+# vmwareapi.VMwareVCDriver, hyperv.HyperVDriver (string value)
+#compute_driver=libvirt.LibvirtDriver
+
+# The default format an ephemeral_volume will be formatted
+# with on creation. (string value)
+#default_ephemeral_format=<None>
+
+# VM image preallocation mode: "none" => no storage
+# provisioning is done up front, "space" => storage is fully
+# allocated at instance start (string value)
+#preallocate_images=none
+
+# Whether to use cow images (boolean value)
+#use_cow_images=true
+
+# Fail instance boot if vif plugging fails (boolean value)
+#vif_plugging_is_fatal=true
+
+# Number of seconds to wait for neutron vif plugging events to
+# arrive before continuing or failing (see
+# vif_plugging_is_fatal). If this is set to zero and
+# vif_plugging_is_fatal is False, events should not be
+# expected to arrive at all. (integer value)
+#vif_plugging_timeout=300
+
+
+#
+# Options defined in nova.virt.firewall
+#
+
+# Firewall driver (defaults to hypervisor specific iptables
+# driver) (string value)
+#firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+
+# Whether to allow network traffic from same network (boolean
 # value)
-#iscsi_write_cache=on
-
-# The path to the client certificate key for verification, if
-# the driver supports it. (string value)
-#driver_client_cert_key=<None>
-
-# The path to the client certificate for verification, if the
-# driver supports it. (string value)
-#driver_client_cert=<None>
+#allow_same_net_traffic=true
 
 
 #
-# Options defined in cinder.volume.drivers.block_device
+# Options defined in nova.virt.hardware
 #
 
-# List of all available devices (list value)
-#available_devices=
+# Defines which pcpus that instance vcpus can use. For
+# example, "4-12,^8,15" (string value)
+#vcpu_pin_set=<None>
 
 
 #
-# Options defined in cinder.volume.drivers.coraid
+# Options defined in nova.virt.imagecache
 #
 
-# IP address of Coraid ESM (string value)
-#coraid_esm_address=
+# Number of seconds to wait between runs of the image cache
+# manager. Set to -1 to disable. Setting this to 0 will
+# disable, but this will change in the K release to mean "run
+# at the default rate". (integer value)
+#image_cache_manager_interval=2400
 
-# User name to connect to Coraid ESM (string value)
-#coraid_user=admin
+# Where cached images are stored under $instances_path. This
+# is NOT the full path - just a folder name. For per-compute-
+# host cached images, set to _base_$my_ip (string value)
+#image_cache_subdirectory_name=_base
 
-# Name of group on Coraid ESM to which coraid_user belongs
-# (must have admin privilege) (string value)
-#coraid_group=admin
+# Should unused base images be removed? (boolean value)
+#remove_unused_base_images=true
 
-# Password to connect to Coraid ESM (string value)
-#coraid_password=password
+# Unused unresized base images younger than this will not be
+# removed (integer value)
+#remove_unused_original_minimum_age_seconds=86400
 
-# Volume Type key name to store ESM Repository Name (string
+
+#
+# Options defined in nova.virt.images
+#
+
+# Force backing images to raw format (boolean value)
+#force_raw_images=true
+
+
+#
+# Options defined in nova.virt.netutils
+#
+
+# Template file for injected network (string value)
+#injected_network_template=/usr/share/nova/interfaces.template
+
+
+#
+# Options defined in nova.vnc
+#
+
+# Location of VNC console proxy, in the form
+# "http://127.0.0.1:6080/vnc_auto.html" (string value)
+#novncproxy_base_url=http://127.0.0.1:6080/vnc_auto.html
+
+# Location of nova xvp VNC console proxy, in the form
+# "http://127.0.0.1:6081/console" (string value)
+#xvpvncproxy_base_url=http://127.0.0.1:6081/console
+
+# IP address on which instance vncservers should listen
+# (string value)
+vncserver_listen= <%= @MY_IP %>
+
+# The address to which proxy clients (like nova-xvpvncproxy)
+# should connect (string value)
+vncserver_proxyclient_address= <%= @MY_IP %>
+
+# Enable VNC related features (boolean value)
+#vnc_enabled=true
+
+# Keymap for VNC (string value)
+#vnc_keymap=en-us
+
+
+#
+# Options defined in nova.vnc.xvp_proxy
+#
+
+# Port that the XCP VNC proxy should bind to (integer value)
+#xvpvncproxy_port=6081
+
+# Address that the XCP VNC proxy should bind to (string value)
+#xvpvncproxy_host=0.0.0.0
+
+
+#
+# Options defined in nova.volume
+#
+
+# The full class name of the volume API class to use (string
 # value)
-#coraid_repository_key=coraid_repository
+#volume_api_class=nova.volume.cinder.API
+
+
+[baremetal]
+
+#
+# Options defined in nova.virt.baremetal.db.api
+#
+
+# The backend to use for bare-metal database (string value)
+#db_backend=sqlalchemy
 
 
 #
-# Options defined in cinder.volume.drivers.datera
+# Options defined in nova.virt.baremetal.db.sqlalchemy.session
 #
 
-# Datera API token. (string value)
-#datera_api_token=<None>
-
-# Datera API port. (string value)
-#datera_api_port=7717
-
-# Datera API version. (string value)
-#datera_api_version=1
-
-# Number of replicas to create of an inode. (string value)
-#datera_num_replicas=3
+# The SQLAlchemy connection string used to connect to the
+# bare-metal database (string value)
+#sql_connection=sqlite:///$state_path/baremetal_nova.sqlite
 
 
 #
-# Options defined in cinder.volume.drivers.emc.emc_vmax_common
+# Options defined in nova.virt.baremetal.driver
 #
 
-# use this file for cinder emc plugin config data (string
+# Baremetal VIF driver. (string value)
+#vif_driver=nova.virt.baremetal.vif_driver.BareMetalVIFDriver
+
+# Baremetal volume driver. (string value)
+#volume_driver=nova.virt.baremetal.volume_driver.LibvirtVolumeDriver
+
+# A list of additional capabilities corresponding to
+# flavor_extra_specs for this compute host to advertise. Valid
+# entries are name=value, pairs For example, "key1:val1,
+# key2:val2" (list value)
+#flavor_extra_specs=
+
+# Baremetal driver back-end (pxe or tilera) (string value)
+#driver=nova.virt.baremetal.pxe.PXE
+
+# Baremetal power management method (string value)
+#power_manager=nova.virt.baremetal.ipmi.IPMI
+
+# Baremetal compute node's tftp root path (string value)
+#tftp_root=/tftpboot
+
+
+#
+# Options defined in nova.virt.baremetal.ipmi
+#
+
+# Path to baremetal terminal program (string value)
+#terminal=shellinaboxd
+
+# Path to baremetal terminal SSL cert(PEM) (string value)
+#terminal_cert_dir=<None>
+
+# Path to directory stores pidfiles of baremetal_terminal
+# (string value)
+#terminal_pid_dir=$state_path/baremetal/console
+
+# Maximal number of retries for IPMI operations (integer
 # value)
-#cinder_emc_config_file=/etc/cinder/cinder_emc_config.xml
+#ipmi_power_retry=10
 
 
 #
-# Options defined in cinder.volume.drivers.emc.emc_vnx_cli
+# Options defined in nova.virt.baremetal.pxe
 #
 
-# VNX authentication scope type. (string value)
-#storage_vnx_authentication_type=global
+# Default kernel image ID used in deployment phase (string
+# value)
+#deploy_kernel=<None>
 
-# Directory path that contains the VNX security file. Make
-# sure the security file is generated first. (string value)
-#storage_vnx_security_file_dir=<None>
+# Default ramdisk image ID used in deployment phase (string
+# value)
+#deploy_ramdisk=<None>
 
-# Naviseccli Path. (string value)
-#naviseccli_path=
+# Template file for injected network config (string value)
+#net_config_template=$pybasedir/nova/virt/baremetal/net-dhcp.ubuntu.template
 
-# Storage pool name. (string value)
-#storage_vnx_pool_name=<None>
+# Additional append parameters for baremetal PXE boot (string
+# value)
+#pxe_append_params=nofb nomodeset vga=normal
 
-# VNX secondary SP IP Address. (string value)
-#san_secondary_ip=<None>
+# Template file for PXE configuration (string value)
+#pxe_config_template=$pybasedir/nova/virt/baremetal/pxe_config.template
 
-# Default timeout for CLI operations in minutes. For example,
-# LUN migration is a typical long running operation, which
-# depends on the LUN size and the load of the array. An upper
-# bound in the specific deployment can be set to avoid
-# unnecessary long wait. By default, it is 365 days long.
+# If True, enable file injection for network info, files and
+# admin password (boolean value)
+#use_file_injection=false
+
+# Timeout for PXE deployments. Default: 0 (unlimited) (integer
+# value)
+#pxe_deploy_timeout=0
+
+# If set, pass the network configuration details to the
+# initramfs via cmdline. (boolean value)
+#pxe_network_config=false
+
+# This gets passed to Neutron as the bootfile dhcp parameter.
+# (string value)
+#pxe_bootfile_name=pxelinux.0
+
+
+#
+# Options defined in nova.virt.baremetal.tilera_pdu
+#
+
+# IP address of tilera pdu (string value)
+#tile_pdu_ip=10.0.100.1
+
+# Management script for tilera pdu (string value)
+#tile_pdu_mgr=/tftpboot/pdu_mgr
+
+# Power status of tilera PDU is OFF (integer value)
+#tile_pdu_off=2
+
+# Power status of tilera PDU is ON (integer value)
+#tile_pdu_on=1
+
+# Power status of tilera PDU (integer value)
+#tile_pdu_status=9
+
+# Wait time in seconds until check the result after tilera
+# power operations (integer value)
+#tile_power_wait=9
+
+
+#
+# Options defined in nova.virt.baremetal.virtual_power_driver
+#
+
+# IP or name to virtual power host (string value)
+#virtual_power_ssh_host=
+
+# Port to use for ssh to virtual power host (integer value)
+#virtual_power_ssh_port=22
+
+# Base command to use for virtual power(vbox, virsh) (string
+# value)
+#virtual_power_type=virsh
+
+# User to execute virtual power commands as (string value)
+#virtual_power_host_user=
+
+# Password for virtual power host_user (string value)
+#virtual_power_host_pass=
+
+# The ssh key for virtual power host_user (string value)
+#virtual_power_host_key=<None>
+
+
+#
+# Options defined in nova.virt.baremetal.volume_driver
+#
+
+# Do not set this out of dev/test environments. If a node does
+# not have a fixed PXE IP address, volumes are exported with
+# globally opened ACL (boolean value)
+#use_unsafe_iscsi=false
+
+# The iSCSI IQN prefix used in baremetal volume connections.
+# (string value)
+#iscsi_iqn_prefix=iqn.2010-10.org.openstack.baremetal
+
+
+[cells]
+
+#
+# Options defined in nova.cells.manager
+#
+
+# Cells communication driver to use (string value)
+#driver=nova.cells.rpc_driver.CellsRPCDriver
+
+# Number of seconds after an instance was updated or deleted
+# to continue to update cells (integer value)
+#instance_updated_at_threshold=3600
+
+# Number of instances to update per periodic task run (integer
+# value)
+#instance_update_num_instances=1
+
+
+#
+# Options defined in nova.cells.messaging
+#
+
+# Maximum number of hops for cells routing. (integer value)
+#max_hop_count=10
+
+# Cells scheduler to use (string value)
+#scheduler=nova.cells.scheduler.CellsScheduler
+
+
+#
+# Options defined in nova.cells.opts
+#
+
+# Enable cell functionality (boolean value)
+#enable=false
+
+# The topic cells nodes listen on (string value)
+#topic=cells
+
+# Manager for cells (string value)
+#manager=nova.cells.manager.CellsManager
+
+# Name of this cell (string value)
+#name=nova
+
+# Key/Multi-value list with the capabilities of the cell (list
+# value)
+#capabilities=hypervisor=xenserver;kvm,os=linux;windows
+
+# Seconds to wait for response from a call to a cell. (integer
+# value)
+#call_timeout=60
+
+# Percentage of cell capacity to hold in reserve. Affects both
+# memory and disk utilization (floating point value)
+#reserve_percent=10.0
+
+# Type of cell: api or compute (string value)
+#cell_type=compute
+
+# Number of seconds after which a lack of capability and
+# capacity updates signals the child cell is to be treated as
+# a mute. (integer value)
+#mute_child_interval=300
+
+# Seconds between bandwidth updates for cells. (integer value)
+#bandwidth_update_interval=600
+
+
+#
+# Options defined in nova.cells.rpc_driver
+#
+
+# Base queue name to use when communicating between cells.
+# Various topics by message type will be appended to this.
+# (string value)
+#rpc_driver_queue_base=cells.intercell
+
+
+#
+# Options defined in nova.cells.scheduler
+#
+
+# Filter classes the cells scheduler should use.  An entry of
+# "nova.cells.filters.all_filters" maps to all cells filters
+# included with nova. (list value)
+#scheduler_filter_classes=nova.cells.filters.all_filters
+
+# Weigher classes the cells scheduler should use.  An entry of
+# "nova.cells.weights.all_weighers" maps to all cell weighers
+# included with nova. (list value)
+#scheduler_weight_classes=nova.cells.weights.all_weighers
+
+# How many retries when no cells are available. (integer
+# value)
+#scheduler_retries=10
+
+# How often to retry in seconds when no cells are available.
 # (integer value)
-#default_timeout=525600
-
-# Default max number of LUNs in a storage group. By default,
-# the value is 255. (integer value)
-#max_luns_per_storage_group=255
-
-# To destroy storage group when the last LUN is removed from
-# it. By default, the value is False. (boolean value)
-#destroy_empty_storage_group=false
-
-# Mapping between hostname and its iSCSI initiator IP
-# addresses. (string value)
-#iscsi_initiators=
-
-# Automatically register initiators. By default, the value is
-# False. (boolean value)
-#initiator_auto_registration=false
+#scheduler_retry_delay=2
 
 
 #
-# Options defined in cinder.volume.drivers.eqlx
+# Options defined in nova.cells.state
 #
 
-# Group name to use for creating volumes (string value)
-#eqlx_group_name=group-0
+# Interval, in seconds, for getting fresh cell information
+# from the database. (integer value)
+#db_check_interval=60
 
-# Timeout for the Group Manager cli command execution (integer
+# Configuration file from which to read cells configuration.
+# If given, overrides reading cells from the database. (string
 # value)
-#eqlx_cli_timeout=30
-
-# Maximum retry count for reconnection (integer value)
-#eqlx_cli_max_retries=5
-
-# Use CHAP authentication for targets? (boolean value)
-#eqlx_use_chap=false
-
-# Existing CHAP account name (string value)
-#eqlx_chap_login=admin
-
-# Password for specified CHAP account name (string value)
-#eqlx_chap_password=password
-
-# Pool in which volumes will be created (string value)
-#eqlx_pool=default
+#cells_config=<None>
 
 
 #
-# Options defined in cinder.volume.drivers.fujitsu_eternus_dx_common
+# Options defined in nova.cells.weights.mute_child
 #
 
-# The configuration file for the Cinder SMI-S driver (string
+# Multiplier used to weigh mute children. (The value should be
+# negative.) (floating point value)
+#mute_weight_multiplier=-10.0
+
+# Weight value assigned to mute children. (The value should be
+# positive.) (floating point value)
+#mute_weight_value=1000.0
+
+
+#
+# Options defined in nova.cells.weights.ram_by_instance_type
+#
+
+# Multiplier used for weighing ram.  Negative numbers mean to
+# stack vs spread. (floating point value)
+#ram_weight_multiplier=10.0
+
+
+#
+# Options defined in nova.cells.weights.weight_offset
+#
+
+# Multiplier used to weigh offset weigher. (floating point
 # value)
-#cinder_smis_config_file=/etc/cinder/cinder_fujitsu_eternus_dx.xml
+#offset_weight_multiplier=1.0
 
+
+[cinder]
 
 #
-# Options defined in cinder.volume.drivers.fusionio.ioControl
+# Options defined in nova.volume.cinder
 #
 
-# amount of time wait for iSCSI target to come online (integer
+# Info to match when looking for cinder in the service
+# catalog. Format is: separated values of the form:
+# <service_type>:<service_name>:<endpoint_type> (string value)
+# Deprecated group;name - DEFAULT;cinder_catalog_info
+#catalog_info=volume:cinder:publicURL
+
+# Override service catalog lookup with template for cinder
+# endpoint e.g. http://localhost:8776/v1/%(project_id)s
+# (string value)
+# Deprecated group;name - DEFAULT;cinder_endpoint_template
+#endpoint_template=<None>
+
+# Region name of this node (string value)
+# Deprecated group;name - DEFAULT;os_region_name
+#os_region_name=<None>
+
+# Location of ca certificates file to use for cinder client
+# requests. (string value)
+# Deprecated group;name - DEFAULT;cinder_ca_certificates_file
+#ca_certificates_file=<None>
+
+# Number of cinderclient retries on failed http calls (integer
 # value)
-#fusionio_iocontrol_targetdelay=5
+# Deprecated group;name - DEFAULT;cinder_http_retries
+#http_retries=3
 
-# number of retries for GET operations (integer value)
-#fusionio_iocontrol_retry=3
+# HTTP inactivity timeout (in seconds) (integer value)
+# Deprecated group;name - DEFAULT;cinder_http_timeout
+#http_timeout=<None>
 
-# verify the array certificate on each transaction (boolean
+# Allow to perform insecure SSL requests to cinder (boolean
 # value)
-#fusionio_iocontrol_verify_cert=true
+# Deprecated group;name - DEFAULT;cinder_api_insecure
+#api_insecure=false
 
+# Allow attach between instance and volume in different
+# availability zones. (boolean value)
+# Deprecated group;name - DEFAULT;cinder_cross_az_attach
+#cross_az_attach=true
+
+
+[conductor]
 
 #
-# Options defined in cinder.volume.drivers.glusterfs
+# Options defined in nova.conductor.api
 #
 
-# File with the list of available gluster shares (string
+# Perform nova-conductor operations locally (boolean value)
+#use_local=false
+
+# The topic on which conductor nodes listen (string value)
+#topic=conductor
+
+# Full class name for the Manager for conductor (string value)
+#manager=nova.conductor.manager.ConductorManager
+
+# Number of workers for OpenStack Conductor service. The
+# default will be the number of CPUs available. (integer
 # value)
-#glusterfs_shares_config=/etc/cinder/glusterfs_shares
+#workers=<None>
 
-# Create volumes as sparsed files which take no space.If set
-# to False volume is created as regular file.In such case
-# volume creation takes a lot of time. (boolean value)
-#glusterfs_sparsed_volumes=true
 
-# Create volumes as QCOW2 files rather than raw files.
+[ephemeral_storage_encryption]
+
+#
+# Options defined in nova.compute.api
+#
+
+# Whether to encrypt ephemeral storage (boolean value)
+#enabled=false
+
+# The cipher and mode to be used to encrypt ephemeral storage.
+# Which ciphers are available ciphers depends on kernel
+# support. See /proc/crypto for the list of available options.
+# (string value)
+#cipher=aes-xts-plain64
+
+# The bit length of the encryption key to be used to encrypt
+# ephemeral storage (in XTS mode only half of the bits are
+# used for encryption key) (integer value)
+#key_size=512
+
+
+[glance]
+
+#
+# Options defined in nova.image.glance
+#
+
+# Default glance hostname or IP address (string value)
+# Deprecated group;name - DEFAULT;glance_host
+host= <%= @CONTROLLER_HNAME %>
+
+# Default glance port (integer value)
+# Deprecated group;name - DEFAULT;glance_port
+#port=9292
+
+# Default protocol to use when connecting to glance. Set to
+# https for SSL. (string value)
+# Deprecated group;name - DEFAULT;glance_protocol
+#protocol=http
+
+# A list of the glance api servers available to nova. Prefix
+# with https:// for ssl-based glance api servers.
+# ([hostname|ip]:port) (list value)
+# Deprecated group;name - DEFAULT;glance_api_servers
+#api_servers=<None>
+
+# Allow to perform insecure SSL (https) requests to glance
 # (boolean value)
-#glusterfs_qcow2_volumes=false
+# Deprecated group;name - DEFAULT;glance_api_insecure
+#api_insecure=false
 
-# Base dir containing mount points for gluster shares. (string
-# value)
-#glusterfs_mount_point_base=$state_path/mnt
-
-
-#
-# Options defined in cinder.volume.drivers.hds.hds
-#
-
-# The configuration file for the Cinder HDS driver for HUS
-# (string value)
-#hds_cinder_config_file=/opt/hds/hus/cinder_hus_conf.xml
-
-
-#
-# Options defined in cinder.volume.drivers.hds.iscsi
-#
-
-# Configuration file for HDS iSCSI cinder plugin (string
-# value)
-#hds_hnas_iscsi_config_file=/opt/hds/hnas/cinder_iscsi_conf.xml
-
-
-#
-# Options defined in cinder.volume.drivers.hds.nfs
-#
-
-# Configuration file for HDS NFS cinder plugin (string value)
-#hds_hnas_nfs_config_file=/opt/hds/hnas/cinder_nfs_conf.xml
-
-
-#
-# Options defined in cinder.volume.drivers.hitachi.hbsd_common
-#
-
-# Serial number of storage system (string value)
-#hitachi_serial_number=<None>
-
-# Name of an array unit (string value)
-#hitachi_unit_name=<None>
-
-# Pool ID of storage system (integer value)
-#hitachi_pool_id=<None>
-
-# Thin pool ID of storage system (integer value)
-#hitachi_thin_pool_id=<None>
-
-# Range of logical device of storage system (string value)
-#hitachi_ldev_range=<None>
-
-# Default copy method of storage system (string value)
-#hitachi_default_copy_method=FULL
-
-# Copy speed of storage system (integer value)
-#hitachi_copy_speed=3
-
-# Interval to check copy (integer value)
-#hitachi_copy_check_interval=3
-
-# Interval to check copy asynchronously (integer value)
-#hitachi_async_copy_check_interval=10
-
-# Control port names for HostGroup or iSCSI Target (string
-# value)
-#hitachi_target_ports=<None>
-
-# Range of group number (string value)
-#hitachi_group_range=<None>
-
-# Request for creating HostGroup or iSCSI Target (boolean
-# value)
-#hitachi_group_request=false
-
-
-#
-# Options defined in cinder.volume.drivers.hitachi.hbsd_fc
-#
-
-# Request for FC Zone creating HostGroup (boolean value)
-#hitachi_zoning_request=false
-
-
-#
-# Options defined in cinder.volume.drivers.hitachi.hbsd_horcm
-#
-
-# Instance numbers for HORCM (string value)
-#hitachi_horcm_numbers=200,201
-
-# Username of storage system for HORCM (string value)
-#hitachi_horcm_user=<None>
-
-# Password of storage system for HORCM (string value)
-#hitachi_horcm_password=<None>
-
-# Add to HORCM configuration (boolean value)
-#hitachi_horcm_add_conf=true
-
-
-#
-# Options defined in cinder.volume.drivers.hitachi.hbsd_iscsi
-#
-
-# Add CHAP user (boolean value)
-#hitachi_add_chap_user=false
-
-# iSCSI authentication method (string value)
-#hitachi_auth_method=<None>
-
-# iSCSI authentication username (string value)
-#hitachi_auth_user=HBSD-CHAP-user
-
-# iSCSI authentication password (string value)
-#hitachi_auth_password=HBSD-CHAP-password
-
-
-#
-# Options defined in cinder.volume.drivers.huawei
-#
-
-# The configuration file for the Cinder Huawei driver (string
-# value)
-#cinder_huawei_conf_file=/etc/cinder/cinder_huawei_conf.xml
-
-
-#
-# Options defined in cinder.volume.drivers.ibm.gpfs
-#
-
-# Specifies the path of the GPFS directory where Block Storage
-# volume and snapshot files are stored. (string value)
-#gpfs_mount_point_base=<None>
-
-# Specifies the path of the Image service repository in GPFS.
-# Leave undefined if not storing images in GPFS. (string
-# value)
-#gpfs_images_dir=<None>
-
-# Specifies the type of image copy to be used.  Set this when
-# the Image service repository also uses GPFS so that image
-# files can be transferred efficiently from the Image service
-# to the Block Storage service. There are two valid values:
-# "copy" specifies that a full copy of the image is made;
-# "copy_on_write" specifies that copy-on-write optimization
-# strategy is used and unmodified blocks of the image file are
-# shared efficiently. (string value)
-#gpfs_images_share_mode=<None>
-
-# Specifies an upper limit on the number of indirections
-# required to reach a specific block due to snapshots or
-# clones.  A lengthy chain of copy-on-write snapshots or
-# clones can have a negative impact on performance, but
-# improves space utilization.  0 indicates unlimited clone
-# depth. (integer value)
-#gpfs_max_clone_depth=0
-
-# Specifies that volumes are created as sparse files which
-# initially consume no space. If set to False, the volume is
-# created as a fully allocated file, in which case, creation
-# may take a significantly longer time. (boolean value)
-#gpfs_sparse_volumes=true
-
-# Specifies the storage pool that volumes are assigned to. By
-# default, the system storage pool is used. (string value)
-#gpfs_storage_pool=system
-
-
-#
-# Options defined in cinder.volume.drivers.ibm.ibmnas
-#
-
-# IP address or Hostname of NAS system. (string value)
-#nas_ip=
-
-# User name to connect to NAS system. (string value)
-#nas_login=admin
-
-# Password to connect to NAS system. (string value)
-#nas_password=
-
-# SSH port to use to connect to NAS system. (integer value)
-#nas_ssh_port=22
-
-# Filename of private key to use for SSH authentication.
-# (string value)
-#nas_private_key=
-
-# IBMNAS platform type to be used as backend storage; valid
-# values are - v7ku : for using IBM Storwize V7000 Unified,
-# sonas : for using IBM Scale Out NAS, gpfs-nas : for using
-# NFS based IBM GPFS deployments. (string value)
-#ibmnas_platform_type=v7ku
-
-
-#
-# Options defined in cinder.volume.drivers.ibm.storwize_svc
-#
-
-# Storage system storage pool for volumes (string value)
-#storwize_svc_volpool_name=volpool
-
-# Storage system space-efficiency parameter for volumes
-# (percentage) (integer value)
-#storwize_svc_vol_rsize=2
-
-# Storage system threshold for volume capacity warnings
-# (percentage) (integer value)
-#storwize_svc_vol_warning=0
-
-# Storage system autoexpand parameter for volumes (True/False)
-# (boolean value)
-#storwize_svc_vol_autoexpand=true
-
-# Storage system grain size parameter for volumes
-# (32/64/128/256) (integer value)
-#storwize_svc_vol_grainsize=256
-
-# Storage system compression option for volumes (boolean
-# value)
-#storwize_svc_vol_compression=false
-
-# Enable Easy Tier for volumes (boolean value)
-#storwize_svc_vol_easytier=true
-
-# The I/O group in which to allocate volumes (integer value)
-#storwize_svc_vol_iogrp=0
-
-# Maximum number of seconds to wait for FlashCopy to be
-# prepared. Maximum value is 600 seconds (10 minutes) (integer
-# value)
-#storwize_svc_flashcopy_timeout=120
-
-# Connection protocol (iSCSI/FC) (string value)
-#storwize_svc_connection_protocol=iSCSI
-
-# Configure CHAP authentication for iSCSI connections
-# (Default: Enabled) (boolean value)
-#storwize_svc_iscsi_chap_enabled=true
-
-# Connect with multipath (FC only; iSCSI multipath is
-# controlled by Nova) (boolean value)
-#storwize_svc_multipath_enabled=false
-
-# Allows vdisk to multi host mapping (boolean value)
-#storwize_svc_multihostmap_enabled=true
-
-# Indicate whether svc driver is compatible for NPIV setup. If
-# it is compatible, it will allow no wwpns being returned on
-# get_conn_fc_wwpns during initialize_connection (boolean
-# value)
-#storwize_svc_npiv_compatibility_mode=false
-
-# Allow tenants to specify QOS on create (boolean value)
-#storwize_svc_allow_tenant_qos=false
-
-# If operating in stretched cluster mode, specify the name of
-# the pool in which mirrored copies are stored.Example:
-# "pool2" (string value)
-#storwize_svc_stretched_cluster_partner=<None>
-
-
-#
-# Options defined in cinder.volume.drivers.ibm.xiv_ds8k
-#
-
-# Proxy driver that connects to the IBM Storage Array (string
-# value)
-#xiv_ds8k_proxy=xiv_ds8k_openstack.nova_proxy.XIVDS8KNovaProxy
-
-# Connection type to the IBM Storage Array
-# (fibre_channel|iscsi) (string value)
-#xiv_ds8k_connection_type=iscsi
-
-# CHAP authentication mode, effective only for iscsi
-# (disabled|enabled) (string value)
-#xiv_chap=disabled
-
-
-#
-# Options defined in cinder.volume.drivers.lvm
-#
-
-# Name for the VG that will contain exported volumes (string
-# value)
-#volume_group=cinder-volumes
-
-# If >0, create LVs with multiple mirrors. Note that this
-# requires lvm_mirrors + 2 PVs with available space (integer
-# value)
-#lvm_mirrors=0
-
-# Type of LVM volumes to deploy; (default or thin) (string
-# value)
-#lvm_type=default
-
-
-#
-# Options defined in cinder.volume.drivers.netapp.options
-#
-
-# The vFiler unit on which provisioning of block storage
-# volumes will be done. This option is only used by the driver
-# when connecting to an instance with a storage family of Data
-# ONTAP operating in 7-Mode. Only use this option when
-# utilizing the MultiStore feature on the NetApp storage
-# system. (string value)
-#netapp_vfiler=<None>
-
-# Administrative user account name used to access the storage
-# system or proxy server. (string value)
-#netapp_login=<None>
-
-# Password for the administrative user account specified in
-# the netapp_login option. (string value)
-#netapp_password=<None>
-
-# This option specifies the virtual storage server (Vserver)
-# name on the storage cluster on which provisioning of block
-# storage volumes should occur. If using the NFS storage
-# protocol, this parameter is mandatory for storage service
-# catalog support (utilized by Cinder volume type extra_specs
-# support). If this option is specified, the exports belonging
-# to the Vserver will only be used for provisioning in the
-# future. Block storage volumes on exports not belonging to
-# the Vserver specified by this option will continue to
-# function normally. (string value)
-#netapp_vserver=<None>
-
-# The hostname (or IP address) for the storage system or proxy
-# server. (string value)
-#netapp_server_hostname=<None>
-
-# The TCP port to use for communication with the storage
-# system or proxy server. If not specified, Data ONTAP drivers
-# will use 80 for HTTP and 443 for HTTPS; E-Series will use
-# 8080 for HTTP and 8443 for HTTPS. (integer value)
-#netapp_server_port=<None>
-
-# This option is used to specify the path to the E-Series
-# proxy application on a proxy server. The value is combined
-# with the value of the netapp_transport_type,
-# netapp_server_hostname, and netapp_server_port options to
-# create the URL used by the driver to connect to the proxy
-# application. (string value)
-#netapp_webservice_path=/devmgr/v2
-
-# This option is only utilized when the storage family is
-# configured to eseries. This option is used to restrict
-# provisioning to the specified controllers. Specify the value
-# of this option to be a comma separated list of controller
-# hostnames or IP addresses to be used for provisioning.
-# (string value)
-#netapp_controller_ips=<None>
-
-# Password for the NetApp E-Series storage array. (string
-# value)
-#netapp_sa_password=<None>
-
-# This option is used to restrict provisioning to the
-# specified storage pools. Only dynamic disk pools are
-# currently supported. Specify the value of this option to be
-# a comma separated list of disk pool names to be used for
-# provisioning. (string value)
-#netapp_storage_pools=<None>
-
-# This option is used to define how the controllers in the
-# E-Series storage array will work with the particular
-# operating system on the hosts that are connected to it.
-# (string value)
-#netapp_eseries_host_type=linux_dm_mp
-
-# If the percentage of available space for an NFS share has
-# dropped below the value specified by this option, the NFS
-# image cache will be cleaned. (integer value)
-#thres_avl_size_perc_start=20
-
-# When the percentage of available space on an NFS share has
-# reached the percentage specified by this option, the driver
-# will stop clearing files from the NFS image cache that have
-# not been accessed in the last M minutes, where M is the
-# value of the expiry_thres_minutes configuration option.
+# Number of retries when downloading an image from glance
 # (integer value)
-#thres_avl_size_perc_stop=60
+# Deprecated group;name - DEFAULT;glance_num_retries
+#num_retries=0
 
-# This option specifies the threshold for last access time for
-# images in the NFS image cache. When a cache cleaning cycle
-# begins, images in the cache that have not been accessed in
-# the last M minutes, where M is the value of this parameter,
-# will be deleted from the cache to create free space on the
-# NFS share. (integer value)
-#expiry_thres_minutes=720
+# A list of url scheme that can be downloaded directly via the
+# direct_url.  Currently supported schemes: [file]. (list
+# value)
+#allowed_direct_url_schemes=
 
-# This option specifies the path of the NetApp copy offload
-# tool binary. Ensure that the binary has execute permissions
-# set which allow the effective user of the cinder-volume
-# process to execute the file. (string value)
-#netapp_copyoffload_tool_path=<None>
 
-# The quantity to be multiplied by the requested volume size
-# to ensure enough space is available on the virtual storage
-# server (Vserver) to fulfill the volume creation request.
+[hyperv]
+
+#
+# Options defined in nova.virt.hyperv.pathutils
+#
+
+# The name of a Windows share name mapped to the
+# "instances_path" dir and used by the resize feature to copy
+# files to the target host. If left blank, an administrative
+# share will be used, looking for the same "instances_path"
+# used locally (string value)
+#instances_path_share=
+
+
+#
+# Options defined in nova.virt.hyperv.utilsfactory
+#
+
+# Force V1 WMI utility classes (boolean value)
+#force_hyperv_utils_v1=false
+
+# Force V1 volume utility class (boolean value)
+#force_volumeutils_v1=false
+
+
+#
+# Options defined in nova.virt.hyperv.vif
+#
+
+# External virtual switch Name, if not provided, the first
+# external virtual switch is used (string value)
+#vswitch_name=<None>
+
+
+#
+# Options defined in nova.virt.hyperv.vmops
+#
+
+# Required for live migration among hosts with different CPU
+# features (boolean value)
+#limit_cpu_features=false
+
+# Sets the admin password in the config drive image (boolean
+# value)
+#config_drive_inject_password=false
+
+# Path of qemu-img command which is used to convert between
+# different image types (string value)
+#qemu_img_cmd=qemu-img.exe
+
+# Attaches the Config Drive image as a cdrom drive instead of
+# a disk drive (boolean value)
+#config_drive_cdrom=false
+
+# Enables metrics collections for an instance by using
+# Hyper-V's metric APIs. Collected data can by retrieved by
+# other apps and services, e.g.: Ceilometer. Requires Hyper-V
+# / Windows Server 2012 and above (boolean value)
+#enable_instance_metrics_collection=false
+
+# Enables dynamic memory allocation (ballooning) when set to a
+# value greater than 1. The value expresses the ratio between
+# the total RAM assigned to an instance and its startup RAM
+# amount. For example a ratio of 2.0 for an instance with
+# 1024MB of RAM implies 512MB of RAM allocated at startup
 # (floating point value)
-#netapp_size_multiplier=1.2
+#dynamic_memory_ratio=1.0
 
-# This option is only utilized when the storage protocol is
-# configured to use iSCSI. This option is used to restrict
-# provisioning to the specified controller volumes. Specify
-# the value of this option to be a comma separated list of
-# NetApp controller volume names to be used for provisioning.
-# (string value)
-#netapp_volume_list=<None>
-
-# The storage family type used on the storage system; valid
-# values are ontap_7mode for using Data ONTAP operating in
-# 7-Mode, ontap_cluster for using clustered Data ONTAP, or
-# eseries for using E-Series. (string value)
-#netapp_storage_family=ontap_cluster
-
-# The storage protocol to be used on the data path with the
-# storage system; valid values are iscsi or nfs. (string
+# Number of seconds to wait for instance to shut down after
+# soft reboot request is made. We fall back to hard reboot if
+# instance does not shutdown within this window. (integer
 # value)
-#netapp_storage_protocol=<None>
-
-# The transport protocol used when communicating with the
-# storage system or proxy server. Valid values are http or
-# https. (string value)
-#netapp_transport_type=http
+#wait_soft_reboot_seconds=60
 
 
 #
-# Options defined in cinder.volume.drivers.nexenta.options
+# Options defined in nova.virt.hyperv.volumeops
 #
 
-# IP address of Nexenta SA (string value)
-#nexenta_host=
-
-# HTTP port to connect to Nexenta REST API server (integer
+# The number of times to retry to attach a volume (integer
 # value)
-#nexenta_rest_port=2000
+#volume_attach_retry_count=10
 
-# Use http or https for REST connection (default auto) (string
-# value)
-#nexenta_rest_protocol=auto
-
-# User name to connect to Nexenta SA (string value)
-#nexenta_user=admin
-
-# Password to connect to Nexenta SA (string value)
-#nexenta_password=nexenta
-
-# Nexenta target portal port (integer value)
-#nexenta_iscsi_target_portal_port=3260
-
-# SA Pool that holds all volumes (string value)
-#nexenta_volume=cinder
-
-# IQN prefix for iSCSI targets (string value)
-#nexenta_target_prefix=iqn.1986-03.com.sun:02:cinder-
-
-# Prefix for iSCSI target groups on SA (string value)
-#nexenta_target_group_prefix=cinder/
-
-# File with the list of available nfs shares (string value)
-#nexenta_shares_config=/etc/cinder/nfs_shares
-
-# Base directory that contains NFS share mount points (string
-# value)
-#nexenta_mount_point_base=$state_path/mnt
-
-# Enables or disables the creation of volumes as sparsed files
-# that take no space. If disabled (False), volume is created
-# as a regular file, which takes a long time. (boolean value)
-#nexenta_sparsed_volumes=true
-
-# Default compression value for new ZFS folders. (string
-# value)
-#nexenta_volume_compression=on
-
-# If set True cache NexentaStor appliance volroot option
-# value. (boolean value)
-#nexenta_nms_cache_volroot=true
-
-# Enable stream compression, level 1..9. 1 - gives best speed;
-# 9 - gives best compression. (integer value)
-#nexenta_rrmgr_compression=0
-
-# TCP Buffer size in KiloBytes. (integer value)
-#nexenta_rrmgr_tcp_buf_size=4096
-
-# Number of TCP connections. (integer value)
-#nexenta_rrmgr_connections=2
-
-# Block size for volumes (default=blank means 8KB) (string
-# value)
-#nexenta_blocksize=
-
-# Enables or disables the creation of sparse volumes (boolean
-# value)
-#nexenta_sparse=false
-
-
-#
-# Options defined in cinder.volume.drivers.nfs
-#
-
-# File with the list of available nfs shares (string value)
-#nfs_shares_config=/etc/cinder/nfs_shares
-
-# Create volumes as sparsed files which take no space.If set
-# to False volume is created as regular file.In such case
-# volume creation takes a lot of time. (boolean value)
-#nfs_sparsed_volumes=true
-
-# Percent of ACTUAL usage of the underlying volume before no
-# new volumes can be allocated to the volume destination.
-# (floating point value)
-#nfs_used_ratio=0.95
-
-# This will compare the allocated to available space on the
-# volume destination.  If the ratio exceeds this number, the
-# destination will no longer be valid. (floating point value)
-#nfs_oversub_ratio=1.0
-
-# Base dir containing mount points for nfs shares. (string
-# value)
-#nfs_mount_point_base=$state_path/mnt
-
-# Mount options passed to the nfs client. See section of the
-# nfs man page for details. (string value)
-#nfs_mount_options=<None>
-
-
-#
-# Options defined in cinder.volume.drivers.nimble
-#
-
-# Nimble Controller pool name (string value)
-#nimble_pool_name=default
-
-# Nimble Subnet Label (string value)
-#nimble_subnet_label=*
-
-
-#
-# Options defined in cinder.volume.drivers.prophetstor.options
-#
-
-# DPL pool uuid in which DPL volumes are stored. (string
-# value)
-#dpl_pool=
-
-# DPL port number. (integer value)
-#dpl_port=8357
-
-
-#
-# Options defined in cinder.volume.drivers.pure
-#
-
-# REST API authorization token. (string value)
-#pure_api_token=<None>
-
-
-#
-# Options defined in cinder.volume.drivers.rbd
-#
-
-# The RADOS pool where rbd volumes are stored (string value)
-#rbd_pool=rbd
-
-# The RADOS client name for accessing rbd volumes - only set
-# when using cephx authentication (string value)
-#rbd_user=<None>
-
-# Path to the ceph configuration file (string value)
-#rbd_ceph_conf=
-
-# Flatten volumes created from snapshots to remove dependency
-# from volume to snapshot (boolean value)
-#rbd_flatten_volume_from_snapshot=false
-
-# The libvirt uuid of the secret for the rbd_user volumes
-# (string value)
-#rbd_secret_uuid=<None>
-
-# Directory where temporary image files are stored when the
-# volume driver does not write them directly to the volume.
-# (string value)
-#volume_tmp_dir=<None>
-
-# Maximum number of nested volume clones that are taken before
-# a flatten occurs. Set to 0 to disable cloning. (integer
-# value)
-#rbd_max_clone_depth=5
-
-# Volumes will be chunked into objects of this size (in
-# megabytes). (integer value)
-#rbd_store_chunk_size=4
-
-# Timeout value (in seconds) used when connecting to ceph
-# cluster. If value < 0, no timeout is set and default
-# librados value is used. (integer value)
-#rados_connect_timeout=-1
-
-
-#
-# Options defined in cinder.volume.drivers.remotefs
-#
-
-# IP address or Hostname of NAS system. (string value)
-#nas_ip=
-
-# User name to connect to NAS system. (string value)
-#nas_login=admin
-
-# Password to connect to NAS system. (string value)
-#nas_password=
-
-# SSH port to use to connect to NAS system. (integer value)
-#nas_ssh_port=22
-
-# Filename of private key to use for SSH authentication.
-# (string value)
-#nas_private_key=
-
-
-#
-# Options defined in cinder.volume.drivers.san.hp.hp_3par_common
-#
-
-# 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1
-# (string value)
-#hp3par_api_url=
-
-# 3PAR Super user username (string value)
-#hp3par_username=
-
-# 3PAR Super user password (string value)
-#hp3par_password=
-
-# The CPG to use for volume creation (string value)
-#hp3par_cpg=OpenStack
-
-# The CPG to use for Snapshots for volumes. If empty
-# hp3par_cpg will be used (string value)
-#hp3par_cpg_snap=
-
-# The time in hours to retain a snapshot.  You can't delete it
-# before this expires. (string value)
-#hp3par_snapshot_retention=
-
-# The time in hours when a snapshot expires  and is deleted.
-# This must be larger than expiration (string value)
-#hp3par_snapshot_expiration=
-
-# Enable HTTP debugging to 3PAR (boolean value)
-#hp3par_debug=false
-
-# List of target iSCSI addresses to use. (list value)
-#hp3par_iscsi_ips=
-
-# Enable CHAP authentication for iSCSI connections. (boolean
-# value)
-#hp3par_iscsi_chap_enabled=false
-
-
-#
-# Options defined in cinder.volume.drivers.san.hp.hp_lefthand_rest_proxy
-#
-
-# HP LeftHand WSAPI Server Url like https://<LeftHand
-# ip>:8081/lhos (string value)
-#hplefthand_api_url=<None>
-
-# HP LeftHand Super user username (string value)
-#hplefthand_username=<None>
-
-# HP LeftHand Super user password (string value)
-#hplefthand_password=<None>
-
-# HP LeftHand cluster name (string value)
-#hplefthand_clustername=<None>
-
-# Configure CHAP authentication for iSCSI connections
-# (Default: Disabled) (boolean value)
-#hplefthand_iscsi_chap_enabled=false
-
-# Enable HTTP debugging to LeftHand (boolean value)
-#hplefthand_debug=false
-
-
-#
-# Options defined in cinder.volume.drivers.san.hp.hp_msa_common
-#
-
-# The VDisk to use for volume creation. (string value)
-#msa_vdisk=OpenStack
-
-
-#
-# Options defined in cinder.volume.drivers.san.san
-#
-
-# Use thin provisioning for SAN volumes? (boolean value)
-#san_thin_provision=true
-
-# IP address of SAN controller (string value)
-#san_ip=
-
-# Username for SAN controller (string value)
-#san_login=admin
-
-# Password for SAN controller (string value)
-#san_password=
-
-# Filename of private key to use for SSH authentication
-# (string value)
-#san_private_key=
-
-# Cluster name to use for creating volumes (string value)
-#san_clustername=
-
-# SSH port to use with SAN (integer value)
-#san_ssh_port=22
-
-# Execute commands locally instead of over SSH; use if the
-# volume service is running on the SAN device (boolean value)
-#san_is_local=false
-
-# SSH connection timeout in seconds (integer value)
-#ssh_conn_timeout=30
-
-# Minimum ssh connections in the pool (integer value)
-#ssh_min_pool_conn=1
-
-# Maximum ssh connections in the pool (integer value)
-#ssh_max_pool_conn=5
-
-
-#
-# Options defined in cinder.volume.drivers.san.solaris
-#
-
-# The ZFS path under which to create zvols for volumes.
-# (string value)
-#san_zfs_volume_base=rpool/
-
-
-#
-# Options defined in cinder.volume.drivers.scality
-#
-
-# Path or URL to Scality SOFS configuration file (string
-# value)
-#scality_sofs_config=<None>
-
-# Base dir where Scality SOFS shall be mounted (string value)
-#scality_sofs_mount_point=$state_path/scality
-
-# Path from Scality SOFS root to volume dir (string value)
-#scality_sofs_volume_dir=cinder/volumes
-
-
-#
-# Options defined in cinder.volume.drivers.smbfs
-#
-
-# File with the list of available smbfs shares. (string value)
-#smbfs_shares_config=/etc/cinder/smbfs_shares
-
-# Default format that will be used when creating volumes if no
-# volume format is specified. Can be set to: raw, qcow2, vhd
-# or vhdx. (string value)
-#smbfs_default_volume_format=qcow2
-
-# Create volumes as sparsed files which take no space rather
-# than regular files when using raw format, in which case
-# volume creation takes lot of time. (boolean value)
-#smbfs_sparsed_volumes=true
-
-# Percent of ACTUAL usage of the underlying volume before no
-# new volumes can be allocated to the volume destination.
-# (floating point value)
-#smbfs_used_ratio=0.95
-
-# This will compare the allocated to available space on the
-# volume destination.  If the ratio exceeds this number, the
-# destination will no longer be valid. (floating point value)
-#smbfs_oversub_ratio=1.0
-
-# Base dir containing mount points for smbfs shares. (string
-# value)
-#smbfs_mount_point_base=$state_path/mnt
-
-# Mount options passed to the smbfs client. See mount.cifs man
-# page for details. (string value)
-#smbfs_mount_options=noperm,file_mode=0775,dir_mode=0775
-
-
-#
-# Options defined in cinder.volume.drivers.solidfire
-#
-
-# Set 512 byte emulation on volume creation;  (boolean value)
-#sf_emulate_512=true
-
-# Allow tenants to specify QOS on create (boolean value)
-#sf_allow_tenant_qos=false
-
-# Create SolidFire accounts with this prefix. Any string can
-# be used here, but the string "hostname" is special and will
-# create a prefix using the cinder node hostsname (previous
-# default behavior).  The default is NO prefix. (string value)
-#sf_account_prefix=<None>
-
-# SolidFire API port. Useful if the device api is behind a
-# proxy on a different port. (integer value)
-#sf_api_port=443
-
-
-#
-# Options defined in cinder.volume.drivers.vmware.vmdk
-#
-
-# IP address for connecting to VMware ESX/VC server. (string
-# value)
-#vmware_host_ip=<None>
-
-# Username for authenticating with VMware ESX/VC server.
-# (string value)
-#vmware_host_username=<None>
-
-# Password for authenticating with VMware ESX/VC server.
-# (string value)
-#vmware_host_password=<None>
-
-# Optional VIM service WSDL Location e.g
-# http://<server>/vimService.wsdl. Optional over-ride to
-# default location for bug work-arounds. (string value)
-#vmware_wsdl_location=<None>
-
-# Number of times VMware ESX/VC server API must be retried
-# upon connection related issues. (integer value)
-#vmware_api_retry_count=10
-
-# The interval (in seconds) for polling remote tasks invoked
-# on VMware ESX/VC server. (floating point value)
-#vmware_task_poll_interval=0.5
-
-# Name for the folder in the VC datacenter that will contain
-# cinder volumes. (string value)
-#vmware_volume_folder=cinder-volumes
-
-# Timeout in seconds for VMDK volume transfer between Cinder
-# and Glance. (integer value)
-#vmware_image_transfer_timeout_secs=7200
-
-# Max number of objects to be retrieved per batch. Query
-# results will be obtained in batches from the server and not
-# in one shot. Server may still limit the count to something
-# less than the configured value. (integer value)
-#vmware_max_objects_retrieval=100
-
-# Optional string specifying the VMware VC server version. The
-# driver attempts to retrieve the version from VMware VC
-# server. Set this configuration only if you want to override
-# the VC server version. (string value)
-#vmware_host_version=<None>
-
-# Directory where virtual disks are stored during volume
-# backup and restore. (string value)
-#vmware_tmp_dir=/tmp
-
-
-#
-# Options defined in cinder.volume.drivers.windows.windows
-#
-
-# Path to store VHD backed volumes (string value)
-#windows_iscsi_lun_path=C:\iSCSIVirtualDisks
-
-
-#
-# Options defined in cinder.volume.drivers.zadara
-#
-
-# Management IP of Zadara VPSA (string value)
-#zadara_vpsa_ip=<None>
-
-# Zadara VPSA port number (string value)
-#zadara_vpsa_port=<None>
-
-# Use SSL connection (boolean value)
-#zadara_vpsa_use_ssl=false
-
-# User name for the VPSA (string value)
-#zadara_user=<None>
-
-# Password for the VPSA (string value)
-#zadara_password=<None>
-
-# Name of VPSA storage pool for volumes (string value)
-#zadara_vpsa_poolname=<None>
-
-# Default thin provisioning policy for volumes (boolean value)
-#zadara_vol_thin=true
-
-# Default encryption policy for volumes (boolean value)
-#zadara_vol_encrypt=false
-
-# Default template for VPSA volume names (string value)
-#zadara_vol_name_template=OS_%s
-
-# Automatically detach from servers on volume delete (boolean
-# value)
-#zadara_vpsa_auto_detach_on_delete=true
-
-# Don't halt on deletion of non-existing volumes (boolean
-# value)
-#zadara_vpsa_allow_nonexistent_delete=true
-
-
-#
-# Options defined in cinder.volume.drivers.zfssa.zfssaiscsi
-#
-
-# Storage pool name. (string value)
-#zfssa_pool=<None>
-
-# Project name. (string value)
-#zfssa_project=<None>
-
-# Block size: 512, 1k, 2k, 4k, 8k, 16k, 32k, 64k, 128k.
-# (string value)
-#zfssa_lun_volblocksize=8k
-
-# Flag to enable sparse (thin-provisioned): True, False.
-# (boolean value)
-#zfssa_lun_sparse=false
-
-# Data compression-off, lzjb, gzip-2, gzip, gzip-9. (string
-# value)
-#zfssa_lun_compression=
-
-# Synchronous write bias-latency, throughput. (string value)
-#zfssa_lun_logbias=
-
-# iSCSI initiator group. (string value)
-#zfssa_initiator_group=
-
-# iSCSI initiator IQNs. (comma separated) (string value)
-#zfssa_initiator=
-
-# iSCSI initiator CHAP user. (string value)
-#zfssa_initiator_user=
-
-# iSCSI initiator CHAP password. (string value)
-#zfssa_initiator_password=
-
-# iSCSI target group name. (string value)
-#zfssa_target_group=tgt-grp
-
-# iSCSI target CHAP user. (string value)
-#zfssa_target_user=
-
-# iSCSI target CHAP password. (string value)
-#zfssa_target_password=
-
-# iSCSI target portal (Data-IP:Port, w.x.y.z:3260). (string
-# value)
-#zfssa_target_portal=<None>
-
-# Network interfaces of iSCSI targets. (comma separated)
-# (string value)
-#zfssa_target_interfaces=<None>
-
-# REST connection timeout. (seconds) (integer value)
-#zfssa_rest_timeout=<None>
-
-
-#
-# Options defined in cinder.volume.manager
-#
-
-# Driver to use for volume creation (string value)
-#volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-
-# Timeout for creating the volume to migrate to when
-# performing volume migration (seconds) (integer value)
-#migration_create_volume_timeout_secs=300
-
-# Offload pending volume delete during volume service startup
-# (boolean value)
-#volume_service_inithost_offload=false
-
-# FC Zoning mode configured (string value)
-#zoning_mode=none
-
-# User defined capabilities, a JSON formatted string
-# specifying key/value pairs. (string value)
-#extra_capabilities={}
-
-
-[BRCD_FABRIC_EXAMPLE]
-
-#
-# Options defined in cinder.zonemanager.drivers.brocade.brcd_fabric_opts
-#
-
-# Management IP of fabric (string value)
-#fc_fabric_address=
-
-# Fabric user ID (string value)
-#fc_fabric_user=
-
-# Password for user (string value)
-#fc_fabric_password=
-
-# Connecting port (integer value)
-#fc_fabric_port=22
-
-# overridden zoning policy (string value)
-#zoning_policy=initiator-target
-
-# overridden zoning activation state (boolean value)
-#zone_activate=true
-
-# overridden zone name prefix (string value)
-#zone_name_prefix=<None>
-
-# Principal switch WWN of the fabric (string value)
-#principal_switch_wwn=<None>
-
-
-[CISCO_FABRIC_EXAMPLE]
-
-#
-# Options defined in cinder.zonemanager.drivers.cisco.cisco_fabric_opts
-#
-
-# Management IP of fabric (string value)
-#cisco_fc_fabric_address=
-
-# Fabric user ID (string value)
-#cisco_fc_fabric_user=
-
-# Password for user (string value)
-#cisco_fc_fabric_password=
-
-# Connecting port (integer value)
-#cisco_fc_fabric_port=22
-
-# overridden zoning policy (string value)
-#cisco_zoning_policy=initiator-target
-
-# overridden zoning activation state (boolean value)
-#cisco_zone_activate=true
-
-# overridden zone name prefix (string value)
-#cisco_zone_name_prefix=<None>
-
-# VSAN of the Fabric (string value)
-#cisco_zoning_vsan=<None>
-
-
-[database]
-
-#
-# Options defined in oslo.db
-#
-
-# The file name to use with SQLite. (string value)
-#sqlite_db=oslo.sqlite
-
-# If True, SQLite uses synchronous mode. (boolean value)
-#sqlite_synchronous=true
-
-# The back end to use for the database. (string value)
-# Deprecated group/name - [DEFAULT]/db_backend
-#backend=sqlalchemy
-
-# The SQLAlchemy connection string to use to connect to the
-# database. (string value)
-# Deprecated group/name - [DEFAULT]/sql_connection
-# Deprecated group/name - [DATABASE]/sql_connection
-# Deprecated group/name - [sql]/connection
-#connection=<None>
-connection=mysql://cinder:<%= @CINDER_DBPASS%>@<%= @CONTROLLER_HNAME%>/cinder
-
-
-# The SQLAlchemy connection string to use to connect to the
-# slave database. (string value)
-#slave_connection=<None>
-
-# The SQL mode to be used for MySQL sessions. This option,
-# including the default, overrides any server-set SQL mode. To
-# use whatever SQL mode is set by the server configuration,
-# set this to no value. Example: mysql_sql_mode= (string
-# value)
-#mysql_sql_mode=TRADITIONAL
-
-# Timeout before idle SQL connections are reaped. (integer
-# value)
-# Deprecated group/name - [DEFAULT]/sql_idle_timeout
-# Deprecated group/name - [DATABASE]/sql_idle_timeout
-# Deprecated group/name - [sql]/idle_timeout
-#idle_timeout=3600
-
-# Minimum number of SQL connections to keep open in a pool.
+# Interval between volume attachment attempts, in seconds
 # (integer value)
-# Deprecated group/name - [DEFAULT]/sql_min_pool_size
-# Deprecated group/name - [DATABASE]/sql_min_pool_size
-#min_pool_size=1
+#volume_attach_retry_interval=5
 
-# Maximum number of SQL connections to keep open in a pool.
-# (integer value)
-# Deprecated group/name - [DEFAULT]/sql_max_pool_size
-# Deprecated group/name - [DATABASE]/sql_max_pool_size
-#max_pool_size=<None>
+# The number of times to retry checking for a disk mounted via
+# iSCSI. (integer value)
+#mounted_disk_query_retry_count=10
 
-# Maximum number of database connection retries during
-# startup. Set to -1 to specify an infinite retry count.
-# (integer value)
-# Deprecated group/name - [DEFAULT]/sql_max_retries
-# Deprecated group/name - [DATABASE]/sql_max_retries
-#max_retries=10
+# Interval between checks for a mounted iSCSI disk, in
+# seconds. (integer value)
+#mounted_disk_query_retry_interval=5
 
-# Interval between retries of opening a SQL connection.
-# (integer value)
-# Deprecated group/name - [DEFAULT]/sql_retry_interval
-# Deprecated group/name - [DATABASE]/reconnect_interval
-#retry_interval=10
 
-# If set, use this value for max_overflow with SQLAlchemy.
-# (integer value)
-# Deprecated group/name - [DEFAULT]/sql_max_overflow
-# Deprecated group/name - [DATABASE]/sqlalchemy_max_overflow
-#max_overflow=<None>
+[image_file_url]
 
-# Verbosity of SQL debugging information: 0=None,
-# 100=Everything. (integer value)
-# Deprecated group/name - [DEFAULT]/sql_connection_debug
-#connection_debug=0
+#
+# Options defined in nova.image.download.file
+#
 
-# Add Python stack traces to SQL as comment strings. (boolean
+# List of file systems that are configured in this file in the
+# image_file_url:<list entry name> sections (list value)
+#filesystems=
+
+
+[ironic]
+
+#
+# Options defined in nova.virt.ironic.driver
+#
+
+# Version of Ironic API service endpoint. (integer value)
+#api_version=1
+
+# URL for Ironic API endpoint. (string value)
+#api_endpoint=<None>
+
+# Ironic keystone admin name (string value)
+#admin_username=<None>
+
+# Ironic keystone admin password. (string value)
+#admin_password=%SERVICE_PASSWORD%
+
+# Ironic keystone auth token. (string value)
+#admin_auth_token=<None>
+
+# Keystone public API endpoint. (string value)
+#admin_url=<None>
+
+# Log level override for ironicclient. Set this in order to
+# override the global "default_log_levels", "verbose", and
+# "debug" settings. (string value)
+#client_log_level=<None>
+
+# Ironic keystone tenant name. (string value)
+admin_tenant_name=service
+
+# How many retries when a request does conflict. (integer
 # value)
-# Deprecated group/name - [DEFAULT]/sql_connection_trace
-#connection_trace=false
+#api_max_retries=60
 
-# If set, use this value for pool_timeout with SQLAlchemy.
+# How often to retry in seconds when a request does conflict
 # (integer value)
-# Deprecated group/name - [DATABASE]/sqlalchemy_pool_timeout
-#pool_timeout=<None>
-
-# Enable the experimental use of database reconnect on
-# connection lost. (boolean value)
-#use_db_reconnect=false
-
-# Seconds between database connection retries. (integer value)
-#db_retry_interval=1
-
-# If True, increases the interval between database connection
-# retries up to db_max_retry_interval. (boolean value)
-#db_inc_retry_interval=true
-
-# If db_inc_retry_interval is set, the maximum seconds between
-# database connection retries. (integer value)
-#db_max_retry_interval=10
-
-# Maximum database connection retries before error is raised.
-# Set to -1 to specify an infinite retry count. (integer
-# value)
-#db_max_retries=20
-
-
-#
-# Options defined in oslo.db.concurrency
-#
-
-# Enable the experimental use of thread pooling for all DB API
-# calls (boolean value)
-# Deprecated group/name - [DEFAULT]/dbapi_use_tpool
-#use_tpool=false
-
-
-[fc-zone-manager]
-
-#
-# Options defined in cinder.zonemanager.drivers.brocade.brcd_fc_zone_driver
-#
-
-# Southbound connector for zoning operation (string value)
-#brcd_sb_connector=cinder.zonemanager.drivers.brocade.brcd_fc_zone_client_cli.BrcdFCZoneClientCLI
-
-
-#
-# Options defined in cinder.zonemanager.drivers.cisco.cisco_fc_zone_driver
-#
-
-# Southbound connector for zoning operation (string value)
-#cisco_sb_connector=cinder.zonemanager.drivers.cisco.cisco_fc_zone_client_cli.CiscoFCZoneClientCLI
-
-
-#
-# Options defined in cinder.zonemanager.fc_zone_manager
-#
-
-# FC Zone Driver responsible for zone management (string
-# value)
-#zone_driver=cinder.zonemanager.drivers.brocade.brcd_fc_zone_driver.BrcdFCZoneDriver
-
-# Zoning policy configured by user (string value)
-#zoning_policy=initiator-target
-
-# Comma separated list of fibre channel fabric names. This
-# list of names is used to retrieve other SAN credentials for
-# connecting to each SAN fabric (string value)
-#fc_fabric_names=<None>
-
-# FC San Lookup Service (string value)
-#fc_san_lookup_service=cinder.zonemanager.drivers.brocade.brcd_fc_san_lookup_service.BrcdFCSanLookupService
+#api_retry_interval=2
 
 
 [keymgr]
 
 #
-# Options defined in cinder.keymgr
+# Options defined in nova.keymgr
 #
 
 # The full class name of the key manager API class (string
 # value)
-#api_class=cinder.keymgr.conf_key_mgr.ConfKeyManager
+#api_class=nova.keymgr.conf_key_mgr.ConfKeyManager
 
 
 #
-# Options defined in cinder.keymgr.conf_key_mgr
+# Options defined in nova.keymgr.conf_key_mgr
 #
 
 # Fixed key returned by key manager, specified in hex (string
 # value)
 #fixed_key=<None>
-
-
-#
-# Options defined in cinder.keymgr.key_mgr
-#
-
-# Authentication url for encryption service. (string value)
-#encryption_auth_url=http://localhost:5000/v2.0
-
-# Url for encryption service. (string value)
-#encryption_api_url=http://localhost:9311/v1
 
 
 [keystone_authtoken]
@@ -2561,19 +2633,19 @@ connection=mysql://cinder:<%= @CINDER_DBPASS%>@<%= @CONTROLLER_HNAME%>/cinder
 
 # Protocol of the admin Identity API endpoint (http or https).
 # Deprecated, use identity_uri. (string value)
-#auth_protocol=https
+#auth_protocol=http
 
 # Complete public Identity API endpoint (string value)
-auth_uri=http://<%= @CONTROLLER_HNAME%>:5000/v2.0
+auth_uri=  http://<%= @CONTROLLER_HNAME%>:5000/v2.0
 
 # Complete admin Identity API endpoint. This should specify
 # the unversioned root endpoint e.g. https://localhost:35357/
 # (string value)
-identity_uri=http://<%= @CONTROLLER_HNAME%>:35357
+identity_uri= http://<%= @CONTROLLER_HNAME%>:35357
 
 # API version of the admin Identity API endpoint (string
 # value)
-#auth_version=<None>
+#auth_version=v2.0
 
 # Do not handle authorization requests within the middleware,
 # but delegate the authorization decision to downstream WSGI
@@ -2597,14 +2669,14 @@ identity_uri=http://<%= @CONTROLLER_HNAME%>:35357
 #admin_token=<None>
 
 # Keystone account username (string value)
-admin_user=cinder
+admin_user= <%= @ADMIN_USER %>
 
 # Keystone account password (string value)
-admin_password=<%= @GLANCE_DBPASS%>
+admin_password= <%= @ADMIN_PASSWORD %>
 
 # Keystone service account tenant name to validate user tokens
 # (string value)
-admin_tenant_name=service
+admin_tenant_name= service
 
 # Env key for the swift cache (string value)
 #cache=<None>
@@ -2631,7 +2703,7 @@ admin_tenant_name=service
 # Optionally specify a list of memcached server(s) to use for
 # caching. If left undefined, tokens will instead be cached
 # in-process. (list value)
-# Deprecated group/name - [DEFAULT]/memcache_servers
+# Deprecated group;name - DEFAULT;memcache_servers
 #memcached_servers=<None>
 
 # In order to prevent excessive effort spent validating
@@ -2722,6 +2794,272 @@ admin_tenant_name=service
 #hash_algorithms=md5
 
 
+[libvirt]
+
+#
+# Options defined in nova.virt.libvirt.driver
+#
+
+# Rescue ami image. This will not be used if an image id is
+# provided by the user. (string value)
+#rescue_image_id=<None>
+
+# Rescue aki image (string value)
+#rescue_kernel_id=<None>
+
+# Rescue ari image (string value)
+#rescue_ramdisk_id=<None>
+
+# Libvirt domain type (valid options are: kvm, lxc, qemu, uml,
+# xen) (string value)
+#virt_type=kvm
+
+# Override the default libvirt URI (which is dependent on
+# virt_type) (string value)
+#connection_uri=
+
+# Inject the admin password at boot time, without an agent.
+# (boolean value)
+#inject_password=false
+
+# Inject the ssh public key at boot time (boolean value)
+#inject_key=false
+
+# The partition to inject to : -2 => disable, -1 => inspect
+# (libguestfs only), 0 => not partitioned, >0 => partition
+# number (integer value)
+#inject_partition=-2
+
+# Sync virtual and real mouse cursors in Windows VMs (boolean
+# value)
+#use_usb_tablet=true
+
+# Migration target URI (any included "%s" is replaced with the
+# migration target hostname) (string value)
+#live_migration_uri=qemu+tcp://%s/system
+
+# Migration flags to be set for live migration (string value)
+#live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED
+
+# Migration flags to be set for block migration (string value)
+#block_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED, VIR_MIGRATE_NON_SHARED_INC
+
+# Maximum bandwidth to be used during migration, in Mbps
+# (integer value)
+#live_migration_bandwidth=0
+
+# Snapshot image format (valid options are : raw, qcow2, vmdk,
+# vdi). Defaults to same as source image (string value)
+#snapshot_image_format=<None>
+
+# DEPRECATED. Libvirt handlers for remote volumes. This option
+# is deprecated and will be removed in the Kilo release. (list
+# value)
+#volume_drivers=iscsi=nova.virt.libvirt.volume.LibvirtISCSIVolumeDriver,iser=nova.virt.libvirt.volume.LibvirtISERVolumeDriver,local=nova.virt.libvirt.volume.LibvirtVolumeDriver,fake=nova.virt.libvirt.volume.LibvirtFakeVolumeDriver,rbd=nova.virt.libvirt.volume.LibvirtNetVolumeDriver,sheepdog=nova.virt.libvirt.volume.LibvirtNetVolumeDriver,nfs=nova.virt.libvirt.volume.LibvirtNFSVolumeDriver,aoe=nova.virt.libvirt.volume.LibvirtAOEVolumeDriver,glusterfs=nova.virt.libvirt.volume.LibvirtGlusterfsVolumeDriver,fibre_channel=nova.virt.libvirt.volume.LibvirtFibreChannelVolumeDriver,scality=nova.virt.libvirt.volume.LibvirtScalityVolumeDriver
+
+# Override the default disk prefix for the devices attached to
+# a server, which is dependent on virt_type. (valid options
+# are: sd, xvd, uvd, vd) (string value)
+#disk_prefix=<None>
+
+# Number of seconds to wait for instance to shut down after
+# soft reboot request is made. We fall back to hard reboot if
+# instance does not shutdown within this window. (integer
+# value)
+#wait_soft_reboot_seconds=120
+
+# Set to "host-model" to clone the host CPU feature flags; to
+# "host-passthrough" to use the host CPU model exactly; to
+# "custom" to use a named CPU model; to "none" to not set any
+# CPU model. If virt_type="kvm|qemu", it will default to
+# "host-model", otherwise it will default to "none" (string
+# value)
+#cpu_mode=<None>
+
+# Set to a named libvirt CPU model (see names listed in
+# /usr/share/libvirt/cpu_map.xml). Only has effect if
+# cpu_mode="custom" and virt_type="kvm|qemu" (string value)
+#cpu_model=<None>
+
+# Location where libvirt driver will store snapshots before
+# uploading them to image service (string value)
+#snapshots_directory=$instances_path/snapshots
+
+# Location where the Xen hvmloader is kept (string value)
+#xen_hvmloader_path=/usr/lib/xen/boot/hvmloader
+
+# Specific cachemodes to use for different disk types e.g:
+# file=directsync,block=none (list value)
+#disk_cachemodes=
+
+# A path to a device that will be used as source of entropy on
+# the host. Permitted options are: /dev/random or /dev/hwrng
+# (string value)
+#rng_dev_path=<None>
+
+# For qemu or KVM guests, set this option to specify a default
+# machine type per host architecture. You can find a list of
+# supported machine types in your environment by checking the
+# output of the "virsh capabilities"command. The format of the
+# value for this config option is host-arch=machine-type. For
+# example: x86_64=machinetype1,armv7l=machinetype2 (list
+# value)
+#hw_machine_type=<None>
+
+# The data source used to the populate the host "serial" UUID
+# exposed to guest in the virtual BIOS. Permitted options are
+# "hardware", "os", "none" or "auto" (default). (string value)
+#sysinfo_serial=auto
+
+# A number of seconds to memory usage statistics period. Zero
+# or negative value mean to disable memory usage statistics.
+# (integer value)
+#mem_stats_period_seconds=10
+
+# List of uid targets and ranges.Syntax is guest-uid:host-
+# uid:countMaximum of 5 allowed. (list value)
+#uid_maps=
+
+# List of guid targets and ranges.Syntax is guest-gid:host-
+# gid:countMaximum of 5 allowed. (list value)
+#gid_maps=
+
+
+#
+# Options defined in nova.virt.libvirt.imagebackend
+#
+
+# VM Images format. Acceptable values are: raw, qcow2, lvm,
+# rbd, default. If default is specified, then use_cow_images
+# flag is used instead of this one. (string value)
+#images_type=default
+
+# LVM Volume Group that is used for VM images, when you
+# specify images_type=lvm. (string value)
+#images_volume_group=<None>
+
+# Create sparse logical volumes (with virtualsize) if this
+# flag is set to True. (boolean value)
+#sparse_logical_volumes=false
+
+# Method used to wipe old volumes (valid options are: none,
+# zero, shred) (string value)
+#volume_clear=zero
+
+# Size in MiB to wipe at start of old volumes. 0 => all
+# (integer value)
+#volume_clear_size=0
+
+# The RADOS pool in which rbd volumes are stored (string
+# value)
+#images_rbd_pool=rbd
+
+# Path to the ceph configuration file to use (string value)
+#images_rbd_ceph_conf=
+
+# Discard option for nova managed disks (valid options are:
+# ignore, unmap). Need Libvirt(1.0.6) Qemu1.5 (raw format)
+# Qemu1.6(qcow2 format) (string value)
+#hw_disk_discard=<None>
+
+
+#
+# Options defined in nova.virt.libvirt.imagecache
+#
+
+# Allows image information files to be stored in non-standard
+# locations (string value)
+#image_info_filename_pattern=$instances_path/$image_cache_subdirectory_name/%(image)s.info
+
+# Should unused kernel images be removed? This is only safe to
+# enable if all compute nodes have been updated to support
+# this option. This will be enabled by default in future.
+# (boolean value)
+#remove_unused_kernels=false
+
+# Unused resized base images younger than this will not be
+# removed (integer value)
+#remove_unused_resized_minimum_age_seconds=3600
+
+# Write a checksum for files in _base to disk (boolean value)
+#checksum_base_images=false
+
+# How frequently to checksum base images (integer value)
+#checksum_interval_seconds=3600
+
+
+#
+# Options defined in nova.virt.libvirt.utils
+#
+
+# Compress snapshot images when possible. This currently
+# applies exclusively to qcow2 images (boolean value)
+#snapshot_compression=false
+
+
+#
+# Options defined in nova.virt.libvirt.vif
+#
+
+# Use virtio for bridge interfaces with KVM/QEMU (boolean
+# value)
+#use_virtio_for_bridges=true
+
+
+#
+# Options defined in nova.virt.libvirt.volume
+#
+
+# Number of times to rescan iSCSI target to find volume
+# (integer value)
+#num_iscsi_scan_tries=5
+
+# Number of times to rescan iSER target to find volume
+# (integer value)
+#num_iser_scan_tries=5
+
+# The RADOS client name for accessing rbd volumes (string
+# value)
+#rbd_user=<None>
+
+# The libvirt UUID of the secret for the rbd_uservolumes
+# (string value)
+#rbd_secret_uuid=<None>
+
+# Directory where the NFS volume is mounted on the compute
+# node (string value)
+#nfs_mount_point_base=$state_path/mnt
+
+# Mount options passedf to the NFS client. See section of the
+# nfs man page for details (string value)
+#nfs_mount_options=<None>
+
+# Number of times to rediscover AoE target to find volume
+# (integer value)
+#num_aoe_discover_tries=3
+
+# Directory where the glusterfs volume is mounted on the
+# compute node (string value)
+#glusterfs_mount_point_base=$state_path/mnt
+
+# Use multipath connection of the iSCSI volume (boolean value)
+#iscsi_use_multipath=false
+
+# Use multipath connection of the iSER volume (boolean value)
+#iser_use_multipath=false
+
+# Path or URL to Scality SOFS configuration file (string
+# value)
+#scality_sofs_config=<None>
+
+# Base dir where Scality SOFS shall be mounted (string value)
+#scality_sofs_mount_point=$state_path/scality
+
+# Protocols listed here will be accessed directly from QEMU.
+# Currently supported protocols: [gluster] (list value)
+#qemu_allowed_storage_drivers=
+
+
 [matchmaker_redis]
 
 #
@@ -2745,88 +3083,726 @@ admin_tenant_name=service
 #
 
 # Matchmaker ring file (JSON). (string value)
-# Deprecated group/name - [DEFAULT]/matchmaker_ringfile
+# Deprecated group;name - DEFAULT;matchmaker_ringfile
 #ringfile=/etc/oslo/matchmaker_ring.json
 
 
-[oslo_messaging_amqp]
+[metrics]
 
 #
-# Options defined in oslo.messaging
-#
-# NOTE: Options in this group are supported when using oslo.messaging >=1.5.0.
-
-# address prefix used when sending to a specific server
-# (string value)
-#server_request_prefix=exclusive
-
-# address prefix used when broadcasting to all servers (string
-# value)
-#broadcast_prefix=broadcast
-
-# address prefix when sending to any server in group (string
-# value)
-#group_request_prefix=unicast
-
-# Name for the AMQP container (string value)
-#container_name=<None>
-
-# Timeout for inactive connections (in seconds) (integer
-# value)
-#idle_timeout=0
-
-# Debug: dump AMQP frames to stdout (boolean value)
-#trace=false
-
-# CA certificate PEM file for verifing server certificate
-# (string value)
-#ssl_ca_file=
-
-# Identifying certificate PEM file to present to clients
-# (string value)
-#ssl_cert_file=
-
-# Private key PEM file used to sign cert_file certificate
-# (string value)
-#ssl_key_file=
-
-# Password for decrypting ssl_key_file (if encrypted) (string
-# value)
-#ssl_key_password=<None>
-
-# Accept clients using either SSL or plain TCP (boolean value)
-#allow_insecure_clients=false
-
-
-[profiler]
-
-#
-# Options defined in cinder.service
+# Options defined in nova.scheduler.weights.metrics
 #
 
-# If False fully disable profiling feature. (boolean value)
-#profiler_enabled=false
+# Multiplier used for weighing metrics. (floating point value)
+#weight_multiplier=1.0
 
-# If False doesn't trace SQL requests. (boolean value)
-#trace_sqlalchemy=false
+# How the metrics are going to be weighed. This should be in
+# the form of "<name1>=<ratio1>, <name2>=<ratio2>, ...", where
+# <nameX> is one of the metrics to be weighed, and <ratioX> is
+# the corresponding ratio. So for "name1=1.0, name2=-1.0" The
+# final weight would be name1.value * 1.0 + name2.value *
+# -1.0. (list value)
+#weight_setting=
+
+# How to treat the unavailable metrics. When a metric is NOT
+# available for a host, if it is set to be True, it would
+# raise an exception, so it is recommended to use the
+# scheduler filter MetricFilter to filter out those hosts. If
+# it is set to be False, the unavailable metric would be
+# treated as a negative factor in weighing process, the
+# returned value would be set by the option
+# weight_of_unavailable. (boolean value)
+#required=true
+
+# The final weight value to be returned if required is set to
+# False and any one of the metrics set by weight_setting is
+# unavailable. (floating point value)
+#weight_of_unavailable=-10000.0
+
+
+[neutron]
+
+#
+# Options defined in nova.api.metadata.handler
+#
+
+# Set flag to indicate Neutron will proxy metadata requests
+# and resolve instance ids. (boolean value)
+# Deprecated group;name - DEFAULT;service_neutron_metadata_proxy
+#service_metadata_proxy=false
+
+# Shared secret to validate proxies Neutron metadata requests
+# (string value)
+# Deprecated group;name - DEFAULT;neutron_metadata_proxy_shared_secret
+#metadata_proxy_shared_secret=
+
+
+#
+# Options defined in nova.network.neutronv2.api
+#
+
+# URL for connecting to neutron (string value)
+# Deprecated group;name - DEFAULT;neutron_url
+#url=http://127.0.0.1:9696
+
+# Timeout value for connecting to neutron in seconds (integer
+# value)
+# Deprecated group;name - DEFAULT;neutron_url_timeout
+#url_timeout=30
+
+# User id for connecting to neutron in admin context (string
+# value)
+#admin_user_id=<None>
+
+# Username for connecting to neutron in admin context (string
+# value)
+# Deprecated group;name - DEFAULT;neutron_admin_username
+#admin_username=<None>
+
+# Password for connecting to neutron in admin context (string
+# value)
+# Deprecated group;name - DEFAULT;neutron_admin_password
+#admin_password=<None>
+
+# Tenant id for connecting to neutron in admin context (string
+# value)
+# Deprecated group;name - DEFAULT;neutron_admin_tenant_id
+#admin_tenant_id=<None>
+
+# Tenant name for connecting to neutron in admin context. This
+# option will be ignored if neutron_admin_tenant_id is set.
+# Note that with Keystone V3 tenant names are only unique
+# within a domain. (string value)
+# Deprecated group;name - DEFAULT;neutron_admin_tenant_name
+#admin_tenant_name=<None>
+
+# Region name for connecting to neutron in admin context
+# (string value)
+# Deprecated group;name - DEFAULT;neutron_region_name
+#region_name=<None>
+
+# Authorization URL for connecting to neutron in admin context
+# (string value)
+# Deprecated group;name - DEFAULT;neutron_admin_auth_url
+#admin_auth_url=http://localhost:5000/v2.0
+
+# If set, ignore any SSL validation issues (boolean value)
+# Deprecated group;name - DEFAULT;neutron_api_insecure
+#api_insecure=false
+
+# Authorization strategy for connecting to neutron in admin
+# context (string value)
+# Deprecated group;name - DEFAULT;neutron_auth_strategy
+#auth_strategy=keystone
+
+# Name of Integration Bridge used by Open vSwitch (string
+# value)
+# Deprecated group;name - DEFAULT;neutron_ovs_bridge
+#ovs_bridge=br-int
+
+# Number of seconds before querying neutron for extensions
+# (integer value)
+# Deprecated group;name - DEFAULT;neutron_extension_sync_interval
+#extension_sync_interval=600
+
+# Location of CA certificates file to use for neutron client
+# requests. (string value)
+# Deprecated group;name - DEFAULT;neutron_ca_certificates_file
+#ca_certificates_file=<None>
+
+# Allow an instance to have multiple vNICs attached to the
+# same Neutron network. (boolean value)
+#allow_duplicate_networks=false
+
+
+[osapi_v3]
+
+#
+# Options defined in nova.api.openstack
+#
+
+# Whether the V3 API is enabled or not (boolean value)
+#enabled=false
+
+# A list of v3 API extensions to never load. Specify the
+# extension aliases here. (list value)
+#extensions_blacklist=
+
+# If the list is not empty then a v3 API extension will only
+# be loaded if it exists in this list. Specify the extension
+# aliases here. (list value)
+#extensions_whitelist=
+
+
+[rdp]
+
+#
+# Options defined in nova.rdp
+#
+
+# Location of RDP html5 console proxy, in the form
+# "http://127.0.0.1:6083/" (string value)
+#html5_proxy_base_url=http://127.0.0.1:6083/
+
+# Enable RDP related features (boolean value)
+#enabled=false
+
+
+[serial_console]
+
+#
+# Options defined in nova.cmd.serialproxy
+#
+
+# Host on which to listen for incoming requests (string value)
+#serialproxy_host=0.0.0.0
+
+# Port on which to listen for incoming requests (integer
+# value)
+#serialproxy_port=6083
+
+
+#
+# Options defined in nova.console.serial
+#
+
+# Enable serial console related features (boolean value)
+#enabled=false
+
+# Range of TCP ports to use for serial ports on compute hosts
+# (string value)
+#port_range=10000:20000
+
+# Location of serial console proxy. (string value)
+#base_url=ws://127.0.0.1:6083/
+
+# IP address on which instance serial console should listen
+# (string value)
+#listen=127.0.0.1
+
+# The address to which proxy clients (like nova-serialproxy)
+# should connect (string value)
+#proxyclient_address=127.0.0.1
+
+
+[spice]
+
+#
+# Options defined in nova.cmd.spicehtml5proxy
+#
+
+# Host on which to listen for incoming requests (string value)
+# Deprecated group;name - DEFAULT;spicehtml5proxy_host
+#html5proxy_host=0.0.0.0
+
+# Port on which to listen for incoming requests (integer
+# value)
+# Deprecated group;name - DEFAULT;spicehtml5proxy_port
+#html5proxy_port=6082
+
+
+#
+# Options defined in nova.spice
+#
+
+# Location of spice HTML5 console proxy, in the form
+# "http://127.0.0.1:6082/spice_auto.html" (string value)
+#html5proxy_base_url=http://127.0.0.1:6082/spice_auto.html
+
+# IP address on which instance spice server should listen
+# (string value)
+#server_listen=127.0.0.1
+
+# The address to which proxy clients (like nova-
+# spicehtml5proxy) should connect (string value)
+#server_proxyclient_address=127.0.0.1
+
+# Enable spice related features (boolean value)
+#enabled=false
+
+# Enable spice guest agent support (boolean value)
+#agent_enabled=true
+
+# Keymap for spice (string value)
+#keymap=en-us
 
 
 [ssl]
 
 #
-# Options defined in cinder.openstack.common.sslutils
+# Options defined in nova.openstack.common.sslutils
 #
 
-# CA certificate file to use to verify connecting clients
+# CA certificate file to use to verify connecting clients.
 # (string value)
 #ca_file=<None>
 
-# Certificate file to use when starting the server securely
+# Certificate file to use when starting the server securely.
 # (string value)
 #cert_file=<None>
 
-# Private key file to use when starting the server securely
+# Private key file to use when starting the server securely.
 # (string value)
 #key_file=<None>
+
+
+[trusted_computing]
+
+#
+# Options defined in nova.scheduler.filters.trusted_filter
+#
+
+# Attestation server HTTP (string value)
+#attestation_server=<None>
+
+# Attestation server Cert file for Identity verification
+# (string value)
+#attestation_server_ca_file=<None>
+
+# Attestation server port (string value)
+#attestation_port=8443
+
+# Attestation web API URL (string value)
+#attestation_api_url=/OpenAttestationWebServices/V1.0
+
+# Attestation authorization blob - must change (string value)
+#attestation_auth_blob=<None>
+
+# Attestation status cache valid period length (integer value)
+#attestation_auth_timeout=60
+
+# Disable SSL cert verification for Attestation service
+# (boolean value)
+#attestation_insecure_ssl=false
+
+
+[upgrade_levels]
+
+#
+# Options defined in nova.baserpc
+#
+
+# Set a version cap for messages sent to the base api in any
+# service (string value)
+#baseapi=<None>
+
+
+#
+# Options defined in nova.cells.rpc_driver
+#
+
+# Set a version cap for messages sent between cells services
+# (string value)
+#intercell=<None>
+
+
+#
+# Options defined in nova.cells.rpcapi
+#
+
+# Set a version cap for messages sent to local cells services
+# (string value)
+#cells=<None>
+
+
+#
+# Options defined in nova.cert.rpcapi
+#
+
+# Set a version cap for messages sent to cert services (string
+# value)
+#cert=<None>
+
+
+#
+# Options defined in nova.compute.rpcapi
+#
+
+# Set a version cap for messages sent to compute services. If
+# you plan to do a live upgrade from havana to icehouse, you
+# should set this option to "icehouse-compat" before beginning
+# the live upgrade procedure. (string value)
+#compute=<None>
+
+
+#
+# Options defined in nova.conductor.rpcapi
+#
+
+# Set a version cap for messages sent to conductor services
+# (string value)
+#conductor=<None>
+
+
+#
+# Options defined in nova.console.rpcapi
+#
+
+# Set a version cap for messages sent to console services
+# (string value)
+#console=<None>
+
+
+#
+# Options defined in nova.consoleauth.rpcapi
+#
+
+# Set a version cap for messages sent to consoleauth services
+# (string value)
+#consoleauth=<None>
+
+
+#
+# Options defined in nova.network.rpcapi
+#
+
+# Set a version cap for messages sent to network services
+# (string value)
+#network=<None>
+
+
+#
+# Options defined in nova.scheduler.rpcapi
+#
+
+# Set a version cap for messages sent to scheduler services
+# (string value)
+#scheduler=<None>
+
+
+[vmware]
+
+#
+# Options defined in nova.virt.vmwareapi.driver
+#
+
+# Hostname or IP address for connection to VMware VC host.
+# (string value)
+#host_ip=<None>
+
+# Port for connection to VMware VC host. (integer value)
+#host_port=443
+
+# Username for connection to VMware VC host. (string value)
+#host_username=<None>
+
+# Password for connection to VMware VC host. (string value)
+#host_password=<None>
+
+# Name of a VMware Cluster ComputeResource. (multi valued)
+#cluster_name=<None>
+
+# Regex to match the name of a datastore. (string value)
+#datastore_regex=<None>
+
+# The interval used for polling of remote tasks. (floating
+# point value)
+#task_poll_interval=0.5
+
+# The number of times we retry on failures, e.g., socket
+# error, etc. (integer value)
+#api_retry_count=10
+
+# VNC starting port (integer value)
+#vnc_port=5900
+
+# Total number of VNC ports (integer value)
+#vnc_port_total=10000
+
+# Whether to use linked clone (boolean value)
+#use_linked_clone=true
+
+# Optional VIM Service WSDL Location e.g
+# http://<server>/vimService.wsdl. Optional over-ride to
+# default location for bug work-arounds (string value)
+#wsdl_location=<None>
+
+
+#
+# Options defined in nova.virt.vmwareapi.vif
+#
+
+# Physical ethernet adapter name for vlan networking (string
+# value)
+#vlan_interface=vmnic0
+
+# Name of Integration Bridge (string value)
+#integration_bridge=br-int
+
+
+#
+# Options defined in nova.virt.vmwareapi.vim_util
+#
+
+# The maximum number of ObjectContent data objects that should
+# be returned in a single result. A positive value will cause
+# the operation to suspend the retrieval when the count of
+# objects reaches the specified maximum. The server may still
+# limit the count to something less than the configured value.
+# Any remaining objects may be retrieved with additional
+# requests. (integer value)
+#maximum_objects=100
+
+
+[xenserver]
+
+#
+# Options defined in nova.virt.xenapi.agent
+#
+
+# Number of seconds to wait for agent reply (integer value)
+#agent_timeout=30
+
+# Number of seconds to wait for agent to be fully operational
+# (integer value)
+#agent_version_timeout=300
+
+# Number of seconds to wait for agent reply to resetnetwork
+# request (integer value)
+#agent_resetnetwork_timeout=60
+
+# Specifies the path in which the XenAPI guest agent should be
+# located. If the agent is present, network configuration is
+# not injected into the image. Used if
+# compute_driver=xenapi.XenAPIDriver and flat_injected=True
+# (string value)
+#agent_path=usr/sbin/xe-update-networking
+
+# Disables the use of the XenAPI agent in any image regardless
+# of what image properties are present. (boolean value)
+#disable_agent=false
+
+# Determines if the XenAPI agent should be used when the image
+# used does not contain a hint to declare if the agent is
+# present or not. The hint is a glance property
+# "xenapi_use_agent" that has the value "True" or "False".
+# Note that waiting for the agent when it is not present will
+# significantly increase server boot times. (boolean value)
+#use_agent_default=false
+
+
+#
+# Options defined in nova.virt.xenapi.client.session
+#
+
+# Timeout in seconds for XenAPI login. (integer value)
+#login_timeout=10
+
+# Maximum number of concurrent XenAPI connections. Used only
+# if compute_driver=xenapi.XenAPIDriver (integer value)
+#connection_concurrent=5
+
+
+#
+# Options defined in nova.virt.xenapi.driver
+#
+
+# URL for connection to XenServer/Xen Cloud Platform. A
+# special value of unix://local can be used to connect to the
+# local unix socket.  Required if
+# compute_driver=xenapi.XenAPIDriver (string value)
+#connection_url=<None>
+
+# Username for connection to XenServer/Xen Cloud Platform.
+# Used only if compute_driver=xenapi.XenAPIDriver (string
+# value)
+#connection_username=root
+
+# Password for connection to XenServer/Xen Cloud Platform.
+# Used only if compute_driver=xenapi.XenAPIDriver (string
+# value)
+#connection_password=<None>
+
+# The interval used for polling of coalescing vhds. Used only
+# if compute_driver=xenapi.XenAPIDriver (floating point value)
+#vhd_coalesce_poll_interval=5.0
+
+# Ensure compute service is running on host XenAPI connects
+# to. (boolean value)
+#check_host=true
+
+# Max number of times to poll for VHD to coalesce. Used only
+# if compute_driver=xenapi.XenAPIDriver (integer value)
+#vhd_coalesce_max_attempts=20
+
+# Base path to the storage repository (string value)
+#sr_base_path=/var/run/sr-mount
+
+# The iSCSI Target Host (string value)
+#target_host=<None>
+
+# The iSCSI Target Port, default is port 3260 (string value)
+#target_port=3260
+
+# IQN Prefix (string value)
+#iqn_prefix=iqn.2010-10.org.openstack
+
+# Used to enable the remapping of VBD dev (Works around an
+# issue in Ubuntu Maverick) (boolean value)
+#remap_vbd_dev=false
+
+# Specify prefix to remap VBD dev to (ex. /dev/xvdb ->
+# /dev/sdb) (string value)
+#remap_vbd_dev_prefix=sd
+
+
+#
+# Options defined in nova.virt.xenapi.image.bittorrent
+#
+
+# Base URL for torrent files. (string value)
+#torrent_base_url=<None>
+
+# Probability that peer will become a seeder. (1.0 = 100%)
+# (floating point value)
+#torrent_seed_chance=1.0
+
+# Number of seconds after downloading an image via BitTorrent
+# that it should be seeded for other peers. (integer value)
+#torrent_seed_duration=3600
+
+# Cached torrent files not accessed within this number of
+# seconds can be reaped (integer value)
+#torrent_max_last_accessed=86400
+
+# Beginning of port range to listen on (integer value)
+#torrent_listen_port_start=6881
+
+# End of port range to listen on (integer value)
+#torrent_listen_port_end=6891
+
+# Number of seconds a download can remain at the same progress
+# percentage w/o being considered a stall (integer value)
+#torrent_download_stall_cutoff=600
+
+# Maximum number of seeder processes to run concurrently
+# within a given dom0. (-1 = no limit) (integer value)
+#torrent_max_seeder_processes_per_host=1
+
+
+#
+# Options defined in nova.virt.xenapi.pool
+#
+
+# To use for hosts with different CPUs (boolean value)
+#use_join_force=true
+
+
+#
+# Options defined in nova.virt.xenapi.vif
+#
+
+# Name of Integration Bridge used by Open vSwitch (string
+# value)
+#ovs_integration_bridge=xapi1
+
+
+#
+# Options defined in nova.virt.xenapi.vm_utils
+#
+
+# Cache glance images locally. `all` will cache all images,
+# `some` will only cache images that have the image_property
+# `cache_in_nova=True`, and `none` turns off caching entirely
+# (string value)
+#cache_images=all
+
+# Compression level for images, e.g., 9 for gzip -9. Range is
+# 1-9, 9 being most compressed but most CPU intensive on dom0.
+# (integer value)
+#image_compression_level=<None>
+
+# Default OS type (string value)
+#default_os_type=linux
+
+# Time to wait for a block device to be created (integer
+# value)
+#block_device_creation_timeout=10
+
+# Maximum size in bytes of kernel or ramdisk images (integer
+# value)
+#max_kernel_ramdisk_size=16777216
+
+# Filter for finding the SR to be used to install guest
+# instances on. To use the Local Storage in default
+# XenServer/XCP installations set this flag to other-config
+# :i18n-key=local-storage. To select an SR with a different
+# matching criteria, you could set it to other-
+# config:my_favorite_sr=true. On the other hand, to fall back
+# on the Default SR, as displayed by XenCenter, set this flag
+# to: default-sr:true (string value)
+#sr_matching_filter=default-sr:true
+
+# Whether to use sparse_copy for copying data on a resize down
+# (False will use standard dd). This speeds up resizes down
+# considerably since large runs of zeros won't have to be
+# rsynced (boolean value)
+#sparse_copy=true
+
+# Maximum number of retries to unplug VBD (integer value)
+#num_vbd_unplug_retries=10
+
+# Whether or not to download images via Bit Torrent
+# (all|some|none). (string value)
+#torrent_images=none
+
+# Name of network to use for booting iPXE ISOs (string value)
+#ipxe_network_name=<None>
+
+# URL to the iPXE boot menu (string value)
+#ipxe_boot_menu_url=<None>
+
+# Name and optionally path of the tool used for ISO image
+# creation (string value)
+#ipxe_mkisofs_cmd=mkisofs
+
+
+#
+# Options defined in nova.virt.xenapi.vmops
+#
+
+# Number of seconds to wait for instance to go to running
+# state (integer value)
+#running_timeout=60
+
+# The XenAPI VIF driver using XenServer Network APIs. (string
+# value)
+#vif_driver=nova.virt.xenapi.vif.XenAPIBridgeDriver
+
+# Dom0 plugin driver used to handle image uploads. (string
+# value)
+#image_upload_handler=nova.virt.xenapi.image.glance.GlanceStore
+
+
+#
+# Options defined in nova.virt.xenapi.volume_utils
+#
+
+# Number of seconds to wait for an SR to settle if the VDI
+# does not exist when first introduced (integer value)
+#introduce_vdi_retry_wait=20
+
+
+[zookeeper]
+
+#
+# Options defined in nova.servicegroup.drivers.zk
+#
+
+# The ZooKeeper addresses for servicegroup service in the
+# format of host1:port,host2:port,host3:port (string value)
+#address=<None>
+
+# The recv_timeout parameter for the zk session (integer
+# value)
+#recv_timeout=4000
+
+# The prefix used in ZooKeeper to store ephemeral nodes
+# (string value)
+#sg_prefix=/servicegroups
+
+# Number of seconds to wait until retrying to join the session
+# (integer value)
+#sg_retry_interval=5
 
 
