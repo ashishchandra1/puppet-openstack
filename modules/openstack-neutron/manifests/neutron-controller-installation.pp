@@ -25,7 +25,7 @@ class openstack-neutron::neutron-controller-installation {
                  "which"
     ]
     
-     notify {"Installing Openstack Nova on Controller Nodes":} ->
+     notify {"Installing Openstack Neutron on Controller Nodes":} ->
 #Installing Packages
      package {
           $packages: 

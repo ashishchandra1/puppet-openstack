@@ -7,6 +7,12 @@ class openstack-neutron::neutron-db-sync {
      $ADMIN_TOKEN = '@dmin123'
      $RABBIT_PASS = '@dmin123' 
 
+     notify {"Creating Symbolic link":} ->
+     exec {"Creating Symbolic Link":
+          command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
+          user =>'root',
+  } -> 
+
 #  notify {"CREATE SHELL SCRIPT TO SYNC NEUTRON DB ":} ->
 #  file { '/tmp/neutron-init-db.sh':
 #    content => template('openstack-neutron/neutron-controller/neutron-init-db.sh'),
