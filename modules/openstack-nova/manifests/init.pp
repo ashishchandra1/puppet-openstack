@@ -15,6 +15,8 @@ class openstack-nova {
           compute1,compute2: {
                 class {'nova-compute-installation':} ->
                 class {'nova-compute-operations':}
+              }
    }
+
 }
 

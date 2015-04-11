@@ -11,11 +11,19 @@ class openstack-nova::nova-controller-installation {
      $RABBIT_HOST = "controller"
      $MY_IP = "10.0.131.20"
 
+     $packages = [ 
+                 "openstack-nova-api",
+                 "openstack-nova-cert",
+                 "openstack-nova-conductor",
+                 "openstack-nova-console",
+                 "openstack-nova-novncproxy",
+                 "openstack-nova-scheduler",
+                 "python-novaclient"
+    ]
 
-     notify {"Installing Openstack Nova on Controller Nodes":} ->
 
-     $packages = [ "openstack-nova-api", "openstack-nova-cert", "openstack-nova-conductor", "openstack-nova-console", "openstack-nova-novncproxy", "openstack-nova-scheduler", "python-novaclient"]
     
+     notify {"Installing Openstack Nova on Controller Nodes":} ->
 #Installing Packages
      package {
           $packages: 

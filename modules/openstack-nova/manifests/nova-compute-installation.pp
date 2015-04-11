@@ -11,10 +11,12 @@ class openstack-nova::nova-compute-installation {
      $RABBIT_HOST = "controller"
      $MY_IP = $ipaddress
     
+     $packages = [
+              "openstack-nova-compute",
+              "sysfsutils"
+     ]
+   
      notify {"Installing Openstack Nova on Compute Nodes":} ->
-
-     $packages = [ "openstack-nova-compute", "sysfsutils"]
-    
 #Installing Packages
      package {
           $packages: 
