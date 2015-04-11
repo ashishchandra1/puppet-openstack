@@ -9,7 +9,7 @@ class openstack-nova::nova-db-sync {
 
   notify {"CREATE SHELL SCRIPT TO SYNC NOVA DB ":} ->
   file { '/tmp/nova-init-db.sh':
-    content => template('openstack-nova/nova-init-db.sh'),
+    content => template('openstack-nova/nova-controller/nova-init-db.sh'),
     mode    => 0755,
   } ->
 

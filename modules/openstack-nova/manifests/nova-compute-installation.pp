@@ -1,4 +1,4 @@
-class openstack-nova::nova-controller-installation {
+class openstack-nova::nova-compute-installation {
 
      $NOVA_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
@@ -6,9 +6,9 @@ class openstack-nova::nova-controller-installation {
      $NOVA_ADMIN_PORT = '8774'
      $ADMIN_TOKEN = '@dmin123'
      $RABBIT_PASS = '@dmin123' 
-     notify {"Installing Openstack Nova on Controller Nodes":} ->
+     notify {"Installing Openstack Nova on Compute Nodes":} ->
 
-     $packages = [ "openstack-nova-api", "openstack-nova-cert", "openstack-nova-conductor", "openstack-nova-console", "openstack-nova-novncproxy", "openstack-nova-scheduler", "python-novaclient"]
+     $packages = [ "openstack-nova-compute", "sysfsutils"]
     
 #Installing Packages
      package {
@@ -21,7 +21,7 @@ class openstack-nova::nova-controller-installation {
        ensure  => file,
        owner  => root,
        group  => nova,
-       content => template('openstack-nova/nova-controller/nova.conf.erb'),
+       content => template('openstack-nova/nova-compute/nova.conf.erb'),
    }
 
 }

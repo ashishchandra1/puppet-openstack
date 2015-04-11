@@ -15,7 +15,7 @@ class openstack-nova::keystone {
      $region = "regionOne"
      notify {"Copy file for Keystone Nova operations":} ->
      file { '/tmp/keystone-nova-operations.sh':
-            content => template('openstack-nova/keystone-nova-operations.sh'),
+            content => template('openstack-nova/nova-controller/keystone-nova-operations.sh'),
             mode    => 0755,
           } ->  
 
