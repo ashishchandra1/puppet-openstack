@@ -22,6 +22,13 @@ class openstack-neutron {
                 class {'neutron-network::neutron-ovs-operations':} ->
                 class {'neutron-network::neutron-network-operations':}
               }
+          
+          compute1, compute2: {
+                class {'neutron-compute::neutron-compute-installation':} ->
+                class {'neutron-compute::neutron-compute-config':} ->
+                class {'neutron-compute::compute-ovs-operations':} ->
+                class {'neutron-compute::neutron-compute-operations':}
+          }
    }
 
 }
