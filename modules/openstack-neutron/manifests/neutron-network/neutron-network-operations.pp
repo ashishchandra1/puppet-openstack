@@ -1,4 +1,4 @@
-class openstack-neutron::neutron-network-operations {
+class openstack-neutron::neutron-network::neutron-network-operations {
 
    notify{"Copy files":} ->
    exec {"Copy files":

@@ -1,9 +1,10 @@
-class openstack-neutron::neutron-network-l3-config {
+class openstack-neutron::neutron-network::neutron-network-config {
 
      $KEYSTONE_HOST = "controller"
      $KEYSTONE_ADMIN_PORT = '35357'
      $ADMIN_TOKEN = '@dmin123'
-     
+     $METADATA_SECRET = '@dmin123'   
+  
      $admin_tenant = "admin"
      $admin_user =  "admin"
      $admin_user_pass = "@dmin123"
@@ -38,6 +39,14 @@ class openstack-neutron::neutron-network-l3-config {
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-network/dhcp_agent.ini.erb')
+     } ->
+
+    notify {"CREATING dnsmasq.conf FILE":} ->
+        file { "/etc/neutron/dnsmasq-neutron.conf":
+        ensure  => file,
+        owner  => root,
+        group  => neutron,
+        content => template('openstack-neutron/neutron-network/dnsmasq-neutron.conf.erb')
      } ->
 
     notify {"CREATING metadata_agent.ini FILE":} ->

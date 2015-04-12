@@ -1,7 +1,7 @@
 [DEFAULT]
 # Print more verbose output (set logging level to INFO instead of default WARNING level).
 #
-verbose = <%= @LOG_BOOL_VALUE %>
+verbose = <%= @VERBOSE %>
 
 # =========Start Global Config Option for Distributed L3 Router===============
 # Setting the "router_distributed" flag to "True" will default to the creation
@@ -251,18 +251,6 @@ auth_strategy=keystone
 # ======== neutron nova interactions ==========
 # Send notification to nova when port status is active.
 # notify_nova_on_port_status_changes = False
-
-
-notify_nova_on_port_status_changes = True
-notify_nova_on_port_data_changes = True
-nova_url = http://<%= @CONTROLLER_HNAME %>:8774/v2
-nova_admin_auth_url = http://<%= @CONTROLLER_HNAME %>:35357/v2.0
-nova_region_name = <%= @REGION %>
-nova_admin_username = <%= @NOVA_ADMIN_USERNAME %>
-nova_admin_tenant_id =
-nova_admin_password = <%= @NOVA_ADMIN_PASSWORD %>
-
-
 # Send notifications to nova when port data (fixed_ips/floatingips) change
 # so nova can update it's cache.
 # notify_nova_on_port_data_changes = False
@@ -598,7 +586,7 @@ admin_password = <%= @ADMIN_PASSWORD %>
 [database]
 # This line MUST be changed to actually run the plugin.
 # Example:
-connection = mysql://neutron:<%= @NEUTRON_DBPASS %>@<%= @CONTROLLER_HNAME %>/neutron
+# connection = mysql://root:pass@127.0.0.1:3306/neutron
 # Replace 127.0.0.1 above with the IP address of the database used by the
 # main neutron server. (Leave it as is if the database runs on this host.)
 # connection = sqlite://
