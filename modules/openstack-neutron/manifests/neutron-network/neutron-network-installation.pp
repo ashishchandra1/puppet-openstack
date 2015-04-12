@@ -16,20 +16,31 @@ class openstack-neutron::neutron-network::neutron-network-installation {
               "openstack-neutron-ml2",
               "openstack-neutron-openvswitch"
      ]
-   
+  
+     notify {"Configure kernel networking parameter":} ->
+     file { "/etc/sysctl.conf":
+        ensure  => file,
+        owner  => root,
+        content => template('openstack-neutron/neutron-network/sysctl.conf.erb')
+      } ->
+     
+     exec {"Configure kernel networking":
+          command =>"sysctl -p",
+          user => 'root',
+     } -> 
+
      notify {"Installing Openstack Neutron on Network Nodes":} ->
-#Installing Packages
      package {
           $packages: 
           ensure =>installed,
-    } 
+    } -> 
 
-#   notify {"CREATING neutron.conf FILE":} ->
-#   file { "/etc/neutron/neutron.conf":
-#       ensure  => file,
-#       owner  => root,
-#       group  => neutron,
-#       content => template('openstack-neutron/neutron-network/neutron.conf.erb'),
-#   }
+    notify {"CREATING neutron.conf FILE":} ->
+    file { "/etc/neutron/neutron.conf":
+        ensure  => file,
+        owner  => root,
+        group  => neutron,
+        content => template('openstack-neutron/neutron-network/neutron.conf.erb'),
+   }
 
 }

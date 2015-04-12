@@ -17,11 +17,10 @@ class openstack-neutron {
               }
 
           network: {
-                notify{"I reached here":} ->
-                class {'neutron-network::neutron-network-installation':}
-                #class {'neutron-network::neutron-network-config':} ->
-                #class {'neutron-network::neutron-ovs-operations':} ->
-                #class {'neutron-network::neutron-network-operations':}
+                class {'neutron-network::neutron-network-installation':} ->
+                class {'neutron-network::neutron-network-config':} ->
+                class {'neutron-network::neutron-ovs-operations':} ->
+                class {'neutron-network::neutron-network-operations':}
               }
    }
 

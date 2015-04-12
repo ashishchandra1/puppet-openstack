@@ -16,15 +16,16 @@ class openstack-neutron::neutron-network::neutron-network-operations {
 
     notify {"Enable Neutron Services on Network Node":} ->
     exec {"Enabling Neutron Services":
-          command => 'systemctl enable neutron-openvswitch-agent.service                                    neutron-l3-agent.service neutron-dhcp-agent.service
-                       neutron-metadata-agent.service neutron-ovs-cleanup.service',
+          command => 'systemctl enable neutron-openvswitch-agent.service \
+                      neutron-l3-agent.service neutron-dhcp-agent.service \
+                      neutron-metadata-agent.service neutron-ovs-cleanup.service',
           user => 'root',
      } ->
 
      notify {"Start Neutron Services on Network Node":} ->
      exec {"Starting neutron Services":
-          command => 'systemctl start eutron-openvswitch-agent.service 
-          neutron-l3-agent.service neutron-dhcp-agent.service 
+          command => 'systemctl start neutron-openvswitch-agent.service \
+          neutron-l3-agent.service neutron-dhcp-agent.service \
           neutron-metadata-agent.service neutron-ovs-cleanup.service',
           user => 'root',
      }
