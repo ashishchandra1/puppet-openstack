@@ -11,7 +11,7 @@ class openstack-neutron::neutron-network::neutron-network-config {
      $admin_tenant = "admin"
      $admin_user =  "admin"
      $admin_user_pass = "@dmin123"
-     $INSTANCE_TUNNEL_IP = "$ipaddress_enp0s3"
+     $INSTANCE_TUNNEL_IP = "$ipaddress_enp0s8"
 
      notify {"CREATING ml2_conf.ini FILE":} ->
         file { "/etc/neutron/plugins/ml2/ml2_conf.ini":

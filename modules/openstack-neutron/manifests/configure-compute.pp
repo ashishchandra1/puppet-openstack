@@ -1,7 +1,7 @@
 class openstack-neutron::configure-compute {
    
    $CONTROLLER_HNAME = "controller"
-   $NOVA_ADMIN_PASS = "@dmin123"
+   $NEUTRON_ADMIN_PASSWORD = "@dmin123"
    $METADATA_SECRET = '@dmin123'
 
    notify {"Adding configurations for Neutron":} ->
@@ -23,9 +23,7 @@ class openstack-neutron::configure-compute {
          admin_auth_url = http://${CONTROLLER_HNAME}:35357/v2.0
          admin_tenant_name = service
          admin_username = neutron
-         admin_password = ${NOVA_ADMIN_PASS}",
-         service_metadata_proxy = True
-         metadata_proxy_shared_secret = ${METADATA_SECRET}
+         admin_password = ${NEUTRON_ADMIN_PASSWORD}",
          match => '^#url=http://127.0.0.1:9696',
    } 
 

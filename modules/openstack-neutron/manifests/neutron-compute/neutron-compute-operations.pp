@@ -1,4 +1,4 @@
-class openstack-neutron::neutron-network::neutron-network-operations {
+class openstack-neutron::neutron-compute::neutron-compute-operations {
 
     notify {"Creating Symbolic link on Compute Node":} ->
     exec {"Creating SYM LINK":
