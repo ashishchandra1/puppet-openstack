@@ -8,4 +8,6 @@ class openstack-dashboard {
                 class {'dashboard-operations':}
              }
 
+   }
+
 }
