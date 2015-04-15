@@ -506,7 +506,7 @@ rpc_backend=rabbit
 #state_path=/var/lib/cinder
 
 # IP address of this host (string value)
-#my_ip=10.0.0.1
+my_ip=<%= @CONTROLLER_HNAME%>
 
 # Default glance host name or IP (string value)
 #glance_host=$my_ip
@@ -783,7 +783,7 @@ auth_strategy=keystone
 
 # Print more verbose output (set logging level to INFO instead
 # of default WARNING level). (boolean value)
-#verbose=false
+verbose=<%= @VERBOSE %>
 
 # Log output to standard error. (boolean value)
 #use_stderr=true

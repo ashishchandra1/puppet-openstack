@@ -1,11 +1,10 @@
 class openstack-glance::keystone {
 
      $GLANCE_DBPASS = '@dmin123'
-     $CONTROLLER_HNAME = $hostname 
-     $GLANCE_HOST = $ipaddress
+     $CONTROLLER_HNAME = "controller" 
      $GLANCE_ADMIN_PORT = '9292'
 
-     $KEYSTONE_HOST = $ipaddress
+     $KEYSTONE_HOST = "controller"
      $KEYSTONE_ADMIN_PORT = '35357'
      $ADMIN_TOKEN = '@dmin123'
      

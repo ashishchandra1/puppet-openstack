@@ -8,7 +8,6 @@ class openstack-cinder {
              }
 
           controller2,controller3: {
-                class {'keystone':} ->
                 class {'cinder-installation':} ->
                 class {'cinder-operations':}
               }

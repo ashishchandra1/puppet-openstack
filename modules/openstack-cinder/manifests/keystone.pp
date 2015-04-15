@@ -1,11 +1,9 @@
 class openstack-cinder::keystone {
 
      $CINDER_DBPASS = '@dmin123'
-     $CONTROLLER_HNAME = $hostname 
-     $CINDER_HOST = $ipaddress
-     $CINDER_ADMIN_PORT = '9292'
+     $CONTROLLER_HNAME = "controller" 
 
-     $KEYSTONE_HOST = $ipaddress
+     $KEYSTONE_HOST = "controller"
      $KEYSTONE_ADMIN_PORT = '35357'
      $ADMIN_TOKEN = '@dmin123'
      
