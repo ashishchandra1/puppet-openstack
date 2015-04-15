@@ -1,9 +1,9 @@
 class openstack-nova {
    case $hostname {
          controller1: {
-                class {'keystone':} ->
+                #class {'keystone':} ->
                 class {'nova-controller-installation':} ->
-                class {'nova-db-sync':} ->
+                #class {'nova-db-sync':} ->
                 class {'nova-controller-operations':}
              }
 
@@ -13,8 +13,8 @@ class openstack-nova {
               }
 
           compute1,compute2: {
-                class {'nova-compute-installation':} ->
-                class {'nova-compute-operations':}
+                class {'nova-compute::nova-compute-installation':} ->
+                class {'nova-compute::nova-compute-operations':}
               }
    }
 

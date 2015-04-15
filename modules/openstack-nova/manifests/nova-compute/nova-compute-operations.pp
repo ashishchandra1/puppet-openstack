@@ -1,4 +1,4 @@
-class openstack-nova::nova-compute-operations {
+class openstack-nova::nova-compute::nova-compute-operations {
 
  notify {"Enable Nova Compute Service":} ->
   exec {"Enabled Nova Compute Services":

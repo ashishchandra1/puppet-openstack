@@ -1,4 +1,4 @@
-class openstack-nova::nova-compute-installation {
+class openstack-nova::nova-compute::nova-compute-installation {
 
      $NOVA_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
