@@ -16,7 +16,7 @@ class openstack-neutron::neutron-controller-installation {
      $MY_IP = "10.0.131.20"
      $REGION = "regionOne"
      $NOVA_ADMIN_USERNAME  = "nova"
-     $NOVA_ADMIN_PASSWORD  = "nova"
+     $NOVA_ADMIN_PASSWORD  = "@dmin123"
      
      $packages = [ 
                  "openstack-neutron",
