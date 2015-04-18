@@ -6,9 +6,9 @@ class openstack-nova::nova-compute::nova-compute-installation {
      $ADMIN_USER = 'nova'
      $ADMIN_PASSWORD = '@dmin123'
      $RABBIT_PASSWORD = '@dmin123'
- 
-     $LOG_BOOL_VALUE = "True"
-     $RABBIT_HOST = "controller"
+    
+     $VERBOSE = "True"
+     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
      $MY_IP = $ipaddress
     
      $packages = [

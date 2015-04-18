@@ -7,9 +7,9 @@ class openstack-nova::nova-controller-installation {
      $ADMIN_PASSWORD = '@dmin123'
      $RABBIT_PASSWORD = '@dmin123' 
 
-     $LOG_BOOL_VALUE = "True"
-     $RABBIT_HOST = "controller"
-     $MY_IP = "$ipaddress"
+     $VERBOSE = "True"
+     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
+     $MY_IP = "10.0.129.20"
 
      $packages = [ 
                  "openstack-nova-api",
@@ -20,11 +20,8 @@ class openstack-nova::nova-controller-installation {
                  "openstack-nova-scheduler",
                  "python-novaclient"
     ]
-
-
     
      notify {"Installing Openstack Nova on Controller Nodes":} ->
-#Installing Packages
      package {
           $packages: 
           ensure =>installed,

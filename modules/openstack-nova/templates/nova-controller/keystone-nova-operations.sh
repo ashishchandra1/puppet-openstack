@@ -36,7 +36,7 @@ else
         keystone user-create --name=nova --pass="$admin_user_pass" > /dev/null
 
         # Add the admin role to nova user
-        keystone  user-role-add --user nova --tenant service --role admin
+        keystone user-role-add --user nova --tenant service --role admin
 
         user_id=$(get_user_id nova)
 
