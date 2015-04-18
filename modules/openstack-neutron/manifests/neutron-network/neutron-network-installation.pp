@@ -8,8 +8,7 @@ class openstack-neutron::neutron-network::neutron-network-installation {
      $RABBIT_PASSWORD = '@dmin123'
  
      $VERBOSE = "True"
-     $RABBIT_HOST = "controller"
-     $MY_IP = $ipaddress_enp0s8
+     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
     
      $packages = [
               "openstack-neutron",

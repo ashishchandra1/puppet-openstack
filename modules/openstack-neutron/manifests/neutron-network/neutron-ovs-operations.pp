@@ -22,7 +22,7 @@ class openstack-neutron::neutron-network::neutron-ovs-operations {
      notify {"Add port to external bridge":} ->
      exec {"Adding port to external bridge":
           #command => 'ovs-vsctl add-port br-ex ${INTERFACE_NAME}',
-          command => 'ovs-vsctl add-port br-ex enp0s8',
+          command => 'ovs-vsctl add-port br-ex enp8s0.798',
           user => 'root',
      }
 

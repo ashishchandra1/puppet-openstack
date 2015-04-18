@@ -9,11 +9,10 @@
 
 # The DHCP agent requires an interface driver be set. Choose the one that best
 # matches your plugin.
-# interface_driver =
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 # Example of interface_driver option for OVS based plugins(OVS, Ryu, NEC, NVP,
 # BigSwitch/Floodlight)
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 # Name of Open vSwitch bridge to use
 # ovs_integration_bridge = br-int

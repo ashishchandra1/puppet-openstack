@@ -5,7 +5,7 @@ class openstack-neutron::neutron-compute::neutron-compute-installation {
      $RABBIT_PASSWORD = '@dmin123'
  
      $VERBOSE = "True"
-     $RABBIT_HOST = "controller"
+     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
     
      $packages = [
               "openstack-neutron-ml2",

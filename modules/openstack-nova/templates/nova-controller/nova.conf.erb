@@ -3129,12 +3129,12 @@ admin_tenant_name= service
 # Set flag to indicate Neutron will proxy metadata requests
 # and resolve instance ids. (boolean value)
 # Deprecated group;name - DEFAULT;service_neutron_metadata_proxy
-#service_metadata_proxy=false
+service_metadata_proxy=True
 
 # Shared secret to validate proxies Neutron metadata requests
 # (string value)
 # Deprecated group;name - DEFAULT;neutron_metadata_proxy_shared_secret
-#metadata_proxy_shared_secret=
+metadata_proxy_shared_secret=<%= @METADATA_SECRET%>
 
 
 #

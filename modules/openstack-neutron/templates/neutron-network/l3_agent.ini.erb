@@ -4,11 +4,10 @@
 
 # L3 requires that an interface driver be set. Choose the one that best
 # matches your plugin.
-# interface_driver =
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 # Example of interface_driver option for OVS based plugins (OVS, Ryu, NEC)
 # that supports L3 agent
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 # Use veth for an OVS interface or not.
 # Support kernels with limited namespace support

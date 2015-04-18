@@ -11,8 +11,6 @@ class openstack-neutron::neutron-db-sync {
   exec {"Nova DB Syncing":
      command => "su -s /bin/sh -c 'neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade juno' neutron",
      user => 'root',
-   require =>  Package["python-neutronclient"],
   } 
-
 
 }

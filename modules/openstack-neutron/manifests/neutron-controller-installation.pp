@@ -11,9 +11,9 @@ class openstack-neutron::neutron-controller-installation {
      $KEYSTONE_ADMIN_PORT = '35357'
      $ADMIN_TOKEN = '@dmin123'
     
-     $LOG_BOOL_VALUE = "True"
-     $RABBIT_HOST = "controller"
-     $MY_IP = "10.0.131.20"
+     $VERBOSE = "True"
+     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
+     $MY_IP = "10.0.129.20"
      $REGION = "regionOne"
      $NOVA_ADMIN_USERNAME  = "nova"
      $NOVA_ADMIN_PASSWORD  = "@dmin123"
