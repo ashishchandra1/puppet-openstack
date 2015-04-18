@@ -9,7 +9,7 @@ class openstack-nova::nova-controller-installation {
 
      $LOG_BOOL_VALUE = "True"
      $RABBIT_HOST = "controller"
-     $MY_IP = "10.0.131.20"
+     $MY_IP = "$ipaddress"
 
      $packages = [ 
                  "openstack-nova-api",
