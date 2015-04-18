@@ -5,7 +5,7 @@ class openstack-neutron {
                 class {'neutron-controller-installation':} ->
                 class {'neutron-ml2-config':} ->
                 class {'configure-compute':} -> 
-                #class {'neutron-db-sync':} ->
+                class {'neutron-db-sync':} ->
                 class {'neutron-controller-operations':}
              }
 
