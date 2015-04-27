@@ -9,6 +9,7 @@ class openstack-nova::nova-controller-installation {
 
      $VERBOSE = "True"
      $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
+     $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
      $MY_IP = "10.0.129.20"
      $METADATA_SECRET = "@dmin123"
 
