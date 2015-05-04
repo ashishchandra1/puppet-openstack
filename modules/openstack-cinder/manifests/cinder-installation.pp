@@ -2,6 +2,8 @@ class openstack-cinder::cinder-installation {
 
      $CINDER_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller"
+     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
+     $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
      $RABBIT_PASS = '@dmin123' 
      $VERBOSE = 'True'
 
