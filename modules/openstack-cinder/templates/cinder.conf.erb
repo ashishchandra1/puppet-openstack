@@ -18,7 +18,7 @@ amqp_durable_queues=true
 #qpid_hostname=localhost
 
 # Qpid broker port. (integer value)
-#qpid_port=5672
+#qpid_port=5672ad
 
 # Qpid HA cluster host:port pairs. (list value)
 #qpid_hosts=$qpid_hostname:$qpid_port
@@ -2600,7 +2600,7 @@ identity_uri=http://<%= @CONTROLLER_HNAME%>:35357
 admin_user=cinder
 
 # Keystone account password (string value)
-admin_password=<%= @GLANCE_DBPASS%>
+admin_password=<%= @CINDER_DBPASS%>
 
 # Keystone service account tenant name to validate user tokens
 # (string value)
