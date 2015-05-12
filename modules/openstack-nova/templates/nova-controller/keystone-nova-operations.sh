@@ -82,4 +82,6 @@ else
             --internalurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \ 
             --adminurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \
             --region "$region" > /dev/null
+fi            
+            
 
