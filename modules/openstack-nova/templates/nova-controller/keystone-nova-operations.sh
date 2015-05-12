@@ -45,8 +45,8 @@ fi
 
 #Create a Nova service
 get_service_id () {
-        keystone service-list |  awk -F'|' '{print $2,$3,$4}' | awk -vservice_name="$1" -vservice_type="$2" 
-                '$2 == service_name && $3 == service_type {print $1}'
+        keystone service-list |  awk -F'|' '{print $2,$3,$4}' | awk -vservice_name="$1" -vservice_type="$2" '
+                 $2 == service_name && $3 == service_type {print $1}'
 }
 
 service_id=$(get_service_id nova compute )
