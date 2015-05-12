@@ -3,7 +3,7 @@ class openstack-neutron::neutron-compute::neutron-compute-operations {
     notify {"Creating Symbolic link on Compute Node":} ->
     
     file {'/etc/neutron/plugin.ini':
-        ensure => link;
+        ensure => link,
         target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
       } ->
 
