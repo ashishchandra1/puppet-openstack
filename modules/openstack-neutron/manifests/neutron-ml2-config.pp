@@ -21,7 +21,7 @@ class openstack-neutron::neutron-ml2-config {
     notify {"Creating Symbolic link":} ->
 
     file {'/etc/neutron/plugin.ini':
-        ensure => link;
+        ensure => link,
         target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
     }
 
