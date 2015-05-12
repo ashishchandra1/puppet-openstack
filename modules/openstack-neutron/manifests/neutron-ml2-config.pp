@@ -19,9 +19,15 @@ class openstack-neutron::neutron-ml2-config {
    } ->
 
     notify {"Creating Symbolic link":} ->
-    exec {"Creating Symbolic Link":
-          command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
-          user =>'root',
-     } 
+
+    file {'/etc/neutron/plugin.ini':
+        ensure => link;
+        target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
+    }
+
+    #exec {"Creating Symbolic Link":
+    #      command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
+    #      user =>'root',
+    # } 
 }
 
