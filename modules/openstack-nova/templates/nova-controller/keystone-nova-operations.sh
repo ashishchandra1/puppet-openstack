@@ -79,8 +79,8 @@ else
    # Create the Compute Service API endpoints
    keystone endpoint-create  --service-id $(keystone service-list | awk '/ compute / {print $2}') \
             --publicurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \
-            --internalurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \ 
-            --adminurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \
+            --internalurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \
+            --adminurl http://"$keystone_host":8774/v2/%\(tenant_id\) \
             --region "$region" > /dev/null
 fi            
             
