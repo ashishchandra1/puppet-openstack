@@ -2,23 +2,19 @@
 # (ListOpt) List of network type driver entrypoints to be loaded from
 # the neutron.ml2.type_drivers namespace.
 #
-# type_drivers = local,flat,vlan,gre,vxlan
+type_drivers = local,flat,vlan,gre,vxlan
 # Example: type_drivers = flat,vlan,gre,vxlan
-type_drivers = flat,gre
-tenant_network_types = gre
-mechanism_drivers = openvswitch
-
 
 # (ListOpt) Ordered list of network_types to allocate as tenant
 # networks. The default value 'local' is useful for single-box testing
 # but provides no connectivity between hosts.
 #
-# tenant_network_types = local
+tenant_network_types = vxlan
 # Example: tenant_network_types = vlan,gre,vxlan
 
 # (ListOpt) Ordered list of networking mechanism driver entrypoints
 # to be loaded from the neutron.ml2.mechanism_drivers namespace.
-# mechanism_drivers =
+mechanism_drivers = openvswitch,linuxbridge
 # Example: mechanism_drivers = openvswitch,mlnx
 # Example: mechanism_drivers = arista
 # Example: mechanism_drivers = cisco,logger
@@ -57,7 +53,7 @@ tunnel_id_ranges = 1:1000
 # (ListOpt) Comma-separated list of <vni_min>:<vni_max> tuples enumerating
 # ranges of VXLAN VNI IDs that are available for tenant network allocation.
 #
-# vni_ranges =
+vni_ranges = 1001:2000
 
 # (StrOpt) Multicast group for the VXLAN interface. When configured, will
 # enable sending all broadcast traffic to this multicast group. When left
