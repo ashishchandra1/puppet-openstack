@@ -26,10 +26,10 @@ class openstack-neutron::neutron-controller-installation {
     ]
     
      notify {"Installing Openstack Neutron on Controller Nodes":} ->
-#Installing Packages
      package {
           $packages: 
           ensure =>installed,
+          before => File['/etc/neutron/neutron.conf'],
     } -> 
 
    notify {"CREATING neutron.conf FILE":} ->

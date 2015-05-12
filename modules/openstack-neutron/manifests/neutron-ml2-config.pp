@@ -16,18 +16,13 @@ class openstack-neutron::neutron-ml2-config {
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-controller/ml2.conf.erb') 
-   } ->
+     } ->
 
-    notify {"Creating Symbolic link":} ->
+     notify {"Creating Symbolic link":} ->
 
-    file {'/etc/neutron/plugin.ini':
-        ensure => link,
-        target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
-    }
-
-    #exec {"Creating Symbolic Link":
-    #      command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
-    #      user =>'root',
-    # } 
+     file {'/etc/neutron/plugin.ini':
+         ensure => link,
+         target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
+     }
 }
 

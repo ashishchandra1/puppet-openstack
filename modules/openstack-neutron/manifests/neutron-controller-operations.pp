@@ -4,7 +4,7 @@ class openstack-neutron::neutron-controller-operations {
     exec {"Restarting compute services":
     command => 'systemctl restart openstack-nova-api.service openstack-nova-scheduler.service openstack-nova-conductor.service',
     user => 'root',
- } ->
+   } ->
 
  notify {"Enable Neutron Service":} ->
   exec {"Enabling Neutron Services":

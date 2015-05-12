@@ -23,7 +23,7 @@ class openstack-neutron::neutron-network::neutron-network-config {
   
       notify {"Creating Symbolic link on network node":} ->
       file {'/etc/neutron/plugin.ini':
-         ensure => link;
+         ensure => link,
          target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
       } ->
 
