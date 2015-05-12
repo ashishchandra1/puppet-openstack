@@ -179,18 +179,18 @@ auth_strategy=keystone
 
 # =========== items for l3 extension ==============
 # Enable high availability for virtual routers.
-# l3_ha = False
+l3_ha = True
 #
 # Maximum number of l3 agents which a HA router will be scheduled on. If it
 # is set to 0 the router will be scheduled on every agent.
-# max_l3_agents_per_router = 3
+max_l3_agents_per_router = 3
 #
 # Minimum number of l3 agents which a HA router will be scheduled on. The
 # default value is 2.
-# min_l3_agents_per_router = 2
+min_l3_agents_per_router = 2
 #
 # CIDR of the administrative network if HA mode is enabled
-# l3_ha_net_cidr = 169.254.192.0/18
+l3_ha_net_cidr = 169.254.192.0/18
 # =========== end of items for l3 extension =======
 
 # =========== WSGI parameters related to the API server ==============
