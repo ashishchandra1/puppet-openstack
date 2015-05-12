@@ -27,7 +27,7 @@ user_id=$(get_user_id nova)
 if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
-        # Creat the user
+        # Create the user
         keystone user-create --name=nova --pass="$admin_user_pass" > /dev/null
 
         # Add the admin role to nova user
@@ -54,7 +54,7 @@ service_id=$(get_service_id nova compute )
 if [ "$service_id" ]; then
         echo "Found existing service id: $service_id"
 else
-        # Creat the service and endpoint.
+        # Creat the service
         keystone service-create --name=nova --type=compute --description="OpenStack Compute" > /dev/null
 
         service_id=$(get_service_id nova compute)
@@ -67,6 +67,7 @@ else
         fi
 fi
 
+# Create the Compute Service API endpoints
 get_keystone_endpoint () {
         keystone endpoint-list | awk -F'|' '{print $7}' | awk -vservice_id="$1" '$1 == service_id  {print $1}'
 }
@@ -76,7 +77,7 @@ endpoint_id=$(get_keystone_endpoint $service_id )
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
-   # Create the Compute Service API endpoints
+
    keystone endpoint-create  --service-id $(keystone service-list | awk '/ compute / {print $2}') \
             --publicurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \
             --internalurl http://"$keystone_host":8774/v2/%\(tenant_id\)s \

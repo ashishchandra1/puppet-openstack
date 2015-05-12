@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Create neutron user and service.
+# Create Neutron user, service and endpoint.
 
 keystone_host="<%=  @KEYSTONE_HOST %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
@@ -17,14 +17,10 @@ export OS_USERNAME=${admin_user}
 export OS_PASSWORD=${admin_user_pass}
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
 
-# Creat the neutron user.
+# Creat the Neutron user.
 
 get_user_id () {
-        keystone user-list |
-                awk -F'|' '{print $2,$3,$4}' |
-                awk -vuser_name="$1" '
-                        $2 == user_name  {print $1}
-                '
+        keystone user-list | awk -F'|' '{print $2,$3,$4}' | awk -vuser_name="$1" ' $2 == user_name  {print $1} '
 }
 
 user_id=$(get_user_id neutron)
@@ -48,24 +44,17 @@ else
         fi
 fi
 
-#Create a Nova service
+#Create a Neutron service
 get_service_id () {
-        keystone service-list |
-                awk -F'|' '{print $2,$3,$4}' |
-                awk -vservice_name="$1" -vservice_type="$2" '
-                        $2 == service_name && $3 == service_type {print $1}
-                '
+        keystone service-list | awk -F'|' '{print $2,$3,$4}' | awk -vservice_name="$1" -vservice_type="$2" '
+                        $2 == service_name && $3 == service_type {print $1} '
 }
 service_id=$(get_service_id neutron network )
 
 if [ "$service_id" ]; then
         echo "Found existing service id: $service_id"
 else
-        # Creat the service and endpoint.
-        keystone service-create \
-                --name=neutron \
-                --type=network \
-                --description="OpenStack Networking" > /dev/null
+        keystone service-create --name=neutron --type=network --description="OpenStack Networking" > /dev/null
 
         service_id=$(get_service_id neutron network)
 
@@ -77,8 +66,19 @@ else
         fi
 fi
 
+# Create the Neutron Service API endpoints
+get_keystone_endpoint () {
+        keystone endpoint-list | awk -F'|' '{print $7}' | awk -vservice_id="$1" '$1 == service_id  {print $1}'
+}
 
-# Create the Compute Service API endpoints
+endpoint_id=$(get_keystone_endpoint $service_id )
 
-keystone endpoint-create  --service-id $(keystone service-list | awk '/ network / {print $2}') --publicurl http://"$keystone_host":9696 --internalurl http://"$keystone_host":9696 --adminurl http://"$keystone_host":9696 --region "$region"
-
+if [ "$endpoint_id" ]; then
+        echo "Found existing endpoint: $endpoint_id"
+else
+   keystone endpoint-create  --service-id $(keystone service-list | awk '/ network / {print $2}') \
+            --publicurl http://"$keystone_host":9696 \
+            --internalurl http://"$keystone_host":9696 \
+            --adminurl http://"$keystone_host":9696 \
+            --region "$region" > /dev/null
+fi
