@@ -76,8 +76,8 @@ if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
     keystone endpoint-create  --service-id $(keystone  service-list | awk '/ image / {print $2}') \
-             --publicurl http://"$keystone_host":9292 
-             --internalurl http://"$keystone_host":9292 
-             --adminurl http://"$keystone_host":9292 
+             --publicurl http://"$keystone_host":9292 \
+             --internalurl http://"$keystone_host":9292 \ 
+             --adminurl http://"$keystone_host":9292 \
              --region "$region" > /dev/null
 fi             
