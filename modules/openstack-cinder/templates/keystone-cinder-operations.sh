@@ -95,7 +95,7 @@ endpoint_id_v2=$(get_keystone_endpoint $service_id_v2 )
 if [ "$endpoint_id_v1" ]; then
         echo "Found existing endpoint: $endpoint_id_v1"
 else
-        keystone endpoint-create  --service-id $(keystone service-list | awk '/ volumev2 / {print $2}') \
+        keystone endpoint-create  --service-id $(keystone service-list | awk '/ volume / {print $2}') \
                 --publicurl http://"$keystone_host":8776/v1/%\(tenant_id\)s \
                 --internalurl http://"$keystone_host":8776/v1/%\(tenant_id\)s \
                 --adminurl http://"$keystone_host":8776/v1/%\(tenant_id\)s \
@@ -105,7 +105,7 @@ fi
 if [ "$endpoint_id_v2" ]; then
         echo "Found existing endpoint: $endpoint_id_v2"
 else
-        keystone endpoint-create --service-id $(keystone service-list | awk '/ volume / {print $2}') \
+        keystone endpoint-create --service-id $(keystone service-list | awk '/ volumev2 / {print $2}') \
                 --publicurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
                 --internalurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
                 --adminurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
