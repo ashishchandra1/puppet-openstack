@@ -3,7 +3,7 @@ class openstack-keystone {
    notify {"Openstack keystone installation and Operations": } ->
    case $hostname {
          controller1: {
-                class {'keystone-db':} ->
+                class {'create-keystone-db':} ->
                 class {'keystone-installation':} ->
                 class {'keystone-db-sync':} ->
                 class {'keystone-operations':} -> 
