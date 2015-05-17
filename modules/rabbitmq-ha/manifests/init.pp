@@ -6,7 +6,7 @@ class rabbitmq-ha {
 
           controller2,controller3: {
                 class {'rabbitmq-install':} ->
-                class {'rabbimq-ha':}
+                class {'rabbitmq-ha':}
               }
 
    }
