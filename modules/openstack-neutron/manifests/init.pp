@@ -1,6 +1,7 @@
 class openstack-neutron {
    case $hostname {
          controller1: {
+                class {'create-neutron-db':} ->
                 class {'keystone':} ->
                 class {'neutron-controller-installation':} ->
                 class {'neutron-ml2-config':} ->

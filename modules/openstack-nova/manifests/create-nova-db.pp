@@ -1,4 +1,4 @@
-class mariadb-galera::nova-controller {
+class openstack-nova::create-nova-db {
      $mysql_password = '@dmin123'
      $db_user = 'nova'
      $db_name = 'nova'

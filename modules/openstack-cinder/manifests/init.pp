@@ -1,6 +1,7 @@
 class openstack-cinder {
    case $hostname {
          controller1: {
+                class {'create-cinder-db':} ->
                 class {'keystone':} ->
                 class {'cinder-installation':} ->
                 class {'cinder-db-sync':} ->
