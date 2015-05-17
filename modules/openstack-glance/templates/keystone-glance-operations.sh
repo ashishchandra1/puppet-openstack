@@ -67,7 +67,7 @@ else
         fi
 fi
 
-# Create the Compute Service API endpoints
+# Create the Image Service API endpoints
 get_keystone_endpoint () {
         keystone endpoint-list | awk -F'|' '{print $7}' | awk -vservice_id="$1" '$1 == service_id  {print $1}'
 }
