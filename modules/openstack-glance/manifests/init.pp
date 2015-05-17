@@ -3,7 +3,7 @@ class openstack-glance {
    notify {"Openstack keystone runs on Primary node": } ->
    case $hostname {
          controller1: {
-                class {create-glance-db':} ->
+                class {'create-glance-db':} ->
                 class {'keystone':} -> 
                 class {'glance-installation':} ->
                 class {'glance-db-sync':} ->
