@@ -10,7 +10,7 @@ class rabbitmq-ha::rabbitmq-install {
          owner  => rabbitmq,
          group  => rabbitmq,
          mode   => '400',
-         content => template('rabbitmq-ha/erlang.cokkie.erb'),
+         content => template('rabbitmq-ha/erlang.cookie.erb'),
     } ->
     
     exec {'systemctl enable rabbitmq-server.service':} ->
