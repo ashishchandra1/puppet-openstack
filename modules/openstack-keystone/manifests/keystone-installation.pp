@@ -9,7 +9,7 @@ class openstack-keystone::keystone-installation {
               "python-keystoneclient"
      ]
 
-     notify {"Installing Openstack glance packages":} ->
+     notify {"Installing Openstack keystone packages":} ->
      package {
           $packages:
           ensure =>installed,

@@ -19,7 +19,7 @@ class openstack-keystone::initiate-keystone {
             mode    => 0755,
           } ->  
 
-      notify {"Keystone operations":} ->
+      notify {"Creating Initial Keystone user, tenanstand services":} ->
       exec {"keystone operations":
             command => "bash /tmp/keystone-operations.sh",
             user => 'root',

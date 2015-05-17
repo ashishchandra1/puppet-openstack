@@ -12,31 +12,26 @@ admin_tenant="<%=  @admin_tenant %>"
 admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 
-export OS_TENANT_NAME=${admin_tenant}
-export OS_USERNAME=${admin_user}
-export OS_PASSWORD=${admin_user_pass}
-export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
-
 export OS_SERVICE_TOKEN=${admin_token}
 export OS_SERVICE_ENDPOINT=http://${keystone_host}:${admin_port}/v2.0/
 
 # Create the Admin tenant.
-keystone tenant-create --name="$admin_tenant" --description 'Admin tenant' > $tmpfile
+keystone tenant-create --name admin --description "Admin Tenant"
 
 # Create the admin user
-keystone user-create  --name="$admin_user" --pass="$admin_user_pass" --email="admin@example.com"
+keystone user-create  --name admin --pass @dmin123 --email admin@example.com
 
 #Create the admin role
-keystone role-create --name="admin" > $tmpfile 
+keystone role-create --name admin
 
 # Add the admin user to the admin role
-keystone user-role-add --user="admin" --tenant="admin" --role="admin" > $tmpfile
+keystone user-role-add --user admin --tenant admin  --role admin
 
 # Create the demo tenant
 keystone tenant-create --name demo --description "Demo Tenant"
 
 # Create demo user under demo tenant
-keystone user-create --name demo --tenant demo --pass $admin_user_pass --email demo@example.com
+keystone user-create --name demo --tenant demo --pass @dmin123 --email demo@example.com
 
 #Create service tenant
 keystone tenant-create --name service --description "Service Tenant"
@@ -47,7 +42,7 @@ get_service_id () {
                  $2 == service_name && $3 == service_type {print $1}'
 }
 
-service_id=$(get_service_id glance image )
+service_id=$(get_service_id keystone identity)
 
 if [ "$service_id" ]; then
         echo "Found existing service id: $service_id"

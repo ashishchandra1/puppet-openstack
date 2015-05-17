@@ -5,7 +5,7 @@ class openstack-keystone {
          controller1: {
                 class {'keystone-installation':} ->
                 class {'keystone-db-sync':} ->
-                class {'keystone-operations':} ->
+                class {'keystone-operations':} -> 
                 class {'initiate-keystone':}
              }
 
