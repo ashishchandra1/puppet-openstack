@@ -1,12 +1,12 @@
 class openstack-keystone {
 
-   notify {"Openstack Keystone runs on Primary node": } ->
+   notify {"Openstack keystone installation and Operations": } ->
    case $hostname {
          controller1: {
-                class {'keystone':} -> 
                 class {'keystone-installation':} ->
                 class {'keystone-db-sync':} ->
-                class {'initiate-keystone:}
+                class {'keystone-operations':} ->
+                class {'initiate-keystone':}
              }
 
           controller2,controller3: {

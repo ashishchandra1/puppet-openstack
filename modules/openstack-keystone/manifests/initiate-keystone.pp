@@ -24,4 +24,4 @@ class openstack-keystone::initiate-keystone {
             command => "bash /tmp/keystone-operations.sh",
             user => 'root',
       } 
-
+}

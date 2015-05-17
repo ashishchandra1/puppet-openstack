@@ -3,7 +3,7 @@ class openstack-keystone::keystone-installation {
      $KEYSTONE_DBPASS = '@dmin123'
      $CONTROLLER_HNAME = "controller" 
      $VERBOSE = 'True' 
-         
+     $ADMIN_TOKEN = "@dmin123"        
      $packages = [
               "openstack-keystone",
               "python-keystoneclient"
@@ -24,7 +24,7 @@ class openstack-keystone::keystone-installation {
 
    notify {"Create generic certificates and keys":} ->
    exec {"Create generic certificates and keys":
-       command => "keystone-manage pki_setup --keystone-user keystone --keystone-group k eystone",
+       command => "keystone-manage pki_setup --keystone-user keystone --keystone-group keystone",
        user => 'root',
        require => Package["python-keystoneclient"],
    } ->
