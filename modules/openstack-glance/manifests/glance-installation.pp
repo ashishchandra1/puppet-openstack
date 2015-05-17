@@ -29,5 +29,9 @@ class openstack-glance::glance-installation {
        group  => glance,
        content => template('openstack-glance/glance-registry.erb'),
    }
+  notify {"“ValueError: unknown locale: UTF-8”":} ->
+  exec {"export LC_ALL=en_US.UTF-8":} ->
+  exec {"export LANG=en_US.UTF-8":}
+
 
 }
