@@ -11,7 +11,7 @@
 # paste application pipelines (for example, in keystone-
 # paste.ini). (string value)
 admin_token= <%= @ADMIN_TOKEN %>
-verbose= <%= @BOOL_VALUE %>
+verbose= <%= @VERBOSE %>
 
 # The IP address of the network interface for the public
 # service to listen on. (string value)
@@ -1334,7 +1334,7 @@ connection=mysql://keystone:<%= @KEYSTONE_DBPASS%>@<%= @CONTROLLER_HNAME%>/keyst
 
 # An implementation of the backend for persisting revocation
 # events. (string value)
-driver=keystone.contrib.revoke.backends.<%= @REVOCATION_DRIVER %>.Revoke
+driver=keystone.contrib.revoke.backends.sql.Revoke
 
 # This value (calculated in seconds) is added to token
 # expiration before a revocation event may be removed from the

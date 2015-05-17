@@ -1,8 +1,8 @@
 {
-  "name": "openstack-keystone",
+  "name": "openstack-glance",
   "version": "0.1.0",
-  "author": "araza",
-  "summary": "Installing and configuring Openstack Services",
+  "author": "Ashish",
+  "summary": "Glance Module for Openstack",
   "license": "Apache 2.0",
   "source": "",
   "project_page": null,

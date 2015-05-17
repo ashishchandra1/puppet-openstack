@@ -1,20 +1,17 @@
 class openstack-keystone {
 
-  notify {"Openstack keystone runs on Primary node": }  
-  case $hostname {
-        controller1: {
-        class {'openstack-keystone::primary' :}
-                    }
-         }
-  notify {"Openstack keystone runs on Secondary node": }
-  case $hostname {
-        controller2,controller3: {
-        class {'openstack-keystone::secondary' :}
-                    }
-         }
-  
+   notify {"Openstack Keystone runs on Primary node": } ->
+   case $hostname {
+         controller1: {
+                class {'keystone':} -> 
+                class {'keystone-installation':} ->
+                class {'keystone-db-sync':} ->
+                class {'initiate-keystone:}
+             }
 
+          controller2,controller3: {
+                class {'keystone-installation':} ->
+                class {'keystone-operations':}                    
+              }
+   }
 }
-
-
-

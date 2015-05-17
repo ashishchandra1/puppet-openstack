@@ -1,7 +1,7 @@
 require 'spec_helper'
-describe 'keystone' do
+describe 'glance' do
 
   context 'with defaults for all parameters' do
-    it { should contain_class('keystone') }
+    it { should contain_class('glance') }
   end
 end
