@@ -7,11 +7,6 @@ class openstack-neutron::neutron-compute::neutron-compute-operations {
         target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
       } ->
 
-    #exec {"Creating SYM LINK":
-    #     command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
-    #     user =>'root',
-    #  } ->
-   
     notify{"Copy files on Compute Node to resolve packaging bug":} ->
     exec {"Copy files on Compute Node":
          command =>'cp /usr/lib/systemd/system/neutron-openvswitch-agent.service \
