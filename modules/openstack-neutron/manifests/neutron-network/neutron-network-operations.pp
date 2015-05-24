@@ -25,8 +25,8 @@ class openstack-neutron::neutron-network::neutron-network-operations {
      notify {"Start Neutron Services on Network Node":} ->
      exec {"Starting neutron Services":
           command => 'systemctl start neutron-openvswitch-agent.service \
-          neutron-l3-agent.service neutron-dhcp-agent.service \
-          neutron-metadata-agent.service neutron-ovs-cleanup.service',
+                      neutron-l3-agent.service neutron-dhcp-agent.service \
+                      neutron-metadata-agent.service neutron-ovs-cleanup.service',
           user => 'root',
      }
 
