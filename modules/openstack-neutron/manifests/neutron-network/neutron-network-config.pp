@@ -27,11 +27,6 @@ class openstack-neutron::neutron-network::neutron-network-config {
          target => '/etc/neutron/plugins/ml2/ml2_conf.ini',  
       } ->
 
-      #exec {"Creating Symbolic Link":
-      #    command => "ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini",
-      #     user =>'root',
-      #} ->    
- 
      notify {"CREATING l3_agent.ini FILE":} ->
         file { "/etc/neutron/l3_agent.ini":
         ensure  => file,
