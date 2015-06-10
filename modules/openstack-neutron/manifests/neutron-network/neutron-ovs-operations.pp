@@ -15,13 +15,13 @@ class openstack-neutron::neutron-network::neutron-ovs-operations {
 
      notify {"Add external bridge":} ->
      exec {"Adding external bridge":
-          command => 'ovs-vsctl add-br br-ex',
+          command => 'ovs-vsctl --may-exist add-br br-ex',
           user => 'root',
      } ->
 
      notify {"Add port to external bridge":} ->
      exec {"Adding port to external bridge":
-          #command => 'ovs-vsctl add-port br-ex ${INTERFACE_NAME}',
+          #command => 'ovs-vsctl --may-exist add-port br-ex ${INTERFACE_NAME}',
           command => 'ovs-vsctl add-port br-ex enp8s0.798',
           user => 'root',
      }
