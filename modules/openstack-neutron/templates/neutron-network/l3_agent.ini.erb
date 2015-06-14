@@ -31,7 +31,7 @@ use_namespaces = True
 # of that external network. To allow L3 agent support multiple external
 # networks, both the external_network_bridge and gateway_external_network_id
 # must be left empty.
-# gateway_external_network_id =
+gateway_external_network_id =
 
 # Indicates that this L3 agent should also handle routers that do not have
 # an external network gateway configured.  This option should be True only
@@ -42,7 +42,7 @@ use_namespaces = True
 # Name of bridge used for external network traffic. This should be set to
 # empty value for the linux bridge. when this parameter is set, each L3 agent
 # can be associated with no more than one external network.
-external_network_bridge = br-ex
+external_network_bridge = 
 
 # TCP Port used by Neutron metadata server
 # metadata_port = 9697
