@@ -9,7 +9,7 @@ type_drivers = local,flat,vlan,gre,vxlan
 # networks. The default value 'local' is useful for single-box testing
 # but provides no connectivity between hosts.
 #
-tenant_network_types = vxlan
+tenant_network_types = vlan
 # Example: tenant_network_types = vlan,gre,vxlan
 
 # (ListOpt) Ordered list of networking mechanism driver entrypoints
@@ -41,7 +41,7 @@ mechanism_drivers = openvswitch,linuxbridge
 # tenant networks, as well as ranges of VLAN tags on each
 # physical_network available for allocation as tenant networks.
 #
-# network_vlan_ranges =
+network_vlan_ranges = physnet1:701:795,physnet2:798:800
 # Example: network_vlan_ranges = physnet1:1000:2999,physnet2
 
 [ml2_type_gre]
