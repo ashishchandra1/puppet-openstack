@@ -12,7 +12,7 @@ class openstack-keystone {
 
           controller2,controller3: {
                 class {'keystone-installation':} ->
-                class {'keystone-operations':}                    
+                class {'keystone-httpd-operations':}                    
               }
    }
 }
