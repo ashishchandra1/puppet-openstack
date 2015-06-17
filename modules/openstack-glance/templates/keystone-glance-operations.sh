@@ -12,14 +12,18 @@ admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 
 
+export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
+export OS_PROJECT_DOMAIN_ID=default
+export OS_USER_DOMAIN_ID=default
+export OS_PROJECT_NAME=admin
 export OS_TENANT_NAME=${admin_tenant}
 export OS_USERNAME=${admin_user}
 export OS_PASSWORD=${admin_user_pass}
-export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
+export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v3
 
 # Creat the Glance user.
 get_user_id () {
-        keystone user-list | awk -F'|' '{print $2,$3,$4}' | awk -vuser_name="$1" ' $2 == user_name  {print $1}'
+        Openstack user list | awk -F'|' '{print $2,$3}' | awk -vuser_name="$1" ' $2 == user_name  {print $1}'
 }
 
 user_id=$(get_user_id glance)
@@ -28,11 +32,11 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the user
-        keystone user-create --name=glance --pass="$admin_user_pass" > /dev/null
+        openstack user create glance --password="$admin_user_pass" --email="glance@example.com"
 
         # Add the admin role to glance user
-        keystone user-role-add --user glance --tenant service --role admin
-        
+        openstack role add --project service --user glance admin
+
         user_id=$(get_user_id glance)
 
         if [ "$user_id" ]; then
@@ -45,8 +49,8 @@ fi
 
 #Create a Glance service
 get_service_id () {
-        keystone service-list |  awk -F'|' '{print $2,$3,$4}' | awk -vservice_name="$1" -vservice_type="$2" '
-                 $2 == service_name && $3 == service_type {print $1}'
+        openstack service list | awk -F'|' '{print $2,$3,$4}' | awk -vservice_name="$1" -vservice_type="$2" '
+                 $2 == service_name && $3 == service_type {print $1} '
 }
 
 service_id=$(get_service_id glance image )
@@ -54,8 +58,8 @@ service_id=$(get_service_id glance image )
 if [ "$service_id" ]; then
         echo "Found existing service id: $service_id"
 else
-        # Creat the service
-        keystone service-create --name=glance --type=image --description="OpenStack Image Service" > /dev/null
+        # Create the service
+        openstack service create --name glance  --description "OpenStack Image service" image
 
         service_id=$(get_service_id glance image)
 
@@ -69,18 +73,20 @@ fi
 
 # Create the Image Service API endpoints
 get_keystone_endpoint () {
-        keystone endpoint-list | awk -F'|' '{print $7}' | awk -vservice_id="$1" '$1 == service_id  {print $1}'
-}
+        openstack endpoint list |  awk -F'|' '{print $2,$3,$4,$5}' | awk -vservice_name="$1" -vservice_type="$2" '
+               $3 == service_name && $4 == service_type {print $1} '
+    }
 
-endpoint_id=$(get_keystone_endpoint $service_id )
+endpoint_id=$(get_keystone_endpoint glance image )
 
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
 
-   keystone endpoint-create  --service-id $(keystone service-list | awk '/ image / {print $2}') \
+   openstack endpoint create \
             --publicurl http://"$keystone_host":9292 \
             --internalurl http://"$keystone_host":9292 \
             --adminurl http://"$keystone_host":9292 \
-            --region "$region" > /dev/null
+            --region "$region" \
+            image
 fi            

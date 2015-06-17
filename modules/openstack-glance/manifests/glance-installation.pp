@@ -6,6 +6,7 @@ class openstack-glance::glance-installation {
          
      $packages = [
               "openstack-glance",
+              "python-glance",
               "python-glanceclient"
      ]
 
