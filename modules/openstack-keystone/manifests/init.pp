@@ -6,7 +6,7 @@ class openstack-keystone {
                 class {'create-keystone-db':} ->
                 class {'keystone-installation':} ->
                 class {'keystone-db-sync':} ->
-                class {'keystone-operations':} -> 
+                class {'keystone-httpd-operations':} -> 
                 class {'initiate-keystone':}
              }
 
