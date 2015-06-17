@@ -9,6 +9,8 @@ admin_token="<%= @ADMIN_TOKEN %>"
 
 admin_tenant="<%=  @admin_tenant %>"
 admin_user="<%= @admin_user %>"
+demo_user="<%= @demo_user %>"
+demo_user_pass="<%= @demo_user_pass %>"
 admin_user_pass="<%= @admin_user_pass %>"
 demo_user="<%= @demo_user %>"
 demo_user_pass="<%= @demo_user_pass %>"
@@ -42,4 +44,5 @@ openstack role create user
 
 # Add the demo user to the demo role
 openstack role add --project demo --user demo user
+
 

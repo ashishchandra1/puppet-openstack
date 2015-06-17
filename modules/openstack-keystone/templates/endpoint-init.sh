@@ -53,6 +53,5 @@ else
 	    --internalurl=http://controller:5000/v2.0 \
 	    --adminurl=http://controller:35357/v2.0 \
 	    identity
-
 fi
 
