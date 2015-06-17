@@ -23,7 +23,7 @@ export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v3
 
 # Creat the Glance user.
 get_user_id () {
-        Openstack user list | awk -F'|' '{print $2,$3}' | awk -vuser_name="$1" ' $2 == user_name  {print $1}'
+        openstack user list | awk -F'|' '{print $2,$3}' | awk -vuser_name="$1" ' $2 == user_name  {print $1} '
 }
 
 user_id=$(get_user_id glance)
