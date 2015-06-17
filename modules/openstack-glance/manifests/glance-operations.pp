@@ -13,3 +13,5 @@ class openstack-glance::glance-operations {
   }
 
 }
+
+
