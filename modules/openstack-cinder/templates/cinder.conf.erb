@@ -13,7 +13,7 @@ verbose = <%= @VERBOSE %>
 
 [oslo_messaging_rabbit]
 rabbit_hosts=<%= @RABBIT_HOSTS %>
-rabbit_password = <%=RABBIT_PASS %>
+rabbit_password = <%= @RABBIT_PASS %>
 rabbit_retry_interval=1
 rabbit_retry_backoff=2
 rabbit_max_retries=0
