@@ -17,7 +17,7 @@ class openstack-neutron::neutron-network::neutron-network-config {
         ensure  => file,
         owner  => root,
         group  => neutron,
-        content => template('openstack-neutron/neutron-network/ml2.conf.ini.erb')
+        content => template('openstack-neutron/neutron-network/ml2_conf.ini.erb')
     } ->
   
     notify {"Creating Symbolic link on network node":} ->
