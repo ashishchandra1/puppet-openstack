@@ -375,7 +375,7 @@ allow_overlapping_ips = True
 
 # Use durable queues in amqp. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_durable_queues
-amqp_durable_queues=true
+#amqp_durable_queues=False
 
 # Auto-delete queues in amqp. (boolean value)
 # amqp_auto_delete=false
@@ -924,7 +924,7 @@ lock_path = $state_path/lock
 
 # Use durable queues in AMQP. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_durable_queues
-# amqp_durable_queues = false
+amqp_durable_queues = true
 
 # Auto-delete queues in AMQP. (boolean value)
 # Deprecated group/name - [DEFAULT]/amqp_auto_delete
