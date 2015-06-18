@@ -422,7 +422,7 @@ my_ip=<%= @MY_IP %>
 # checking. noauth provides administrative credentials
 # regardless of the passed in user, noauth2 only does if
 # 'admin' is specified as the username.  (string value)
-#auth_strategy=keystone
+auth_strategy=keystone
 
 # Treat X-Forwarded-For as the canonical remote address. Only
 # enable this if you have a sanitizing proxy. (boolean value)
@@ -3089,7 +3089,7 @@ metadata_proxy_shared_secret= <%= @$METADATA_SECRET %>
 # context. DEPRECATED: specify an auth_plugin and appropriate
 # credentials instead. If an auth_plugin is specified strategy
 # will be ignored. (string value)
-auth_strategy=keystone
+#auth_strategy=keystone
 
 # Name of Integration Bridge used by Open vSwitch (string
 # value)
