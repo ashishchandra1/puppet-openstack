@@ -3036,12 +3036,11 @@ password=@dmin123
 
 # Set flag to indicate Neutron will proxy metadata requests
 # and resolve instance ids. (boolean value)
-#service_metadata_proxy=false
+service_metadata_proxy= True
 
 # Shared secret to validate proxies Neutron metadata requests
 # (string value)
-#metadata_proxy_shared_secret=
-
+metadata_proxy_shared_secret= <%= @$METADATA_SECRET %>
 
 #
 # Options defined in nova.network.neutronv2.api
