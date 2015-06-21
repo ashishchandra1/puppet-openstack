@@ -4,6 +4,5 @@ class openstack-keystone::keystone-db-sync{
     exec {"Keystone DB Syncing":
         command => "su -s /bin/sh -c 'keystone-manage db_sync' keystone",
         user => 'root',
-     }
-
+    }
 }

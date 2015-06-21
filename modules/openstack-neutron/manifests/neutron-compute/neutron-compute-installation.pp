@@ -1,33 +1,34 @@
 class openstack-neutron::neutron-compute::neutron-compute-installation {
 
-     $CONTROLLER_HNAME = "controller"
-     $ADMIN_PASSWORD = '@dmin123'
-     $RABBIT_PASSWORD = '@dmin123'
+    $CONTROLLER_HNAME = "controller"
+    $ADMIN_PASSWORD = '@dmin123'
+    $RABBIT_PASSWORD = '@dmin123'
  
-     $VERBOSE = "True"
-     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
+    $VERBOSE = "True"
+    $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
     
-     $packages = [
-              "openstack-neutron-ml2",
-              "openstack-neutron-openvswitch"
-     ]
+    $packages = [
+        "openstack-neutron",
+        "openstack-neutron-ml2",
+        "openstack-neutron-openvswitch"
+    ]
   
-     notify {"Configure kernel networking parameter on Compute Node":} ->
-     file { "/etc/sysctl.conf":
+    notify {"Configure kernel networking parameter on Compute Node":} ->
+    file { "/etc/sysctl.conf":
         ensure  => file,
         owner  => root,
         content => template('openstack-neutron/neutron-compute/sysctl.conf.erb')
-      } ->
+    } ->
      
-     exec {"Configure kernel networking on Compute node":
-          command =>"sysctl -p",
-          user => 'root',
-     } -> 
+    exec {"Configure kernel networking on Compute node":
+        command =>"sysctl -p",
+        user => 'root',
+    } -> 
 
-     notify {"Installing Openstack Neutron on Compute Nodes":} ->
-     package {
-          $packages: 
-          ensure =>installed,
+    notify {"Installing Openstack Neutron on Compute Nodes":} ->
+    package {
+        $packages: 
+        ensure =>installed,
     } -> 
 
     notify {"CREATING neutron.conf file on Compute Node":} ->
@@ -36,6 +37,13 @@ class openstack-neutron::neutron-compute::neutron-compute-installation {
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-compute/neutron.conf.erb'),
-   }
+   } ->
 
+   notify {"CREATING ml2_conf.ini FILE":} ->
+        file { "/etc/neutron/plugins/ml2/ml2_conf.ini":
+        ensure  => file,
+        owner  => root,
+        group  => neutron,
+        content => template('openstack-neutron/neutron-compute/ml2_conf.ini.erb')
+    }
 }

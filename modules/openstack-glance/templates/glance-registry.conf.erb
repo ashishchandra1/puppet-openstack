@@ -49,14 +49,17 @@ verbose=<%= @VERBOSE%>
 # Role used to identify an authenticated user as administrator
 #admin_role=admin
 
-# Whether to automatically create the database tables.
-# Default: False
-#db_auto_create=False
-
 # Enable DEBUG log messages from sqlalchemy which prints every database
 # query and response.
 # Default: False
 #sqlalchemy_debug=True
+
+# http_keepalive option. If False, server will return the header
+# "Connection: close", If True, server will return "Connection: Keep-Alive"
+# in its responses. In order to close the client socket connection
+# explicitly after the response is sent and read successfully by the client,
+# you simply have to set this option to False when you create a wsgi server.
+#http_keepalive=True
 
 # ================= Syslog Options ============================
 
@@ -121,6 +124,25 @@ notification_driver = noop
 #qpid_protocol=tcp
 #qpid_tcp_nodelay=True
 
+
+# =============== Policy Options ==============================
+
+[oslo_policy]
+# The JSON file that defines policies.
+# Deprecated group/name - [DEFAULT]/policy_file
+#policy_file=policy.json
+
+# Default rule. Enforced when a requested rule is not found.
+# Deprecated group/name - [DEFAULT]/policy_default_rule
+#policy_default_rule=default
+
+# Directories where policy configuration files are stored.
+# They can be relative to any directory in the search path
+# defined by the config_dir option, or absolute paths.
+# The file defined by policy_file must exist for these
+# directories to be searched.
+# Deprecated group/name - [DEFAULT]/policy_dirs
+#policy_dirs=policy.d
 
 # ================= Database Options ==========================
 
@@ -226,13 +248,15 @@ connection=mysql://glance:<%= @GLANCE_DBPASS%>@<%= @CONTROLLER_HNAME%>/glance
 #admin_user=%SERVICE_USER%
 #admin_password=%SERVICE_PASSWORD%
 
-auth_uri = http://<%= @CONTROLLER_HNAME%>:5000/v2.0
-identity_uri = http://<%= @CONTROLLER_HNAME%>:35357
-admin_tenant_name = service
-admin_user = glance
-admin_password = <%= @GLANCE_DBPASS%>
 
-
+auth_uri=http://<%= @CONTROLLER_HNAME%>:5000
+auth_url=http://<%= @CONTROLLER_HNAME%>:35357
+auth_plugin=password
+project_domain_id=default
+user_domain_id=default
+project_name=service
+username=glance
+password=<%= @GLANCE_DBPASS%>
 
 [paste_deploy]
 # Name of the paste configuration file that defines the available pipelines
@@ -242,7 +266,7 @@ admin_password = <%= @GLANCE_DBPASS%>
 # service name removed. For example, if your paste section name is
 # [pipeline:glance-registry-keystone], you would configure the flavor below
 # as 'keystone'.
-flavor= keystone
+flavor=keystone
 
 [profiler]
 # If False fully disable profiling feature.

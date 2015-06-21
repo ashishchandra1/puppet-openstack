@@ -10,4 +10,4 @@ class openstack-install {
 
 }
 
-include openstack-nova
+#include openstack-nova

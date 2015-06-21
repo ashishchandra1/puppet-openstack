@@ -6,6 +6,7 @@ class openstack-glance::glance-installation {
          
      $packages = [
               "openstack-glance",
+              "python-glance",
               "python-glanceclient"
      ]
 
@@ -19,7 +20,7 @@ class openstack-glance::glance-installation {
        ensure  => file,
        owner  => root,
        group  => glance,
-       content => template('openstack-glance/glance-api.erb'),
+       content => template('openstack-glance/glance-api.conf.erb'),
    } ->
 
    notify {"CREATING glance-registry.conf FILE":} ->
@@ -27,6 +28,6 @@ class openstack-glance::glance-installation {
        ensure  => file,
        owner  => root,
        group  => glance,
-       content => template('openstack-glance/glance-registry.erb'),
+       content => template('openstack-glance/glance-registry.conf.erb'),
    }
 }

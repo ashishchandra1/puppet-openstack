@@ -6,13 +6,13 @@ class openstack-keystone {
                 class {'create-keystone-db':} ->
                 class {'keystone-installation':} ->
                 class {'keystone-db-sync':} ->
-                class {'keystone-operations':} -> 
+                class {'keystone-httpd-operations':} -> 
                 class {'initiate-keystone':}
              }
 
           controller2,controller3: {
                 class {'keystone-installation':} ->
-                class {'keystone-operations':}                    
+                class {'keystone-httpd-operations':}                    
               }
    }
 }
