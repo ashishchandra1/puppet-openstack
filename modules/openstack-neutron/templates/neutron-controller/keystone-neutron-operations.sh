@@ -76,7 +76,7 @@ get_keystone_endpoint () {
                $3 == service_name && $4 == service_type {print $1} '
 }
 
-endpoint_id=$(get_keystone_endpoint $service_id )
+endpoint_id=$(get_keystone_endpoint neutron network )
 
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
