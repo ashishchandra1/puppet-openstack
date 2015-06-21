@@ -37,5 +37,13 @@ class openstack-neutron::neutron-compute::neutron-compute-installation {
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-compute/neutron.conf.erb'),
-   }
+   } ->
+
+   notify {"CREATING ml2_conf.ini FILE":} ->
+        file { "/etc/neutron/plugins/ml2/ml2_conf.ini":
+        ensure  => file,
+        owner  => root,
+        group  => neutron,
+        content => template('openstack-neutron/neutron-compute/ml2_conf.ini.erb')
+    }
 }

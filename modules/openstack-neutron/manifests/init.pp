@@ -5,7 +5,6 @@ class openstack-neutron {
             class {'keystone':} ->
             class {'neutron-controller-installation':} ->
             class {'neutron-ml2-config':} ->
-            class {'configure-compute':} -> 
             class {'neutron-db-sync':} ->
             class {'neutron-controller-operations':}
         }
@@ -13,7 +12,6 @@ class openstack-neutron {
         controller2,controller3: {
             class {'neutron-controller-installation':} ->
             class {'neutron-ml2-config':} ->
-            class {'configure-compute':} ->
             class {'neutron-controller-operations':}
         }
 
@@ -26,7 +24,6 @@ class openstack-neutron {
           
         compute1, compute2: {
             class {'neutron-compute::neutron-compute-installation':} ->
-            class {'neutron-compute::neutron-compute-config':} ->
             class {'neutron-compute::compute-ovs-operations':} ->
             class {'neutron-compute::neutron-compute-operations':}
         }

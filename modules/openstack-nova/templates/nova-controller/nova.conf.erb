@@ -1050,7 +1050,7 @@ auth_strategy=keystone
 
 # The full class name of the network API class to use (string
 # value)
-#network_api_class=nova.network.api.API
+network_api_class=nova.network.neutronv2.api.API
 
 
 #
@@ -1168,7 +1168,7 @@ auth_strategy=keystone
 #dnsmasq_config_file=
 
 # Driver used to create ethernet devices. (string value)
-#linuxnet_interface_driver=nova.network.linux_net.LinuxBridgeInterfaceDriver
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
 
 # Name of Open vSwitch bridge used with linuxnet (string
 # value)
@@ -1328,7 +1328,7 @@ auth_strategy=keystone
 #
 
 # The full class name of the security API class (string value)
-#security_group_api=nova
+security_group_api=neutron
 
 
 #
@@ -1756,7 +1756,7 @@ verbose=<%= @VERBOSE %>
 
 # Firewall driver (defaults to hypervisor specific iptables
 # driver) (string value)
-#firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 # Whether to allow network traffic from same network (boolean
 # value)
@@ -3047,7 +3047,7 @@ metadata_proxy_shared_secret= <%= @METADATA_SECRET %>
 #
 
 # URL for connecting to neutron (string value)
-#url=http://127.0.0.1:9696
+url=http://<%= @CONTROLLER_HNAME %>:9696
 
 # User id for connecting to neutron in admin context.
 # DEPRECATED: specify an auth_plugin and appropriate
@@ -3057,12 +3057,12 @@ metadata_proxy_shared_secret= <%= @METADATA_SECRET %>
 # Username for connecting to neutron in admin context
 # DEPRECATED: specify an auth_plugin and appropriate
 # credentials instead. (string value)
-#admin_username=<None>
+admin_username=neutron
 
 # Password for connecting to neutron in admin context
 # DEPRECATED: specify an auth_plugin and appropriate
 # credentials instead. (string value)
-#admin_password=<None>
+admin_password=<%= @ADMIN_PASSWORD %>
 
 # Tenant id for connecting to neutron in admin context
 # DEPRECATED: specify an auth_plugin and appropriate
@@ -3074,7 +3074,7 @@ metadata_proxy_shared_secret= <%= @METADATA_SECRET %>
 # Note that with Keystone V3 tenant names are only unique
 # within a domain. DEPRECATED: specify an auth_plugin and
 # appropriate credentials instead. (string value)
-#admin_tenant_name=<None>
+admin_tenant_name=service
 
 # Region name for connecting to neutron in admin context
 # (string value)
@@ -3083,13 +3083,13 @@ metadata_proxy_shared_secret= <%= @METADATA_SECRET %>
 # Authorization URL for connecting to neutron in admin
 # context. DEPRECATED: specify an auth_plugin and appropriate
 # credentials instead. (string value)
-#admin_auth_url=http://localhost:5000/v2.0
+admin_auth_url=http://<%= @CONTROLLER_HNAME%>:5000/v2.0
 
 # Authorization strategy for connecting to neutron in admin
 # context. DEPRECATED: specify an auth_plugin and appropriate
 # credentials instead. If an auth_plugin is specified strategy
 # will be ignored. (string value)
-#auth_strategy=keystone
+auth_strategy=keystone
 
 # Name of Integration Bridge used by Open vSwitch (string
 # value)
