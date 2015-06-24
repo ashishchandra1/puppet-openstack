@@ -4,10 +4,8 @@ class mariadb-galera {
         controller1: {
             class {'mariadb-galera::params':} ->
             class {'mariadb-galera::install_mariadb':} ->
-            class {'mariadb-galera::stop-maria':}->
-            class {'mariadb-galera::config':} ->
+            class {'mariadb-galera::config_galera':} ->
             class {'mariadb-galera::start-primary':}
-  
         }
     }
 
@@ -16,8 +14,7 @@ class mariadb-galera {
         controller2,controller3:{
             class {'mariadb-galera::params':} ->
             class {'mariadb-galera::install_mariadb':} ->
-            class {'mariadb-galera::stop-maria':}->
-            class {'mariadb-galera::config' :} ->
+            class {'mariadb-galera::config_galera':} ->
             class {'mariadb-galera::start-sec' :}  
         }
     }

@@ -1,6 +1,5 @@
-class mariadb-galera::install_mariadb {
-    $mysql_root_password = '@dmin123'
-    $galera_db_user = 'sst_user'
+class mariadb-galera::install_mariadb inherits mariadb-galera::params {
+    include mariadb-galera::params
 
     yumrepo { 'mariadb':
         baseurl         => "http://yum.mariadb.org/10.0/centos7-amd64",
@@ -9,15 +8,6 @@ class mariadb-galera::install_mariadb {
         gpgkey          => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
         descr           => 'MariaDB Yum Repository',
     }
-
-    $packages = [ 
-        "MariaDB-Galera-server",
-        "MariaDB-client",
-        "rsync",
-        "galera",
-        "expect",
-        "socat"
-    ]
 
     notify {"Set SELINUX in permissive mode": } ->
     exec {"selinux permissive":
@@ -47,10 +37,5 @@ class mariadb-galera::install_mariadb {
     notify{"Execute mysql-autosecure script":} ->
     exec { "mysql-autosecure":
         command => "bash /usr/local/src/mysql-autosecure.sh $mysql_root_password",
-    } ->
-
-    notify {"Creating Galera Cluster users":} ->
-    exec { "create-galera-cluster-user":
-        command => "/usr/bin/mysql -uroot -p$mysql_root_password -e \"delete from mysql.user where user=''; grant all on *.* to 'root'@'%' identified by '$mysql_root_password'; grant usage on *.* to ${galera_db_user}@'%' identified by '$mysql_root_password'; grant all privileges on *.* to ${galera_db_user}@'%'; flush privileges;\"",
-    }    
+    }      
 }
