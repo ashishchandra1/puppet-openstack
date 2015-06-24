@@ -15,6 +15,7 @@ class mariadb-galera::install_mariadb {
         "MariaDB-client",
         "rsync",
         "galera",
+        "expect",
         "socat"
     ]
 
