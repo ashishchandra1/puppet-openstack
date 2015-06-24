@@ -1,17 +1,16 @@
 class mariadb-galera::set-pass {
      $mysql_password = '@dmin123'
 
+    notify{"Create mysql-autosecure script":} ->
     file { "mysql-autosecure":
         path => "/usr/local/src/mysql-autosecure.sh",
         source => "puppet:///modules/mariadb-galera/mysql-autosecure.sh",
+        mode => 0755,
     } ->
-    notify {"Bingo!!!!!!!!!!!! I reached here":} -> 
+    
+    notify{"Execute mysql-autosecure script":} ->
     exec { "mysql-autosecure":
-        command => "sh /usr/local/src/mysql-autosecure.sh $mysql_password",
-        path => "/usr/bin:/bin/",
-        creates => "/usr/bin/mysql_secure_installation.ran",
-        logoutput => true,
-        require => File["mysql-autosecure"]
+        command => "bash /usr/local/src/mysql-autosecure.sh $mysql_password",
     }
 
 }
