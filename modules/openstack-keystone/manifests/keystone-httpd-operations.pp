@@ -1,5 +1,4 @@
-class openstack-keystone::keystone-httpd-operations {
-    $CONTROLLER_HNAME = "controller"
+class openstack-keystone::keystone-httpd-operations inherits openstack-keystone::params {
     
     file { "/etc/httpd/conf/httpd.conf":
        ensure  => file,

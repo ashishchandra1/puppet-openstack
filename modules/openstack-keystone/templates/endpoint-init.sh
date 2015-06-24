@@ -4,7 +4,6 @@ tmpfile=$(mktemp keystoneXXXXXX)
 trap "rm -f $tmpfile" 0
 
 keystone_host="<%=  @KEYSTONE_HOST %>"
-public_port="<%= @KEYSTONE_PUBLIC_PORT  %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @REGION %>"

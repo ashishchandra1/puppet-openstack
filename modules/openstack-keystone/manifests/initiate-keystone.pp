@@ -1,17 +1,4 @@
-class openstack-keystone::initiate-keystone {
-    $KEYSTONE_DBPASS = '@dmin123'
-    $CONTROLLER_HNAME = "controller" 
-    $KEYSTONE_HOST = "controller"
-    $KEYSTONE_ADMIN_PORT = '35357'
-    $KEYSTONE_PUBLIC_PORT = '5000'
-    $ADMIN_TOKEN = '@dmin123'
-    $REGION = "regionOne"
-     
-    $admin_tenant = "admin"
-    $admin_user = "admin"
-    $admin_user_pass = "@dmin123"
-    $demo_user = "demo"
-    $demo_user_pass = "@dmin123"
+class openstack-keystone::initiate-keystone inherits openstack-keystone::params {
 
     notify {"Create KEYSTONE Service and Service Endpoint":} ->
     file { "/tmp/keystone-service-endpoint.sh":
