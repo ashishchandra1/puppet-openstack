@@ -1,16 +1,4 @@
-class openstack-neutron::neutron-network::neutron-network-config {
-
-    $KEYSTONE_HOST = "controller"
-    $CONTROLLER_HNAME = "controller"
-    $KEYSTONE_ADMIN_PORT = '35357'
-    $ADMIN_TOKEN = '@dmin123'
-    $ADMIN_PASSWORD = '@dmin123'
-    $REGION = "regionOne"
-    $METADATA_SECRET = '@dmin123'   
-       
-    $admin_tenant = "admin"
-    $admin_user =  "admin"
-    $admin_user_pass = "@dmin123"
+class openstack-neutron::neutron-network::neutron-network-config inherits openstack-neutron::params{
 
     notify {"CREATING ml2_conf.ini FILE":} ->
         file { "/etc/neutron/plugins/ml2/ml2_conf.ini":

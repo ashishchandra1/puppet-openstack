@@ -1,32 +1,8 @@
-class openstack-neutron::neutron-controller-installation {
+class openstack-neutron::neutron-controller-installation inherits openstack-neutron::params {
 
-    $NEUTRON_DBPASS = '@dmin123'
-    $CONTROLLER_HNAME = "controller"
-    $NEUTRON_ADMIN_PORT = '9696'
-    $ADMIN_USER = 'neutron'
-    $ADMIN_PASSWORD = '@dmin123'
-    $RABBIT_PASSWORD = '@dmin123' 
-
-    $KEYSTONE_HOST = "controller"
-    $KEYSTONE_ADMIN_PORT = '35357'
-    $ADMIN_TOKEN = '@dmin123'
-    $VERBOSE = "True"
-    $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
-    $MY_IP = "10.0.129.20"
-    $REGION = "regionOne"
-    $NOVA_ADMIN_USERNAME  = "nova"
-    $NOVA_ADMIN_PASSWORD  = "@dmin123"
-     
-    $packages = [ 
-        "openstack-neutron",
-        "openstack-neutron-ml2",
-        "python-neutronclient",
-        "which"
-    ]
-    
     notify {"Installing Openstack Neutron on Controller Nodes":} ->
     package {
-        $packages: 
+        $neutron_controller_packages: 
         ensure =>installed,
         before => File['/etc/neutron/neutron.conf'],
     } -> 
