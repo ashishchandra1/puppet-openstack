@@ -1,8 +1,8 @@
 {
-  "name": "openstack-glance",
+  "name": "openstack-keystone",
   "version": "0.1.0",
   "author": "Ashish",
-  "summary": "Glance Module for Openstack",
+  "summary": "Keystone Module for Openstack",
   "license": "Apache 2.0",
   "source": "",
   "project_page": null,

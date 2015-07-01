@@ -1,5 +1,5 @@
 {
-  "name": "openstack-cinder",
+  "name": "openstack-nova",
   "version": "0.1.0",
   "author": "openstack",
   "summary": null,
