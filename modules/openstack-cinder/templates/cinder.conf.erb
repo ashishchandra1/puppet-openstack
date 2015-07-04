@@ -13,14 +13,14 @@ verbose = <%= @VERBOSE %>
 
 [oslo_messaging_rabbit]
 rabbit_hosts=<%= @RABBIT_HOSTS %>
-rabbit_password = <%= @RABBIT_PASS %>
+rabbit_password = <%= @RABBIT_PASSWORD %>
 rabbit_retry_interval=1
 rabbit_retry_backoff=2
 rabbit_max_retries=0
 rabbit_ha_queues=true
 
 [database]
-connection = mysql://cinder:<%= @CINDER_DBPASS%>@<%= @CONTROLLER_HNAME%>/cinder
+connection = mysql://cinder:<%= @CINDER_DB_PASSWORD%>@<%= @CONTROLLER_HNAME%>/cinder
 
 [keystone_authtoken]
 auth_uri = http://<%= @CONTROLLER_HNAME%>:5000
@@ -30,7 +30,7 @@ project_domain_id = default
 user_domain_id = default
 project_name = service
 username = cinder
-password = <%= @ADMIN_PASSWORD%>
+password = <%= @ADMIN_TOKEN%>
 
 [oslo_concurrency]
 lock_path = /var/lock/cinder

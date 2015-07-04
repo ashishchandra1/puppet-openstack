@@ -1,18 +1,5 @@
-class openstack-neutron::neutron-compute::neutron-compute-installation {
+class openstack-neutron::neutron-compute::neutron-compute-installation inherits openstack-neutron::params {
 
-    $CONTROLLER_HNAME = "controller"
-    $ADMIN_PASSWORD = '@dmin123'
-    $RABBIT_PASSWORD = '@dmin123'
- 
-    $VERBOSE = "True"
-    $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
-    
-    $packages = [
-        "openstack-neutron",
-        "openstack-neutron-ml2",
-        "openstack-neutron-openvswitch"
-    ]
-  
     notify {"Configure kernel networking parameter on Compute Node":} ->
     file { "/etc/sysctl.conf":
         ensure  => file,
@@ -27,7 +14,7 @@ class openstack-neutron::neutron-compute::neutron-compute-installation {
 
     notify {"Installing Openstack Neutron on Compute Nodes":} ->
     package {
-        $packages: 
+        $neutron_compute_packages: 
         ensure =>installed,
     } -> 
 

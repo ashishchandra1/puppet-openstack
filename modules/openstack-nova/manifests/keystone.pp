@@ -1,13 +1,5 @@
-class openstack-nova::keystone {
+class openstack-nova::keystone inherits openstack-nova::params {
 
-     $KEYSTONE_HOST = "controller"
-     $KEYSTONE_ADMIN_PORT = '35357'
-     $ADMIN_TOKEN = '@dmin123'
-     
-     $admin_tenant = "admin"
-     $admin_user =  "admin"
-     $admin_user_pass = "@dmin123"
-     $region = "regionOne"
      notify {"Copy file for Keystone Nova operations":} ->
      file { '/tmp/keystone-nova-operations.sh':
             content => template('openstack-nova/nova-controller/keystone-nova-operations.sh'),

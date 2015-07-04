@@ -6,9 +6,12 @@ keystone_host="<%=  @KEYSTONE_HOST %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @REGION %>"
 
-public_port="<%= @KEYSTONE_PUBLIC_PORT  %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
-admin_tenant="<%=  @admin_tenant %>"
+admin_tenant="<%= @admin_tenant %>"
+demo_tenant="<%= @demo_tenant %>"
+service_tenant="<%= @service_tenant %>"
+demo_user="<%= @demo_user %>"
+demo_user_pass="<%= @demo_user_pass %>"
 admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 
@@ -16,25 +19,25 @@ export OS_SERVICE_TOKEN=${admin_token}
 export OS_SERVICE_ENDPOINT=http://${keystone_host}:${admin_port}/v2.0/
 
 # Create the Admin tenant.
-keystone tenant-create --name admin --description "Admin Tenant"
+keystone tenant-create --name ${admin_tenant} --description "Admin Tenant"
 
 # Create the admin user
-keystone user-create  --name admin --pass @dmin123 --email admin@example.com
+keystone user-create  --name ${admin_user} --pass ${admin_user_pass} --email admin@example.com
 
 #Create the admin role
 keystone role-create --name admin
 
 # Add the admin user to the admin role
-keystone user-role-add --user admin --tenant admin  --role admin
+keystone user-role-add --user ${admin_user} --tenant ${admin_tenant}  --role admin
 
 # Create the demo tenant
-keystone tenant-create --name demo --description "Demo Tenant"
+keystone tenant-create --name ${demo_tenant} --description "Demo Tenant"
 
 # Create demo user under demo tenant
-keystone user-create --name demo --tenant demo --pass @dmin123 --email demo@example.com
+keystone user-create --name ${demo_user} --tenant demo --pass ${demo_user_pass} --email demo@example.com
 
 #Create service tenant
-keystone tenant-create --name service --description "Service Tenant"
+keystone tenant-create --name ${service_tenant} --description "Service Tenant"
 
 #Create a Keystone service
 get_service_id () {

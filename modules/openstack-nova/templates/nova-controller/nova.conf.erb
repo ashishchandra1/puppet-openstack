@@ -6,7 +6,7 @@
 
 # ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP.
 # The "host" option should point or resolve to this address. (string value)
-#rpc_zmq_bind_address=*
+#rpc_zmq_bind_address=*ra
 
 # MatchMaker driver. (string value)
 #rpc_zmq_matchmaker=oslo_messaging._drivers.matchmaker.MatchMakerLocalhost
@@ -3852,7 +3852,7 @@ lock_path=/var/lib/nova/tmp
 
 # Use durable queues in AMQP. (boolean value)
 # Deprecated group;name - DEFAULT;rabbit_durable_queues
-amqp_durable_queues=true
+#amqp_durable_queues=false
 
 # Auto-delete queues in AMQP. (boolean value)
 # Deprecated group;name - DEFAULT;amqp_auto_delete
@@ -3918,7 +3918,7 @@ amqp_durable_queues=true
 
 # Use durable queues in AMQP. (boolean value)
 # Deprecated group;name - DEFAULT;rabbit_durable_queues
-#amqp_durable_queues=false
+amqp_durable_queues=true
 
 # Auto-delete queues in AMQP. (boolean value)
 # Deprecated group;name - DEFAULT;amqp_auto_delete

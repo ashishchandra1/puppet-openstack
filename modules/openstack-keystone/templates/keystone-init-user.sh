@@ -3,7 +3,6 @@
 # Create administrative tenant and user.
 
 keystone_host="<%=  @KEYSTONE_HOST %>"
-public_port="<%= @KEYSTONE_PUBLIC_PORT  %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 
@@ -12,8 +11,6 @@ admin_user="<%= @admin_user %>"
 demo_user="<%= @demo_user %>"
 demo_user_pass="<%= @demo_user_pass %>"
 admin_user_pass="<%= @admin_user_pass %>"
-demo_user="<%= @demo_user %>"
-demo_user_pass="<%= @demo_user_pass %>"
 
 export OS_URL=http://${keystone_host}:${admin_port}/v2.0
 export OS_TOKEN=${admin_token}
