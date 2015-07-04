@@ -1,1 +1,27 @@
 Puppet script to install Openstack Kilo in HA mode.
+
+Hostname Convention:
+ 
+  HAProxy nodes:
+    haproxy1, haproxy2
+  
+  Controllers:
+    controller1, controller2, controller3
+   
+  Network Nodes:
+    network1, network2
+    
+  Compute Nodes:
+    compute1, compute2
+
+Architecture
+=============
+
+Database:
+-----------
+The three controllers are running Mariadb and are in a cluster using Galera.
+
+Messaging Queue:
+----------------
+Rabbitmq is used for AMQP, and three controllers are in a cluster with HA Queue.
+
