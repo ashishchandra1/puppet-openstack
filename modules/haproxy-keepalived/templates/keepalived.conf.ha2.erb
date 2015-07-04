@@ -1,0 +1,24 @@
+global_defs {
+	router_id <%= @ROUTER_ID_HA2 %>
+}
+ 
+vrrp_script check_haproxy {
+	script "killall -0 haproxy"
+	interval 2
+	weight 2
+}
+ 
+vrrp_instance VI_1 {
+	state MASTER
+	interface <%= @INTERFACE_HA2%>
+	virtual_router_id 10
+	priority <%= @PRIORITY_HA2%>
+	advert_int 1
+	
+        virtual_ipaddress {
+		<%= @VIRTUAL_IP%>
+	}
+	track_script {
+		check_haproxy
+	}
+}

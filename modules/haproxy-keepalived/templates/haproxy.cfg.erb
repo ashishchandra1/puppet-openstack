@@ -1,0 +1,125 @@
+global
+  chroot  /var/lib/haproxy
+  daemon
+  group  haproxy
+  maxconn  4000
+  pidfile  /var/run/haproxy.pid
+  user  haproxy
+
+defaults
+  log  global
+  maxconn  8000
+  option  redispatch
+  retries  3
+  timeout  http-request 10s
+  timeout  queue 1m
+  timeout  connect 10s
+  timeout  client 1m
+  timeout  server 1m
+  timeout  check 10s
+
+listen galera_cluster
+  bind <%= @VIRTUAL_IP %>:3306
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:3306  check
+  server  controller2 <%= @CONTROLLER2_IP %>:3306  check
+  server  controller3 <%= @CONTROLLER3_IP %>:3306  check
+
+listen vnc
+  bind <%= @VIRTUAL_IP %>:6080
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:6080  check
+  server  controller2 <%= @CONTROLLER2_IP %>:6080  check
+  server  controller3 <%= @CONTROLLER3_IP %>:6080  check
+
+
+listen rabbit_cluster
+  bind <%= @VIRTUAL_IP %>:5672
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:5672  check
+  server  controller2 <%= @CONTROLLER2_IP %>:5672  check
+  server  controller3 <%= @CONTROLLER3_IP %>:5672  check
+
+
+listen dashboard_cluster
+  bind <%= @VIRTUAL_IP %>:80
+  mode http
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:80  check
+  server  controller2 <%= @CONTROLLER2_IP %>:80  check
+  server  controller3 <%= @CONTROLLER3_IP %>:80  check
+
+listen dashboard_cluster_ssl
+  bind <%= @VIRTUAL_IP %>:443
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:443  check
+  server  controller2 <%= @CONTROLLER2_IP %>:443  check
+  server  controller3 <%= @CONTROLLER3_IP %>:443  check
+
+listen keystone_public_internal_cluster
+  bind <%= @VIRTUAL_IP %>:5000
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:5000  check
+  server  controller2 <%= @CONTROLLER2_IP %>:5000  check
+  server  controller3 <%= @CONTROLLER3_IP %>:5000  check
+
+listen keystone_admin_cluster
+  bind <%= @VIRTUAL_IP %>:35357
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:35357  check
+  server  controller2 <%= @CONTROLLER2_IP %>:35357  check
+  server  controller3 <%= @CONTROLLER3_IP %>:35357  check
+
+listen glance_api_cluster
+  bind <%= @VIRTUAL_IP %>:9292
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:9292  check
+  server  controller2 <%= @CONTROLLER2_IP %>:9292  check
+  server  controller3 <%= @CONTROLLER3_IP %>:9292  check
+
+listen glance_registry_cluster
+  bind <%= @VIRTUAL_IP %>:9191
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:9191  check
+  server  controller2 <%= @CONTROLLER2_IP %>:9191  check
+  server  controller3 <%= @CONTROLLER3_IP %>:9191  check
+
+listen nova_compute_api_cluster
+  bind <%= @VIRTUAL_IP %>:8774
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:8774  check
+  server  controller2 <%= @CONTROLLER2_IP %>:8774  check
+  server  controller3 <%= @CONTROLLER3_IP %>:8774  check
+
+listen nova_metadata_api_cluster
+  bind <%= @VIRTUAL_IP %>:8775
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:8775  check
+  server  controller2 <%= @CONTROLLER2_IP %>:8775  check
+  server  controller3 <%= @CONTROLLER3_IP %>:8775  check
+
+listen cinder_api_cluster
+  bind <%= @VIRTUAL_IP %>:8776
+  mode tcp
+  balance  roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:8776  check
+  server  controller2 <%= @CONTROLLER2_IP %>:8776  check
+  server  controller3 <%= @CONTROLLER3_IP %>:8776  check
+
+listen neutron_api_cluster
+  bind <%= @VIRTUAL_IP %>:9696
+  mode tcp
+  balance roundrobin
+  server  controller1 <%= @CONTROLLER1_IP %>:9696  check
+  server  controller2 <%= @CONTROLLER2_IP %>:9696  check
+  server  controller3 <%= @CONTROLLER3_IP %>:9696  check
