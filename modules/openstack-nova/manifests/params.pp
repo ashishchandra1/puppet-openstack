@@ -10,12 +10,15 @@ class openstack-nova::params {
     $VERBOSE = "True"
     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
     $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
-    $MY_IP = "10.0.129.20"
+ 
     $METADATA_SECRET = "@dmin123"
     $admin_tenant = "admin"
     $admin_user =  "admin"
     $admin_user_pass = "@dmin123"
     $region = "regionOne"
+
+    $MY_IP = "192.168.213.10"
+    $MY_COMPUTE_IP = $ipaddress
 
     $controller_packages = [ 
         "openstack-nova-api",
