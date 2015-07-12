@@ -22,8 +22,21 @@ class openstack-neutron::params {
     $mysql_root_password = '@dmin123'
     $db_user = 'neutron'
     $db_name = 'neutron'
-    $db_password = '@dmin123'  
-       
+    $db_password = '@dmin123' 
+    
+    # OVS operations
+    $DATA_BRIDGE = 'br-data'
+    $EXT_BRIDGE  = 'br-ex'
+    $COMPUTE_DATA_INTERFACE = 'enp10s0'  
+    $NETWORK_DATA_INTERFACE = 'team1'
+    $NETWORK_EXT_INTERFACE = 'team2'
+    
+    # ml2 config parameters 
+    $DATA_VLAN_RANGES = "physnet1:500:699"
+    $EXT_VLAN_RANGES = "physnet2"
+    $TENANT_NETWORK_TYPES = 'vlan'
+    $MECHANISM_DRIVERS = 'openvswitch,linuxbridge'
+     
     $neutron_compute_packages = [
         "openstack-neutron",
         "openstack-neutron-ml2",

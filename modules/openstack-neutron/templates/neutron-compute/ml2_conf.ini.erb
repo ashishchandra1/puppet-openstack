@@ -9,12 +9,12 @@ type_drivers = local,flat,vlan,gre,vxlan
 # networks. The default value 'local' is useful for single-box testing
 # but provides no connectivity between hosts.
 #
-tenant_network_types = vlan
+tenant_network_types = <%= @TENANT_NETWORK_TYPES  %>
 # Example: tenant_network_types = vlan,gre,vxlan
 
 # (ListOpt) Ordered list of networking mechanism driver entrypoints
 # to be loaded from the neutron.ml2.mechanism_drivers namespace.
-mechanism_drivers = openvswitch,linuxbridge
+mechanism_drivers = <%= @MECHANISM_DRIVERS  %>
 # Example: mechanism_drivers = openvswitch,mlnx
 # Example: mechanism_drivers = arista
 # Example: mechanism_drivers = cisco,logger
@@ -64,7 +64,7 @@ flat_networks = *
 # tenant networks, as well as ranges of VLAN tags on each
 # physical_network available for allocation as tenant networks.
 #
-network_vlan_ranges = physnet1:701:795
+network_vlan_ranges = <%= @DATA_VLAN_RANGES %>
 # Example: network_vlan_ranges = physnet1:1000:2999,physnet2
 
 [ml2_type_gre]
@@ -97,7 +97,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
 [ovs]
 integration_bridge = br-int
 enable_tunneling = False
-bridge_mappings = physnet1:br-data
+bridge_mappings = physnet1:<%= @DATA_BRIDGE%>
 
 [agent]
 l2_population=False
