@@ -1,13 +1,16 @@
 Exec {
-      path => [
-              '/usr/local/bin', '/usr/bin',
-              '/usr/sbin', '/bin'],
-              logoutput => true,
-     }
+      path => [ '/usr/local/bin', '/usr/bin',
+                '/usr/sbin', '/bin'],
+      logoutput => true,
+    }
 
-class openstack-install {
-   class {'ntp':} -> class{'openstack-packages':} -> class{'mariadb':} -> class{'rabbitmq':} -> class{'openstack-keystone':} -> class{'openstack-glance':} -> class{'openstack-compute':}
-
-}
-
+#include initial-packages
+#include haproxy-keepalived
+#include rabbitmq-ha
+#include mariadb-galera
+#include openstack-keystone
+#include openstack-glance
+#include openstack-cinder
 #include openstack-nova
+#include openstack-neutron
+#include openstack-dashboard

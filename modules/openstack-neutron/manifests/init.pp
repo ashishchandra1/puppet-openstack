@@ -8,7 +8,7 @@ class openstack-neutron {
             class {'neutron-controller-operations':}
         }
 
-        controller2,controller3: {
+        controller2, controller3: {
             class {'neutron-controller-installation':} ->
             class {'neutron-controller-operations':}
         }
@@ -26,5 +26,4 @@ class openstack-neutron {
             class {'neutron-compute::neutron-compute-operations':}
         }
     }
-
 }
