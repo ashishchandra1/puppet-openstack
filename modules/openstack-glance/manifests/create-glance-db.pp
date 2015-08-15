@@ -1,8 +1,8 @@
 class openstack-glance::create-glance-db inherits openstack-glance::params {
 
     notify {"Creating a new Glance database ":} ->
-    exec { "create-${db_name}-db":
-        unless => "/usr/bin/mysql -u${db_user} -p${db_password} ${db_name}",
-        command => "/usr/bin/mysql -uroot -p$mysql_root_password -e \"create database ${db_name};   grant all privileges on ${db_name}.* to '${db_user}'@'localhost' identified by '$db_password'; grant all privileges on ${db_name}.* to '${db_user}'@'%' identified by '$db_password';\"",
+    exec { "create-${GLANCE_DB_NAME}-db":
+        unless => "/usr/bin/mysql -u${GLANE_DB_USER} -p${GLANCE_DB_PASSWORD} ${GLANCE_DB_NAME}",
+        command => "/usr/bin/mysql -uroot -p$MYSQL_ROOT_PASSWORD -e \"create database ${GLANCE_DB_NAME};   grant all privileges on ${GLANCE_DB_NAME}.* to '${GLANE_DB_USER}'@'localhost' identified by '$GLANCE_DB_PASSWORD'; grant all privileges on ${GLANCE_DB_NAME}.* to '${GLANE_DB_USER}'@'%' identified by '$GLANCE_DB_PASSWORD';\"",
     }
 }

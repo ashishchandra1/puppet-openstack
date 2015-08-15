@@ -9,6 +9,7 @@ class openstack-cinder::params {
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
+    $CINDER_USER_PASSWORD = '@dmin123'
     
     $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
     $CINDER_DB_PASSWORD = 'jvTjSYt3BOFF'

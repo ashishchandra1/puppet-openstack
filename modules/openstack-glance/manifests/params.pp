@@ -1,12 +1,12 @@
 class openstack-glance::params {
-    $GLANCE_DBPASS = '@dmin123'
+    $GLANCE_USER_PASSWORD = '@dmin123'
     $CONTROLLER_HNAME = "controller" 
     $VERBOSE = 'True' 
     
-    $mysql_root_password = '@dmin123'
-    $db_user = 'glance'
-    $db_name = 'glance'
-    $db_password = '@dmin123'
+    $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
+    $GLANCE_DB_PASSWORD = 'sSQT9735FWFc'
+    $GLANCE_DB_USER = 'glance'
+    $GLANCE_DB_NAME = 'glance'
 
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'

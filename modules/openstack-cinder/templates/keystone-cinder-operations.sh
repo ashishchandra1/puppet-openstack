@@ -10,6 +10,7 @@ region="<%= @region %>"
 admin_tenant="<%=  @admin_tenant %>"
 admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
+cinder_user_pass="<%= @CINDER_USER_PASSWORD %>"
 
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
 export OS_PROJECT_DOMAIN_ID=default
@@ -32,7 +33,7 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the Cinder user
-        openstack user create cinder --password="$admin_user_pass" --email="cinder@example.com"
+        openstack user create cinder --password="$cinder_user_pass" --email="cinder@example.com"
 
         # Add the admin role to Cinder user
         openstack role add --project service --user cinder admin

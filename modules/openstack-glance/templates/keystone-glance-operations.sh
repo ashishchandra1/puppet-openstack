@@ -10,7 +10,7 @@ region="<%= @region %>"
 admin_tenant="<%=  @admin_tenant %>"
 admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
-
+glance_user_pass="<%= @GLANCE_USER_PASSWORD %>"
 
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
 export OS_PROJECT_DOMAIN_ID=default
@@ -32,7 +32,7 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the user
-        openstack user create glance --password="$admin_user_pass" --email="glance@example.com"
+        openstack user create glance --password="$glance_user_pass" --email="glance@example.com"
 
         # Add the admin role to glance user
         openstack role add --project service --user glance admin
