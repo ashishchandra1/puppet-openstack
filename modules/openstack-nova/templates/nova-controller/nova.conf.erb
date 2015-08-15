@@ -2209,7 +2209,7 @@ memcached_servers=<%= @MEMCACHED_SERVERS %>
 # Deprecated group;name - DEFAULT;sql_connection
 # Deprecated group;name - [DATABASE]/sql_connection
 # Deprecated group;name - [sql]/connection
-connection=mysql://nova:<%= @NOVA_DBPASS %>@<%= @CONTROLLER_HNAME %>/nova
+connection=mysql://nova:<%= @NOVA_DB_PASSWORD %>@<%= @CONTROLLER_HNAME %>/nova
 
 # The SQLAlchemy connection string to use to connect to the slave database.
 # (string value)
@@ -2551,7 +2551,7 @@ project_domain_id=default
 user_domain_id=default
 project_name=service
 username=nova
-password=@dmin123
+password=<%= @NOVA_USER_PASSWORD% >
 
 
 # API version of the admin Identity API endpoint. (string value)
