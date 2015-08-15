@@ -3,8 +3,8 @@ class openstack-neutron::params {
     $NEUTRON_USER_PASSWORD = '@dmin123'
     $CONTROLLER_HNAME = "controller"
     $ADMIN_PASSWORD = '@dmin123'
-    $RABBIT_PASSWORD = '@dmin123' 
-
+    $RABBIT_USER = 'openstack'
+    $RABBIT_PASSWORD = '2v04VsaRkZfr'
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'

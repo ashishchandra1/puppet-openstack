@@ -7,7 +7,8 @@ class openstack-nova::params {
     $CONTROLLER_HNAME = "controller"
     $ADMIN_USER = 'nova'
     $ADMIN_PASSWORD = '@dmin123'
-    $RABBIT_PASSWORD = '@dmin123' 
+    $RABBIT_USER = 'openstack' 
+    $RABBIT_PASSWORD = '2v04VsaRkZfr' 
     $VERBOSE = "True"
     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
     $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
