@@ -1,10 +1,6 @@
 class openstack-keystone::params {
-	$mysql_root_password = '@dmin123'
-    $db_user = 'keystone'
-    $db_name = 'keystone'
-    $db_password = '@dmin123'
 
-    $KEYSTONE_DBPASS = '@dmin123'
+    $KEYSTONE_USER_PASSWORD = '@dmin123'
     $CONTROLLER_HNAME = "controller" 
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
@@ -12,6 +8,11 @@ class openstack-keystone::params {
     $REGION = "regionOne"
     $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
     $VERBOSE = 'True' 
+
+    $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
+    $KEYSTONE_DB_PASSWORD = '29Q51nX6XeCq'
+    $KEYSTONE_DB_USER = 'keystone'
+    $KEYSTONE_DB_NAME = 'keystone'
      
     $admin_tenant = "admin"
     $demo_tenant  = "demo"

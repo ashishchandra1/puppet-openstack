@@ -415,7 +415,7 @@ verbose = <%= @VERBOSE %>
 # Deprecated group/name - [DEFAULT]/sql_connection
 # Deprecated group/name - [DATABASE]/sql_connection
 # Deprecated group/name - [sql]/connection
-connection = mysql://keystone:<%= @KEYSTONE_DBPASS%>@<%= @CONTROLLER_HNAME%>/keystone
+connection = mysql://keystone:<%= @KEYSTONE_DB_PASSWORD%>@<%= @CONTROLLER_HNAME%>/keystone
 
 # The SQLAlchemy connection string to use to connect to the slave database.
 # (string value)
