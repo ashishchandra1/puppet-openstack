@@ -14,7 +14,7 @@ class mariadb-galera::config_galera inherits mariadb-galera::params {
     
     notify {"Injecting Cluster configuration file ":} ->
     file { '/etc/my.cnf.d/server.cnf':
-        content => template('mariadb-galera/mariadb-primary.erb'),
+        content => template('mariadb-galera/server.cnf.erb'),
         require  => Class['mariadb-galera::params'],
     } 
 }

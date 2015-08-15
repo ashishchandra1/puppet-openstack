@@ -121,7 +121,7 @@ rpc_backend=rabbit
 #
 
 # IP address of this host (string value)
-my_ip=<%= @MY_IP %>
+my_ip=<%= @MY_CONTROLLER_IP %>
 
 # Block storage IP address of this host (string value)
 #my_block_storage_ip=$my_ip
@@ -1816,7 +1816,7 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 # Location of VNC console proxy, in the form
 # "http://127.0.0.1:6080/vnc_auto.html" (string value)
-novncproxy_base_url=http://<%= @CONTROLLER_HNAME%>:6080/vnc_auto.html
+novncproxy_base_url=http://<%= @MY_CONTROLLER_IP %>:6080/vnc_auto.html
 
 # Location of nova xvp VNC console proxy, in the form
 # "http://127.0.0.1:6081/console" (string value)

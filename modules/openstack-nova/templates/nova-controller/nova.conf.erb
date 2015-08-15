@@ -121,7 +121,7 @@ rpc_backend=rabbit
 #
 
 # IP address of this host (string value)
-my_ip=<%= @MY_IP %>
+my_ip=<%= @MY_CONTROLLER_IP %>
 
 # Block storage IP address of this host (string value)
 #my_block_storage_ip=$my_ip
@@ -1824,11 +1824,11 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 # IP address on which instance vncservers should listen
 # (string value)
-vncserver_listen=<%= @MY_IP %>
+vncserver_listen=<%= @MY_CONTROLLER_IP %>
 
 # The address to which proxy clients (like nova-xvpvncproxy)
 # should connect (string value)
-vncserver_proxyclient_address=<%= @MY_IP %>
+vncserver_proxyclient_address=<%= @MY_CONTROLLER_IP %>
 
 # Enable VNC related features (boolean value)
 #vnc_enabled=true
