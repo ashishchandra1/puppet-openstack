@@ -1,6 +1,6 @@
 class openstack-neutron::params {
 	
-    $NEUTRON_DBPASS = '@dmin123'
+    $NEUTRON_USER_PASSWORD = '@dmin123'
     $CONTROLLER_HNAME = "controller"
     $ADMIN_PASSWORD = '@dmin123'
     $RABBIT_PASSWORD = '@dmin123' 
@@ -18,12 +18,12 @@ class openstack-neutron::params {
     $region = "regionOne"
 
     $METADATA_SECRET = '@dmin123' 
-
-    $mysql_root_password = '@dmin123'
-    $db_user = 'neutron'
-    $db_name = 'neutron'
-    $db_password = '@dmin123' 
     
+    $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
+    $NEUTRON_DB_PASSWORD = '3w550M3H32KO'
+    $NEUTRON_DB_USER = 'neutron'
+    $NEUTRON_DB_NAME = 'neutron'
+
     # OVS operations
     $DATA_BRIDGE = 'br-data'
     $EXT_BRIDGE  = 'br-ex'

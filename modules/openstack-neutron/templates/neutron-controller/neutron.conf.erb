@@ -693,12 +693,12 @@ project_domain_id = default
 user_domain_id = default
 project_name = service
 username = neutron
-password = <%= @ADMIN_PASSWORD %>
+password = <%= @NEUTRON_USER_PASSWORD %>
 
 [database]
 # This line MUST be changed to actually run the plugin.
 # Example:
-connection = mysql://neutron:<%= @NEUTRON_DBPASS %>@<%= @CONTROLLER_HNAME %>/neutron
+connection = mysql://neutron:<%= @NEUTRON_DB_PASSWORD %>@<%= @CONTROLLER_HNAME %>/neutron
 # Replace 127.0.0.1 above with the IP address of the database used by the
 # main neutron server. (Leave it as is if the database runs on this host.)
 # connection = sqlite://
