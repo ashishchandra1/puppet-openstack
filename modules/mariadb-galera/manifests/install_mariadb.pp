@@ -36,6 +36,6 @@ class mariadb-galera::install_mariadb inherits mariadb-galera::params {
     
     notify{"Execute mysql-autosecure script":} ->
     exec { "mysql-autosecure":
-        command => "bash /usr/local/src/mysql-autosecure.sh $mysql_root_password",
+        command => "bash /usr/local/src/mysql-autosecure.sh $MYSQL_ROOT_PASSWORD",
     }      
 }

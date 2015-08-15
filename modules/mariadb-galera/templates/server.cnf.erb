@@ -65,5 +65,5 @@ wsrep_cluster_name='galera_cluster'
 wsrep_node_address='<%= @HOST_IP %>'
 wsrep_node_name='<%= @HOSTNAME %>'
 wsrep_sst_method=rsync
-wsrep_sst_auth=sst_user:<%= @DBPASS %>
+wsrep_sst_auth=<%= @GALERA_DB_USER %>:<%= @GALERA_DB_PASSWORD %>
 

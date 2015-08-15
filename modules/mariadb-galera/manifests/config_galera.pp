@@ -4,7 +4,7 @@ class mariadb-galera::config_galera inherits mariadb-galera::params {
  
     notify {"Creating Galera Cluster users":} ->
     exec { "create-galera-cluster-user":
-        command => "/usr/bin/mysql -uroot -p$mysql_root_password -e \"delete from mysql.user where user=''; grant all on *.* to 'root'@'%' identified by '$mysql_root_password'; grant usage on *.* to ${galera_db_user}@'%' identified by '$mysql_root_password'; grant all privileges on *.* to ${galera_db_user}@'%'; flush privileges;\"",
+        command => "/usr/bin/mysql -uroot -p$MYSQL_ROOT_PASSWORD -e \"delete from mysql.user where user=''; grant all on *.* to 'root'@'%' identified by '$MYSQL_ROOT_PASSWORD'; grant usage on *.* to ${GALERA_DB_USER}@'%' identified by '$MYSQL_ROOT_PASSWORD'; grant all privileges on *.* to ${GALERA_DB_USER}@'%'; flush privileges;\"",
     } ->
 
     notify {"Stoping mariadb Service on member Nodes": } ->
