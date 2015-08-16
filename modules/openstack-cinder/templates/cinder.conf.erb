@@ -1,12 +1,6 @@
 [DEFAULT]
 logdir = /var/log/cinder
-state_path = /var/lib/cinder
-lock_path = /var/lib/cinder/tmp
 volumes_dir = /etc/cinder/volumes
-iscsi_helper = lioadm
-rootwrap_config = /etc/cinder/rootwrap.conf
-auth_strategy = keystone
-amqp_durable_queues=true
 verbose = <%= @VERBOSE %>
 
 #
@@ -2452,7 +2446,7 @@ project_domain_id = default
 user_domain_id = default
 project_name = service
 username = cinder
-password = <%= @CINDER_USER_PASSWORD>
+password = <%= @CINDER_USER_PASSWORD %>
 
 # API version of the admin Identity API endpoint. (string value)
 #auth_version = <None>
