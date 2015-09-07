@@ -11,7 +11,6 @@ class openstack-glance::glance-operations {
     command => 'systemctl restart openstack-glance-api.service openstack-glance-registry.service',
     user => 'root',
   }
-
 }
 
 

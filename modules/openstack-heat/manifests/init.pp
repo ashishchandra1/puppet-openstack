@@ -1,41 +1,18 @@
-# == Class: heat
-#
-# Full description of class heat here.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
-#
-# === Examples
-#
-#  class { 'heat':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2015 Your name here, unless otherwise noted.
-#
-class heat {
+class openstack-heat {
 
+   notify {"Openstack keystone runs on Primary node": } ->
+   case $hostname {
+         controller1: {
+                class {'create-heat-db':} ->
+                class {'keystone':} ->
+                class {'heat-installation':} ->
+                class {'heat-db-sync':} ->
+                class {'heat-operations':}
+             }
 
+          controller2,controller3: {
+                class {'heat-installation':} ->
+                class {'heat-operations':}
+              }
+   }
 }
