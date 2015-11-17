@@ -454,7 +454,7 @@ allow_overlapping_ips = True
 # rabbit_use_ssl=false
 
 # The RabbitMQ userid. (string value)
-rabbit_userid=<%= @RABBIT_USER %>
+# rabbit_userid= guest
 
 # The RabbitMQ password. (string value)
 # rabbit_password=guest
@@ -969,7 +969,7 @@ rabbit_hosts = <%= @RABBIT_HOSTS%>
 
 # The RabbitMQ userid. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_userid
-# rabbit_userid = guest
+rabbit_userid = <%= @RABBIT_USER %>
 
 # The RabbitMQ password. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_password

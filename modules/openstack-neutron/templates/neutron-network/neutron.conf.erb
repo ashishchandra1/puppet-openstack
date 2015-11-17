@@ -448,16 +448,16 @@ allow_overlapping_ips = True
 # rabbit_port=5672
 
 # RabbitMQ HA cluster host:port pairs. (list value)
-rabbit_hosts=<%= @RABBIT_HOSTS%>
+#rabbit_hosts=$rabbit_host:$rabbit_port
 
 # Connect over SSL for RabbitMQ. (boolean value)
 # rabbit_use_ssl=false
 
 # The RabbitMQ userid. (string value)
-rabbit_userid=<%= @RABBIT_USER %>
+#rabbit_userid=guest
 
 # The RabbitMQ password. (string value)
-rabbit_password=<%= @RABBIT_PASSWORD%>
+#rabbit_password=guest
 
 # the RabbitMQ login method (string value)
 # rabbit_login_method=AMQPLAIN
@@ -975,7 +975,7 @@ rabbit_hosts = <%= @RABBIT_HOSTS %>
 
 # The RabbitMQ userid. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_userid
-# rabbit_userid = guest
+rabbit_userid = <%= @RABBIT_USER %>
 
 # The RabbitMQ password. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_password
