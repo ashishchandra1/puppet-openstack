@@ -28,8 +28,8 @@ class openstack-neutron::params {
     $DATA_BRIDGE = 'br-data'
     $EXT_BRIDGE  = 'br-ex'
     $COMPUTE_DATA_INTERFACE = 'enp10s0'  
-    $NETWORK_DATA_INTERFACE = 'team1'
-    $NETWORK_EXT_INTERFACE = 'team2'
+    $NETWORK_DATA_INTERFACE = 'enp9s0'
+    $NETWORK_EXT_INTERFACE = 'enp7s0'
     
     # ml2 config parameters 
     $DATA_VLAN_RANGES = "physnet1:500:699"

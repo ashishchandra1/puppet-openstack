@@ -13,7 +13,7 @@ class openstack-neutron {
             class {'neutron-controller-operations':}
         }
 
-        network1, network2: {
+        network01, network02: {
             class {'neutron-network::neutron-network-installation':} ->
             class {'neutron-network::neutron-network-config':} ->
             class {'neutron-network::neutron-ovs-operations':} ->

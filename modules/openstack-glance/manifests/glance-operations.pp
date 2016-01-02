@@ -12,5 +12,3 @@ class openstack-glance::glance-operations {
     user => 'root',
   }
 }
-
-
