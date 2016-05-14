@@ -1845,22 +1845,22 @@ iscsi_helper=lioadm
 #
 
 # The RADOS pool where rbd volumes are stored (string value)
-#rbd_pool=openstack_volumes
+rbd_pool=<%= @RBD_STORE_POOL%>
 
 # The RADOS client name for accessing rbd volumes - only set
 # when using cephx authentication (string value)
-#rbd_user=cinder
+rbd_user=<%= @RBD_STORE_USER%>
 
 # Path to the ceph configuration file (string value)
-#rbd_ceph_conf=/etc/ceph/ceph.conf
+rbd_ceph_conf=<%= @CEPH_CONF%>
 
 # Flatten volumes created from snapshots to remove dependency
 # from volume to snapshot (boolean value)
-#rbd_flatten_volume_from_snapshot=false
+rbd_flatten_volume_from_snapshot=false
 
 # The libvirt uuid of the secret for the rbd_user volumes
 # (string value)
-#rbd_secret_uuid=457eb676-33da-42ec-9a8c-9293d545c337
+rbd_secret_uuid=<%= @RBD_SECRET_UUID%>
 
 # Directory where temporary image files are stored when the
 # volume driver does not write them directly to the volume.
@@ -1871,16 +1871,16 @@ iscsi_helper=lioadm
 # Maximum number of nested volume clones that are taken before
 # a flatten occurs. Set to 0 to disable cloning. (integer
 # value)
-#rbd_max_clone_depth=5
+rbd_max_clone_depth=<%= @RBD_MAX_CLONE_DEPTH%>
 
 # Volumes will be chunked into objects of this size (in
 # megabytes). (integer value)
-#rbd_store_chunk_size=4
+rbd_store_chunk_size=<%= @RBD_STORE_CHUNK_SIZE%>
 
 # Timeout value (in seconds) used when connecting to ceph
 # cluster. If value < 0, no timeout is set and default
 # librados value is used. (integer value)
-#rados_connect_timeout=-1
+rados_connect_timeout=<%= @RADOS_CONNECT_TIMEOUT%>
 
 
 #
@@ -2264,7 +2264,7 @@ iscsi_helper=lioadm
 #
 
 # Driver to use for volume creation (string value)
-volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_driver=<%= @VOLUME_DRIVER%>
 
 # Timeout for creating the volume to migrate to when
 # performing volume migration (seconds) (integer value)

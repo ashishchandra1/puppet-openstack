@@ -26,4 +26,14 @@ class openstack-cinder::params {
         "python-cinderclient",
         "python-oslo-db" 
      ]
+
+    ### CEPH_CONFIGURATIONS 
+    $RBD_STORE_POOL = 'openstack_volumes'
+    $RBD_STORE_USER = 'cinder'
+    $CEPH_CONF = '/etc/ceph/ceph.conf'
+    $RBD_SECRET_UUID = '457eb676-33da-42ec-9a8c-9293d545c337'
+    $RBD_MAX_CLONE_DEPTH = '5'
+    $RBD_STORE_CHUNK_SIZE = '4'
+    $RADOS_CONNECT_TIMEOUT = '-1'
+    $VOLUME_DRIVER = 'cinder.volume.drivers.rbd.RBDDriver'
 }
