@@ -42,4 +42,12 @@ class openstack-nova::params {
         "openstack-nova-compute",
         "sysfsutils"
     ]
+
+    ##### CEPH CONFIGURATIONS
+ 
+    $IMAGES_TYPE = 'rbd'
+    $IMAGES_RBD_POOL = 'openstack_vms'
+    $CEPH_CONF = '/etc/ceph/ceph.conf'
+    $RBD_STORE_USER = 'cinder'
+    $RBD_SECRET_UUID = '457eb676-33da-42ec-9a8c-9293d545c337'
 }
