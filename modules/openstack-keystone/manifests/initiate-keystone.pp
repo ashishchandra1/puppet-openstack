@@ -2,7 +2,7 @@ class openstack-keystone::initiate-keystone inherits openstack-keystone::params 
 
     notify {"Create KEYSTONE Service and Service Endpoint":} ->
     file { "/tmp/keystone-service-endpoint.sh":
-        content => template('openstack-keystone/endpoint-init.sh'),
+        content => template('openstack-keystone/endpoint-initialise.sh'),
         mode => 0755,
     } ->
   
@@ -15,7 +15,7 @@ class openstack-keystone::initiate-keystone inherits openstack-keystone::params 
 
     notify {"Creating Script for Keystone  user/tenant creation":} ->
     file { '/tmp/keystone-create-user.sh':
-        content => template('openstack-keystone/keystone-init-user.sh'),
+        content => template('openstack-keystone/keystone-initialise-user.sh'),
         mode => 0755,
     } -> 
   

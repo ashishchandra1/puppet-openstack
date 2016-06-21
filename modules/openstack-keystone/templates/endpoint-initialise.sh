@@ -8,8 +8,9 @@ admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @REGION %>"
 
-export OS_URL=http://${keystone_host}:${admin_port}/v2.0
+export OS_URL=http://${keystone_host}:${admin_port}/v3
 export OS_TOKEN=${admin_token}
+export OS_IDENTITY_API_VERSION=3
 
 get_service_id () {
 	openstack service list |
