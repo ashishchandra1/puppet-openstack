@@ -7,6 +7,7 @@ class openstack-glance::params {
     $GLANCE_DB_PASSWORD = 'sSQT9735FWFc'
     $GLANCE_DB_USER = 'glance'
     $GLANCE_DB_NAME = 'glance'
+    $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
 
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
@@ -18,8 +19,6 @@ class openstack-glance::params {
     $region = "regionOne"
 
     $packages = [
-        "openstack-glance",
-        "python-glance",
-        "python-glanceclient"
+        "openstack-glance"
     ]
 }
