@@ -1,4 +1,4 @@
-class openstack-glance::keystone inherits openstack-glance::params {
+class openstack-glance::keystone_operations inherits openstack-glance::params {
 
     notify {"Copy file for Keystone operations":} ->
     file { '/tmp/keystone-glance-operations.sh':

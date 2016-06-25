@@ -3,7 +3,6 @@ class openstack-nova::params {
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
-    $NOVA_DBPASS = '@dmin123'
     $CONTROLLER_HNAME = "controller"
     $ADMIN_USER = 'nova'
     $ADMIN_PASSWORD = '@dmin123'
@@ -17,6 +16,7 @@ class openstack-nova::params {
     
     $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
     $NOVA_DB_PASSWORD = '5M37vBRU55hO'
+
     $NOVA_DB_USER = 'nova'
     $NOVA_DB_NAME = 'nova'
 
@@ -30,12 +30,10 @@ class openstack-nova::params {
 
     $controller_packages = [ 
         "openstack-nova-api",
-        "openstack-nova-cert",
         "openstack-nova-conductor",
         "openstack-nova-console",
         "openstack-nova-novncproxy",
-        "openstack-nova-scheduler",
-        "python-novaclient"
+        "openstack-nova-scheduler"
     ]
 
     $compute_packages = [

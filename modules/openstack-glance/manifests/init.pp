@@ -4,7 +4,7 @@ class openstack-glance {
    case $hostname {
          controller1: {
                 class {'create-glance-db':} ->
-                class {'keystone':} -> 
+                class {'keystone_operations':} -> 
                 class {'glance-installation':} ->
                 class {'glance-db-sync':} ->
                 class {'glance-operations':}

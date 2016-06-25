@@ -1,4 +1,4 @@
-class openstack-nova::keystone inherits openstack-nova::params {
+class openstack-nova::keystone_operations inherits openstack-nova::params {
 
      notify {"Copy file for Keystone Nova operations":} ->
      file { '/tmp/keystone-nova-operations.sh':

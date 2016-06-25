@@ -12,14 +12,15 @@ admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 nova_user_pass="<%= @NOVA_USER_PASSWORD %>"
 
-export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
-export OS_PROJECT_DOMAIN_ID=default
-export OS_USER_DOMAIN_ID=default
+
+export OS_PROJECT_DOMAIN_NAME=default
+export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_NAME=admin
-export OS_TENANT_NAME=${admin_tenant}
 export OS_USERNAME=${admin_user}
 export OS_PASSWORD=${admin_user_pass}
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
 
 
 # Creat the nova user.
@@ -33,7 +34,7 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the user
-        openstack user create nova --password="$nova_user_pass" --email="nova@example.com"
+        openstack user create --domain default nova --password="$nova_user_pass" --email="nova@example.com"
         
         # Add the admin role to nova user
         openstack role add --project service --user nova admin
