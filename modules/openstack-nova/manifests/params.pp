@@ -37,7 +37,6 @@ class openstack-nova::params {
     ]
 
     $compute_packages = [
-        "openstack-nova-compute",
-        "sysfsutils"
+        "openstack-nova-compute"
     ]
 }
