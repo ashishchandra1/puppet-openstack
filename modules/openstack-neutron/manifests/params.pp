@@ -10,6 +10,7 @@ class openstack-neutron::params {
     $ADMIN_TOKEN = '@dmin123'
     $VERBOSE = "True"
     $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
+    $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
     $REGION = "regionOne"
      
     $admin_tenant = "admin"
@@ -38,21 +39,16 @@ class openstack-neutron::params {
     $MECHANISM_DRIVERS = 'openvswitch,linuxbridge'
      
     $neutron_compute_packages = [
-        "openstack-neutron",
-        "openstack-neutron-ml2",
-        "openstack-neutron-openvswitch"
+        "openstack-neutron-linuxbridge",
+        "etables",
+        "ipset"
     ]
     
-    $neutron_network_packages = [
-        "openstack-neutron",
-        "openstack-neutron-ml2",
-        "openstack-neutron-openvswitch"
-    ]
-     
     $neutron_controller_packages = [ 
         "openstack-neutron",
         "openstack-neutron-ml2",
-        "python-neutronclient",
+        " openstack-neutron-linuxbridge",
+        "ebtables",
         "which"
     ]
 }

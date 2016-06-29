@@ -4144,20 +4144,20 @@ virt_type=qemu
 
 # Set flag to indicate Neutron will proxy metadata requests and resolve
 # instance ids. (boolean value)
-#service_metadata_proxy=false
+service_metadata_proxy=True
 
 # Shared secret to validate proxies Neutron metadata requests (string value)
-#metadata_proxy_shared_secret =
+metadata_proxy_shared_secret = <%= @METADATA_SECRET %>
 
 #
 # From nova.network
 #
 
 # URL for connecting to neutron (string value)
-#url=http://127.0.0.1:9696
+url=http://<%= @CONTROLLER_HNAME %>:9696
 
 # Region name for connecting to neutron in admin context (string value)
-#region_name=<None>
+region_name=RegionOne
 
 # Default OVS bridge name to use if not specified by Neutron (string value)
 #ovs_bridge=br-int
@@ -4170,11 +4170,11 @@ virt_type=qemu
 #
 
 # Authentication URL (unknown value)
-#auth_url=<None>
+auth_url=http://<%= @CONTROLLER_HNAME %>:35357
 
 # Authentication type to load (unknown value)
 # Deprecated group;name - DEFAULT;auth_plugin
-#auth_type=<None>
+auth_type=password
 
 # PEM encoded Certificate Authority to use when verifying HTTPs connections.
 # (string value)
@@ -4208,13 +4208,13 @@ virt_type=qemu
 #keyfile=<None>
 
 # User's password (unknown value)
-#password=<None>
+password=<%= @NEUTRON_USER_PASSWORD %>
 
 # Domain ID containing project (unknown value)
 #project_domain_id=<None>
 
 # Domain name containing project (unknown value)
-#project_domain_name=<None>
+project_domain_name=default
 
 # Project ID to scope to (unknown value)
 # Deprecated group;name - DEFAULT;tenant-id
@@ -4222,7 +4222,7 @@ virt_type=qemu
 
 # Project name to scope to (unknown value)
 # Deprecated group;name - DEFAULT;tenant-name
-#project_name=<None>
+project_name=service
 
 # Tenant ID (unknown value)
 #tenant_id=<None>
@@ -4241,14 +4241,14 @@ virt_type=qemu
 #user_domain_id=<None>
 
 # User's domain name (unknown value)
-#user_domain_name=<None>
+user_domain_name=default
 
 # User id (unknown value)
 #user_id=<None>
 
 # Username (unknown value)
 # Deprecated group;name - DEFAULT;user-name
-#username=<None>
+username=neutron
 
 
 [osapi_v21]

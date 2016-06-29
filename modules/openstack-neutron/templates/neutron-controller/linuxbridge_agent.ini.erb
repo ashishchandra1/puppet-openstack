@@ -1,4 +1,4 @@
-[DEFAULT]
+:[DEFAULT]
 
 #
 # From oslo.log
@@ -96,136 +96,102 @@
 #fatal_deprecations = false
 
 
-[ml2]
+[agent]
 
 #
-# From neutron.ml2
+# From neutron.ml2.linuxbridge.agent
 #
 
-# List of network type driver entrypoints to be loaded from the
-# neutron.ml2.type_drivers namespace. (list value)
-type_drivers = local,flat,vlan,gre,vxlan
+# The number of seconds the agent will wait between polling for local device
+# changes. (integer value)
+#polling_interval = 2
 
-# Ordered list of network_types to allocate as tenant networks. The default
-# value 'local' is useful for single-box testing but provides no connectivity
-# between hosts. (list value)
-tenant_network_types = <%= @TENANT_NETWORK_TYPES  %>
+# Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If
+# value is set to 0, rpc timeout won't be changed (integer value)
+#quitting_rpc_timeout = 10
 
-# An ordered list of networking mechanism driver entrypoints to be loaded from
-# the neutron.ml2.mechanism_drivers namespace. (list value)
-mechanism_drivers = <%= @MECHANISM_DRIVERS  %>
-
-# An ordered list of extension driver entrypoints to be loaded from the
-# neutron.ml2.extension_drivers namespace. For example: extension_drivers =
-# port_security,qos (list value)
-#extension_drivers =
-
-# Maximum size of an IP packet (MTU) that can traverse the underlying physical
-# network infrastructure without fragmentation when using an overlay/tunnel
-# protocol. Either set this to the same value as the global_physnet_mtu value
-# or use it to explicitly specify a physical network MTU value that differs
-# from the default global_physnet_mtu value. (integer value)
-#path_mtu = 1500
-
-# A list of mappings of physical networks to MTU values. The format of the
-# mapping is <physnet>:<mtu val>. This mapping allows specifying a physical
-# network MTU value that differs from the default global_physnet_mtu value.
-# (list value)
-#physical_network_mtus =
-
-# Default network type for external networks when no provider attributes are
-# specified. By default it is None, which means that if provider attributes are
-# not specified while creating external networks then they will have the same
-# type as tenant networks. Allowed values for external_network_type config
-# option depend on the network type values configured in type_drivers config
-# option. (string value)
-#external_network_type = <None>
+# Enable suppression of ARP responses that don't match an IP address that
+# belongs to the port from which they originate. Note: This prevents the VMs
+# attached to this agent from spoofing, it doesn't protect them from other
+# devices which have the capability to spoof (e.g. bare metal or VMs attached
+# to agents without this flag set to True). Spoofing rules will not be added to
+# any ports that have port security disabled. For LinuxBridge, this requires
+# ebtables. For OVS, it requires a version that supports matching ARP headers.
+# This option will be removed in Newton so the only way to disable protection
+# will be via the port security extension. (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#prevent_arp_spoofing = true
 
 
-[ml2_type_flat]
+[linux_bridge]
 
 #
-# From neutron.ml2
+# From neutron.ml2.linuxbridge.agent
 #
 
-# List of physical_network names with which flat networks can be created. Use
-# default '*' to allow flat networks with arbitrary physical_network names. Use
-# an empty list to disable flat networks. (list value)
-#flat_networks = *
+# Comma-separated list of <physical_network>:<physical_interface> tuples
+# mapping physical network names to the agent's node-specific physical network
+# interfaces to be used for flat and VLAN networks. All physical networks
+# listed in network_vlan_ranges on the server should have mappings to
+# appropriate interfaces on each agent. (list value)
+#physical_interface_mappings =
 
-
-[ml2_type_geneve]
-
-#
-# From neutron.ml2
-#
-
-# Comma-separated list of <vni_min>:<vni_max> tuples enumerating ranges of
-# Geneve VNI IDs that are available for tenant network allocation (list value)
-#vni_ranges =
-
-# Geneve encapsulation header size is dynamic, this value is used to calculate
-# the maximum MTU for the driver. This is the sum of the sizes of the outer ETH
-# + IP + UDP + GENEVE header sizes. The default size for this field is 50,
-# which is the size of the Geneve header without any additional option headers.
-# (integer value)
-#max_header_size = 50
-
-
-[ml2_type_gre]
-
-#
-# From neutron.ml2
-#
-
-# Comma-separated list of <tun_min>:<tun_max> tuples enumerating ranges of GRE
-# tunnel IDs that are available for tenant network allocation (list value)
-#tunnel_id_ranges =
-
-
-[ml2_type_vlan]
-
-#
-# From neutron.ml2
-#
-
-# List of <physical_network>:<vlan_min>:<vlan_max> or <physical_network>
-# specifying physical_network names usable for VLAN provider and tenant
-# networks, as well as ranges of VLAN tags on each available for allocation to
-# tenant networks. (list value)
-network_vlan_ranges = <%= @DATA_VLAN_RANGES %>,<%= @EXT_VLAN_RANGES %>
-
-
-[ml2_type_vxlan]
-
-#
-# From neutron.ml2
-#
-
-# Comma-separated list of <vni_min>:<vni_max> tuples enumerating ranges of
-# VXLAN VNI IDs that are available for tenant network allocation (list value)
-#vni_ranges =
-
-# Multicast group for VXLAN. When configured, will enable sending all broadcast
-# traffic to this multicast group. When left unconfigured, will disable
-# multicast VXLAN mode. (string value)
-#vxlan_group = <None>
+# List of <physical_network>:<physical_bridge> (list value)
+#bridge_mappings =
 
 
 [securitygroup]
 
 #
-# From neutron.ml2
+# From neutron.ml2.linuxbridge.agent
 #
 
 # Driver for security groups firewall in the L2 agent (string value)
-firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
 # Controls whether the neutron security group API is enabled in the server. It
 # should be false when using no security groups or using the nova security
 # group API. (boolean value)
-#enable_security_group = true
+enable_security_group = true
 
 # Use ipset to speed-up the iptables based security groups. Enabling ipset
 # support requires that ipset is installed on L2 agent node. (boolean value)
-enable_ipset = true
+#enable_ipset = true
+
+
+[vxlan]
+
+#
+# From neutron.ml2.linuxbridge.agent
+#
+
+# Enable VXLAN on the agent. Can be enabled when agent is managed by ml2 plugin
+# using linuxbridge mechanism driver (boolean value)
+#enable_vxlan = true
+
+# TTL for vxlan interface protocol packets. (integer value)
+#ttl = <None>
+
+# TOS for vxlan interface protocol packets. (integer value)
+#tos = <None>
+
+# Multicast group(s) for vxlan interface. A range of group addresses may be
+# specified by using CIDR notation. Specifying a range allows different VNIs to
+# use different group addresses, reducing or eliminating spurious broadcast
+# traffic to the tunnel endpoints. To reserve a unique group for each possible
+# (24-bit) VNI, use a /8 such as 239.0.0.0/8. This setting must be the same on
+# all the agents. (string value)
+#vxlan_group = 224.0.0.1
+
+# Local IP address of the VXLAN endpoints. (IP address value)
+#local_ip = <None>
+
+# Extension to use alongside ml2 plugin's l2population mechanism driver. It
+# enables the plugin to populate VXLAN forwarding table. (boolean value)
+#l2_population = false
+
+# Enable local ARP responder which provides local responses instead of
+# performing ARP broadcast into the overlay. Enabling local ARP responder is
+# not fullycompatible with the allowed-address-pairs extension. (boolean value)
+#arp_responder = false

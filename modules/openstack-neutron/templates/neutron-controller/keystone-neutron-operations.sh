@@ -12,7 +12,6 @@ admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 neutron_user_pass="<%= @NEUTRON_USER_PASSWORD %>"
 
-export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
 export OS_PROJECT_DOMAIN_ID=default
 export OS_USER_DOMAIN_ID=default
 export OS_PROJECT_NAME=admin
@@ -21,9 +20,7 @@ export OS_USERNAME=${admin_user}
 export OS_PASSWORD=${admin_user_pass}
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v3
 
-
 # Creat the Neutron user.
-
 get_user_id () {
         openstack user list | awk -F'|' '{print $2,$3}' | awk -vuser_name="$1" ' $2 == user_name  {print $1} '
 }
@@ -34,7 +31,7 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the user
-        openstack user create neutron --password="$neutron_user_pass" --email="neutron@example.com"
+        openstack user create --domain default neutron --password="$neutron_user_pass" --email="neutron@example.com"
 
         # Add the admin role to neutron user
         openstack role add --project service --user neutron admin
