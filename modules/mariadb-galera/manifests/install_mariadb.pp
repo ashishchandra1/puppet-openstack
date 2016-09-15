@@ -21,6 +21,12 @@ class mariadb-galera::install_mariadb inherits mariadb-galera::params {
         ensure =>installed,
     } ->
    
+    notify {"Injecting my.cnf configuration file ":} ->
+    file { '/etc/my.cnf':
+        content => template('mariadb-galera/my.cnf.erb'),
+        require  => Class['mariadb-galera::params'],
+    } ->
+
     notify {"Starting Mariadb Service": } ->
     exec{"Starting Mariadb":
         command => 'service mysql start',
