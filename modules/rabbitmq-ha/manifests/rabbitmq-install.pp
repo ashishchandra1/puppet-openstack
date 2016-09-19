@@ -14,9 +14,18 @@ class rabbitmq-ha::rabbitmq-install {
          mode   => '400',
          content => template('rabbitmq-ha/erlang.cookie.erb'),
     } ->
-    
-    exec {'systemctl enable rabbitmq-server.service':} ->
-    exec {'systemctl start rabbitmq-server.service':} ->
+
+    notify {"Enabling Rabbitmq Service":} ->
+    exec {"Enable Rabbitmq Services":
+        command => 'systemctl enable rabbitmq-server.service',
+        user => 'root',
+    } ->
+
+    notify {"Starting Rabbitmq Service":} ->
+    exec {"Start Rabbitmq Services":
+        command => 'systemctl start rabbitmq-server.service',
+        user => 'root',
+    } ->
   
     notify {"Add a new openstack user":}->  
     exec { "Adding a new user":
@@ -30,5 +39,9 @@ class rabbitmq-ha::rabbitmq-install {
         logoutput => true,
     } ->
 
-   exec {'systemctl restart rabbitmq-server.service':}
+   notify {"Retarting Rabbitmq Service":} ->
+   exec {"Restart Rabbitmq Services":
+        command => 'systemctl restart rabbitmq-server.service',
+        user => 'root',
+    }
 }
