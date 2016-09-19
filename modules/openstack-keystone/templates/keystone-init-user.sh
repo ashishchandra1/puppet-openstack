@@ -15,10 +15,10 @@ admin_user_pass="<%= @admin_user_pass %>"
 export OS_URL=http://${keystone_host}:${admin_port}/v2.0
 export OS_TOKEN=${admin_token}
 
-# Create admin project
+# Create the  Admin project
 openstack project create --description "Admin Project" admin
 
-# Create the admin user.
+# Create the admin user
 openstack user create "$admin_user" --password "$admin_user_pass" --email="admin@example.com"
 
 # Create the admin role
@@ -41,5 +41,3 @@ openstack role create user
 
 # Add the demo user to the demo role
 openstack role add --project demo --user demo user
-
-
