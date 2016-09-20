@@ -26,16 +26,18 @@ class openstack-keystone::keystone-httpd-operations inherits openstack-keystone:
         user => 'root'
     } ->
 
-    notify {"Copy the WSGI components from the upstream repository into this directory":} ->
-    exec {"Copying the WSGI components":
-        command => "curl http://git.openstack.org/cgit/openstack/keystone/plain/httpd/keystone.py?h=stable/kilo| tee /var/www/cgi-bin/keystone/main /var/www/cgi-bin/keystone/admin",
-        user => 'root'
+    file { "/var/www/cgi-bin/keystone/main":
+       ensure  => file,
+       owner  => keystone,
+       group  => keystone,
+       content => template('openstack-keystone/cgi_bin_keystone.erb'),
     } ->
 
-    notify {"Adjust ownership ":} ->
-    exec {"Adjusting ownership":
-        command => "chown -R keystone:keystone /var/www/cgi-bin/keystone",
-        user => 'root'
+    file { "/var/www/cgi-bin/keystone/admin":
+       ensure  => file,
+       owner  => keystone,
+       group  => keystone,
+       content => template('openstack-keystone/cgi_bin_keystone.erb'),
     } ->
   
     notify {"Adjust permissions ":} ->

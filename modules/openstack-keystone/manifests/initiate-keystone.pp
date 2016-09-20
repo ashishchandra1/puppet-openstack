@@ -2,7 +2,7 @@ class openstack-keystone::initiate-keystone inherits openstack-keystone::params 
 
     notify {"Create KEYSTONE Service and Service Endpoint":} ->
     file { "/tmp/keystone-service-endpoint.sh":
-        content => template('openstack-keystone/endpoint-init.sh'),
+        content => template('openstack-keystone/keystone-service-endpoint.sh'),
         mode => 0755,
     } ->
   
