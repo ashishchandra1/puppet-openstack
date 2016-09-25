@@ -48,10 +48,8 @@ endpoint_id=$(get_keystone_endpoint keystone identity )
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
-        openstack endpoint create --region="$region" \
-	    --publicurl=http://controller:5000/v2.0 \
-	    --internalurl=http://controller:5000/v2.0 \
-	    --adminurl=http://controller:35357/v2.0 \
-	    identity
+        openstack endpoint create --region="$region" identity public http://controller:5000/v3
+        openstack endpoint create --region="$region" identity internal http://controller:5000/v3
+        openstack endpoint create --region="$region" identity admin http://controller:35357/v3
 fi
 

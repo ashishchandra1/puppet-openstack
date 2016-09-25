@@ -6,14 +6,12 @@ keystone_host="<%=  @KEYSTONE_HOST %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 
-admin_tenant="<%=  @admin_tenant %>"
-admin_user="<%= @admin_user %>"
-demo_user="<%= @demo_user %>"
 demo_user_pass="<%= @demo_user_pass %>"
 admin_user_pass="<%= @admin_user_pass %>"
 
-export OS_URL=http://${keystone_host}:${admin_port}/v2.0
+export OS_URL=http://${keystone_host}:${admin_port}/v3
 export OS_TOKEN=${admin_token}
+export OS_IDENTITY_API_VERSION=3
 
 # Create default domian
 openstack domain create --description "Default Domain" default
@@ -22,10 +20,10 @@ openstack domain create --description "Default Domain" default
 openstack project create --domain default --description "Admin Project" admin
 
 # Create the admin user.
-openstack user create --domain default "$admin_user" --password "$admin_user_pass" --email="admin@example.com"
+openstack user create --domain default --password "$admin_user_pass" admin
 
 # Create the admin role
- openstack role create admin
+openstack role create admin
 
 # Add the admin user to the admin role
 openstack role add --project admin --user admin admin
@@ -37,12 +35,10 @@ openstack project create --domain default --description "Service Project" servic
 openstack project create --domain default --description "Demo Project" demo
 
 # Create the demo user
-openstack user create --domain default "$demo_user" --password "$demo_user_pass" --email="demo@example.com"
+openstack user create --domain default --password "$demo_user_pass" demo
 
 # Create the user role
 openstack role create user
 
 # Add the demo user to the demo role
 openstack role add --project demo --user demo user
-
-

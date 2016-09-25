@@ -1,5 +1,11 @@
 class openstack-keystone::keystone-httpd-operations inherits openstack-keystone::params {
     
+    notify {"Initialize Fernet Keys Keystone":} ->
+    exec {"Initialising Fernet Keys":
+        command => "keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone",
+        user => 'root',
+    } ->
+
     file { "/etc/httpd/conf/httpd.conf":
        ensure  => file,
        owner  => root,
@@ -12,18 +18,6 @@ class openstack-keystone::keystone-httpd-operations inherits openstack-keystone:
        owner  => root,
        group  => root,
        content => template('openstack-keystone/wsgi-keystone.conf.erb'),
-    } ->
-
-    notify {"Enabling memcached service":} ->
-    exec {"Enable memcached service":
-        command => 'systemctl enable memcached.service',
-        user => 'root',
-    } ->
-
-    notify {"Starting memcached service":} ->
-    exec {"Start memcached service":
-        command => 'systemctl start memcached.service',
-        user => 'root',
     } ->
 
     notify {"Enabling HTTPD Service":} ->
