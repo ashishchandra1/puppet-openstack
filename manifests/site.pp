@@ -4,7 +4,7 @@ Exec {
       logoutput => true,
     }
 
-#include initial-packages
+#include openstack-initial-packages
 #include haproxy-keepalived
 #include rabbitmq-ha
 #include mariadb-galera
