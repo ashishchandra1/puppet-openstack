@@ -3,11 +3,7 @@ class openstack-dashboard::dashboard-installation {
      $CONTROLLER_HNAME = "controller"
      $ADMIN_TOKEN = '@dmin123'
      $packages = [
-              "openstack-dashboard",
-              "httpd",
-              "mod_wsgi",
-              "memcached",
-              "python-memcached"
+              "openstack-dashboard"
      ]
   
      notify {"Installing dashboard packages":} ->

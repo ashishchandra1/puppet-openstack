@@ -1,6 +1,6 @@
 class openstack-cinder {
    case $hostname {
-         controller1: {
+         demo_controller1: {
                 class {'create-cinder-db':} ->
                 class {'keystone':} ->
                 class {'cinder-installation':} ->
@@ -8,7 +8,7 @@ class openstack-cinder {
                 class {'cinder-operations':}
              }
 
-          controller2,controller3: {
+          demo_controller2, demo_controller3: {
                 class {'cinder-installation':} ->
                 class {'cinder-operations':}
               }

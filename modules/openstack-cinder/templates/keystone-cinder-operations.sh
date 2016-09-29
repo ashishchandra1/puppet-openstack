@@ -7,8 +7,6 @@ admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @region %>"
 
-admin_tenant="<%=  @admin_tenant %>"
-admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 cinder_user_pass="<%= @CINDER_USER_PASSWORD %>"
 
@@ -33,7 +31,7 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the Cinder user
-        openstack user create cinder --password="$cinder_user_pass" --email="cinder@example.com"
+        openstack user create --domain default  --password="$cinder_user_pass" cinder
 
         # Add the admin role to Cinder user
         openstack role add --project service --user cinder admin
@@ -101,22 +99,15 @@ endpoint_id_v2=$(get_keystone_endpoint cinderv2 volumev2 )
 if [ "$endpoint_id_v1" ]; then
         echo "Found existing endpoint: $endpoint_id_v1"
 else
-        openstack endpoint create  \
-                --publicurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
-                --internalurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
-                --adminurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
-                --region "$region" \
-                volume
+        openstack endpoint create --region "$region" volume public http://"$keystone_host":8776/v1/%\(tenant_id\)s
+        openstack endpoint create --region "$region" volume internal http://"$keystone_host":8776/v1/%\(tenant_id\)s
+        openstack endpoint create --region "$region" volume admin http://"$keystone_host":8776/v1/%\(tenant_id\)s
 fi
 
 if [ "$endpoint_id_v2" ]; then
         echo "Found existing endpoint: $endpoint_id_v2"
 else
-        openstack endpoint create \
-                --publicurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
-                --internalurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
-                --adminurl http://"$keystone_host":8776/v2/%\(tenant_id\)s \
-                --region "$region" \
-                volumev2
-
+        openstack endpoint create --region "$region" volumev2 public http://"$keystone_host":8776/v2/%\(tenant_id\)s
+        openstack endpoint create --region "$region" volumev2 internal http://"$keystone_host":8776/v2/%\(tenant_id\)s
+        openstack endpoint create --region "$region" volumev2 admin http://"$keystone_host":8776/v2/%\(tenant_id\)s
 fi
