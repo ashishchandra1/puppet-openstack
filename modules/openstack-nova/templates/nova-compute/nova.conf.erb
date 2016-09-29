@@ -4157,7 +4157,7 @@ metadata_proxy_shared_secret = <%= @METADATA_SECRET %>
 url=http://<%= @CONTROLLER_HNAME %>:9696
 
 # Region name for connecting to neutron in admin context (string value)
-region_name=RegionOne
+region_name=<%= @region %>
 
 # Default OVS bridge name to use if not specified by Neutron (string value)
 #ovs_bridge=br-int

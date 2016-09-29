@@ -7,8 +7,6 @@ admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @region %>"
 
-admin_tenant="<%= @admin_tenant %>"
-admin_user="<%= @admin_user %>"
 admin_user_pass="<%= @admin_user_pass %>"
 neutron_user_pass="<%= @NEUTRON_USER_PASSWORD %>"
 
@@ -31,7 +29,7 @@ if [ "$user_id" ]; then
         echo "Found existing user id: $user_id"
 else
         # Create the user
-        openstack user create --domain default neutron --password="$neutron_user_pass" --email="neutron@example.com"
+        openstack user create --domain default --password="$neutron_user_pass" neutron
 
         # Add the admin role to neutron user
         openstack role add --project service --user neutron admin
@@ -79,10 +77,8 @@ endpoint_id=$(get_keystone_endpoint neutron network )
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
-   openstack endpoint create \
-            --publicurl http://"$keystone_host":9696 \
-            --internalurl http://"$keystone_host":9696 \
-            --adminurl http://"$keystone_host":9696 \
-            --region "$region" \
-            network
+    openstack endpoint create --region "$region" network public http://"$keystone_host":9696
+    openstack endpoint create --region "$region" network internal http://"$keystone_host":9696
+    openstack endpoint create --region "$region" network admin http://"$keystone_host":9696
+
 fi

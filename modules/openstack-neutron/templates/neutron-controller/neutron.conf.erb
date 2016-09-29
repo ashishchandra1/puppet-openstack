@@ -134,11 +134,11 @@ allow_overlapping_ips = True
 #force_gateway_on_subnet = true
 
 # Send notification to nova when port status changes (boolean value)
-notify_nova_on_port_status_changes = true
+notify_nova_on_port_status_changes = True
 
 # Send notification to nova when port data (fixed_ips/floatingip) changes so
 # nova can update its cache. (boolean value)
-notify_nova_on_port_data_changes = true
+notify_nova_on_port_data_changes = True
 
 # Number of seconds between sending events to nova if there are any events to
 # send. (integer value)
@@ -949,10 +949,10 @@ password = <%= @NEUTRON_USER_PASSWORD %>
 [nova]
 
 auth_url = http://<%= @CONTROLLER_HNAME %>:35357
-auth_plugin = password
+auth_type=password
 project_domain_name = default
 user_domain_name = default
-region_name = <%= @REGION %>
+region_name = <%= @region %>
 project_name = service
 username = nova
 password = <%= @ADMIN_PASSWORD%>

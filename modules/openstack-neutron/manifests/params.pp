@@ -9,12 +9,9 @@ class openstack-neutron::params {
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
     $VERBOSE = "True"
-    $RABBIT_HOSTS = "controller1:5672,controller2:5672,controller3:5672"
-    $MEMCACHED_SERVERS = "controller1:11211,controller2:11211,controller3:11211"
-    $REGION = "regionOne"
+    $RABBIT_HOSTS = "demo_controller1:5672, demo_controller2:5672, demo_controller3:5672"
+    $MEMCACHED_SERVERS = "demo_controller1:11211, demo_controller2:11211, demo_controller3:11211"
      
-    $admin_tenant = "admin"
-    $admin_user =  "admin"
     $admin_user_pass = "@dmin123"
     $region = "regionOne"
 
@@ -36,7 +33,7 @@ class openstack-neutron::params {
     $DATA_VLAN_RANGES = "physnet1:500:699"
     $EXT_VLAN_RANGES = "physnet2"
     $TENANT_NETWORK_TYPES = 'vlan'
-    $MECHANISM_DRIVERS = 'openvswitch,linuxbridge'
+    $MECHANISM_DRIVERS = 'openvswitch,linuxbridge,l2population'
      
     $neutron_compute_packages = [
         "openstack-neutron-linuxbridge",

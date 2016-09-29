@@ -1,6 +1,6 @@
 class openstack-neutron {
     case $hostname {
-        controller1: {
+        demo_controller1: {
             class {'create-neutron-db':} ->
             class {'keystone':} ->
             class {'neutron-controller-installation':} ->
@@ -8,7 +8,7 @@ class openstack-neutron {
             class {'neutron-controller-operations':}
         }
 
-        controller2, controller3: {
+        demo_controller2, demo_controller3: {
             class {'neutron-controller-installation':} ->
             class {'neutron-controller-operations':}
         }
