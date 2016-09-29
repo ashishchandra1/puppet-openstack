@@ -4,7 +4,7 @@ class openstack-keystone::params {
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
-    $REGION = "regionOne"
+    $region = "regionOne"
     $VERBOSE = 'True' 
 
     $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'

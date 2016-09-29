@@ -6,7 +6,7 @@ trap "rm -f $tmpfile" 0
 keystone_host="<%=  @KEYSTONE_HOST %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
-region="<%= @REGION %>"
+region="<%= @region %>"
 
 export OS_URL=http://${keystone_host}:${admin_port}/v3
 export OS_TOKEN=${admin_token}

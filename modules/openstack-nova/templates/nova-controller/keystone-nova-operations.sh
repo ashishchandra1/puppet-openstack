@@ -82,6 +82,7 @@ endpoint_id=$(get_keystone_endpoint nova compute )
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
-   openstack endpoint create --region "$region" compute internal http://"$keystone_host":8774/v2.1/%\(tenant_id\)s
-   openstack endpoint create --region "$region" compute admin http://"$keystone_host":8774/v2.1/%\(tenant_id\)s           
+    openstack endpoint create --region "$region" compute public http://"$keystone_host":8774/v2.1/%\(tenant_id\)s
+    openstack endpoint create --region "$region" compute internal http://"$keystone_host":8774/v2.1/%\(tenant_id\)s
+    openstack endpoint create --region "$region" compute admin http://"$keystone_host":8774/v2.1/%\(tenant_id\)s
 fi
