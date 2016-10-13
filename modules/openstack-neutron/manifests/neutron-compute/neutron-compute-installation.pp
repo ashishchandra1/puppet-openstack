@@ -1,18 +1,6 @@
 class openstack-neutron::neutron-compute::neutron-compute-installation inherits openstack-neutron::params {
 
-    notify {"Configure kernel networking parameter on Compute Node":} ->
-    file { "/etc/sysctl.conf":
-        ensure  => file,
-        owner  => root,
-        content => template('openstack-neutron/neutron-compute/sysctl.conf.erb')
-    } ->
-     
-    exec {"Configure kernel networking on Compute node":
-        command =>"sysctl -p",
-        user => 'root',
-    } -> 
-
-    notify {"Installing Openstack Neutron on Compute Nodes":} ->
+    notify {"Installing Openstack Neutron Packages on Compute Nodes":} ->
     package {
         $neutron_compute_packages: 
         ensure =>installed,
@@ -26,11 +14,11 @@ class openstack-neutron::neutron-compute::neutron-compute-installation inherits 
         content => template('openstack-neutron/neutron-compute/neutron.conf.erb'),
    } ->
 
-   notify {"CREATING ml2_conf.ini FILE":} ->
-        file { "/etc/neutron/plugins/ml2/ml2_conf.ini":
+   notify {"Configuring linux bridge ":} ->
+        file { "/etc/neutron/plugins/ml2/linuxbridge_agent.ini":
         ensure  => file,
         owner  => root,
         group  => neutron,
-        content => template('openstack-neutron/neutron-compute/ml2_conf.ini.erb')
+        content => template('openstack-neutron/neutron-compute/linuxbridge_agent.ini')
     }
 }

@@ -104,7 +104,7 @@
 
 # List of network type driver entrypoints to be loaded from the
 # neutron.ml2.type_drivers namespace. (list value)
-type_drivers = local,flat,vlan,gre,vxlan
+type_drivers = flat,vlan,vxlan
 
 # Ordered list of network_types to allocate as tenant networks. The default
 # value 'local' is useful for single-box testing but provides no connectivity
@@ -118,7 +118,7 @@ mechanism_drivers = <%= @MECHANISM_DRIVERS  %>
 # An ordered list of extension driver entrypoints to be loaded from the
 # neutron.ml2.extension_drivers namespace. For example: extension_drivers =
 # port_security,qos (list value)
-#extension_drivers =
+extension_drivers = port_security
 
 # Maximum size of an IP packet (MTU) that can traverse the underlying physical
 # network infrastructure without fragmentation when using an overlay/tunnel
@@ -151,7 +151,7 @@ mechanism_drivers = <%= @MECHANISM_DRIVERS  %>
 # List of physical_network names with which flat networks can be created. Use
 # default '*' to allow flat networks with arbitrary physical_network names. Use
 # an empty list to disable flat networks. (list value)
-#flat_networks = *
+flat_networks = provider
 
 
 [ml2_type_geneve]
@@ -193,7 +193,7 @@ mechanism_drivers = <%= @MECHANISM_DRIVERS  %>
 # specifying physical_network names usable for VLAN provider and tenant
 # networks, as well as ranges of VLAN tags on each available for allocation to
 # tenant networks. (list value)
-network_vlan_ranges = <%= @DATA_VLAN_RANGES %>,<%= @EXT_VLAN_RANGES %>
+#network_vlan_ranges =
 
 
 [ml2_type_vxlan]
@@ -204,7 +204,7 @@ network_vlan_ranges = <%= @DATA_VLAN_RANGES %>,<%= @EXT_VLAN_RANGES %>
 
 # Comma-separated list of <vni_min>:<vni_max> tuples enumerating ranges of
 # VXLAN VNI IDs that are available for tenant network allocation (list value)
-#vni_ranges =
+vni_ranges = 1:1000
 
 # Multicast group for VXLAN. When configured, will enable sending all broadcast
 # traffic to this multicast group. When left unconfigured, will disable
@@ -219,7 +219,7 @@ network_vlan_ranges = <%= @DATA_VLAN_RANGES %>,<%= @EXT_VLAN_RANGES %>
 #
 
 # Driver for security groups firewall in the L2 agent (string value)
-firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+#firewall_driver = <None>
 
 # Controls whether the neutron security group API is enabled in the server. It
 # should be false when using no security groups or using the nova security
@@ -228,4 +228,4 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
 
 # Use ipset to speed-up the iptables based security groups. Enabling ipset
 # support requires that ipset is installed on L2 agent node. (boolean value)
-enable_ipset = true
+enable_ipset = True

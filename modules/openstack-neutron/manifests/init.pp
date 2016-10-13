@@ -15,7 +15,6 @@ class openstack-neutron {
 
         compute1, compute2, compute3, compute4, compute5, compute6, compute7, compute8, compute9: {
             class {'neutron-compute::neutron-compute-installation':} ->
-            class {'neutron-compute::compute-ovs-operations':} ->
             class {'neutron-compute::neutron-compute-operations':}
         }
     }

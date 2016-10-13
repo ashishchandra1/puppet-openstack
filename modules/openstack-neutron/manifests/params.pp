@@ -22,18 +22,12 @@ class openstack-neutron::params {
     $NEUTRON_DB_USER = 'neutron'
     $NEUTRON_DB_NAME = 'neutron'
 
-    # OVS operations
-    $DATA_BRIDGE = 'br-data'
-    $EXT_BRIDGE  = 'br-ex'
-    $COMPUTE_DATA_INTERFACE = 'enp10s0'  
-    $NETWORK_DATA_INTERFACE = 'enp9s0'
-    $NETWORK_EXT_INTERFACE = 'enp7s0'
-    
+    PROVIDER_INTERFACE_NAME=
+    OVERLAY_INTERFACE_IP_ADDRESS= $ipaddress
+
     # ml2 config parameters 
-    $DATA_VLAN_RANGES = "physnet1:500:699"
-    $EXT_VLAN_RANGES = "physnet2"
-    $TENANT_NETWORK_TYPES = 'vlan'
-    $MECHANISM_DRIVERS = 'openvswitch,linuxbridge,l2population'
+    $TENANT_NETWORK_TYPES = 'vxlan'
+    $MECHANISM_DRIVERS = 'linuxbridge,l2population'
      
     $neutron_compute_packages = [
         "openstack-neutron-linuxbridge",
