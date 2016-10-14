@@ -13,7 +13,7 @@ class openstack-neutron {
             class {'neutron-controller-operations':}
         }
 
-        compute1, compute2, compute3, compute4, compute5, compute6, compute7, compute8, compute9: {
+        demo_compute1, demo_compute2: {
             class {'neutron-compute::neutron-compute-installation':} ->
             class {'neutron-compute::neutron-compute-operations':}
         }

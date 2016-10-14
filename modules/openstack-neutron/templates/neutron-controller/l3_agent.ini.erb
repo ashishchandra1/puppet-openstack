@@ -104,7 +104,7 @@ interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
 # empty value for the Linux Bridge. When this parameter is set, each L3 agent
 # can be associated with no more than one external network. This option is
 # deprecated and will be removed in the M release. (string value)
-external_network_bridge = br-ex
+external_network_bridge = 
 
 # Seconds between running periodic tasks (integer value)
 #periodic_interval = 40
@@ -126,17 +126,17 @@ external_network_bridge = br-ex
 #periodic_fuzzy_delay = 5
 
 # Location to store keepalived/conntrackd config files (string value)
-#ha_confs_path = $state_path/ha_confs
+ha_confs_path = $state_path/ha_confs
 
 # VRRP authentication type (string value)
 # Allowed values: AH, PASS
-#ha_vrrp_auth_type = PASS
+ha_vrrp_auth_type = PASS
 
 # VRRP authentication password (string value)
-#ha_vrrp_auth_password = <None>
+ha_vrrp_auth_password = <%= @ADMIN_PASSWORD %>
 
 # The advertisement interval in seconds (integer value)
-#ha_vrrp_advert_int = 2
+ha_vrrp_advert_int = 2
 
 # Service to handle DHCPv6 Prefix delegation. (string value)
 #pd_dhcp_driver = dibbler

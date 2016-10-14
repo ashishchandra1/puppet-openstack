@@ -274,7 +274,7 @@ notify_nova_on_port_data_changes = True
 # greater than 1, the scheduler automatically assigns multiple DHCP agents for
 # a given tenant network, providing high availability for DHCP service.
 # (integer value)
-#dhcp_agents_per_network = 1
+dhcp_agents_per_network = 3
 
 # Enable services on an agent with admin_state_up False. If this option is
 # False, when admin_state_up of an agent is turned False, services on it will
@@ -303,18 +303,18 @@ notify_nova_on_port_data_changes = True
 
 # Automatically reschedule routers from offline L3 agents to online L3 agents.
 # (boolean value)
-#allow_automatic_l3agent_failover = false
+allow_automatic_l3agent_failover = True
 
 # Enable HA mode for virtual routers. (boolean value)
-#l3_ha = false
+l3_ha = True
 
 # Maximum number of L3 agents which a HA router will be scheduled on. If it is
 # set to 0 then the router will be scheduled on every agent. (integer value)
-#max_l3_agents_per_router = 3
+max_l3_agents_per_router = 3
 
 # Minimum number of L3 agents which a HA router will be scheduled on. If it is
 # set to 0 then the router will be scheduled on every agent. (integer value)
-#min_l3_agents_per_router = 2
+min_l3_agents_per_router = 3
 
 # Subnet used for the l3 HA admin network. (string value)
 #l3_ha_net_cidr = 169.254.192.0/18

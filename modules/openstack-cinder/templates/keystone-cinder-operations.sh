@@ -10,15 +10,15 @@ region="<%= @region %>"
 admin_user_pass="<%= @admin_user_pass %>"
 cinder_user_pass="<%= @CINDER_USER_PASSWORD %>"
 
-export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v2.0
-export OS_PROJECT_DOMAIN_ID=default
-export OS_USER_DOMAIN_ID=default
+export OS_PROJECT_DOMAIN_NAME=default
+export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_NAME=admin
-export OS_TENANT_NAME=${admin_tenant}
-export OS_USERNAME=${admin_user}
+export OS_USERNAME=admin
+export OS_TENANT_NAME=admin
 export OS_PASSWORD=${admin_user_pass}
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v3
-
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
 
 # Create the Cinder user.
 get_user_id () {

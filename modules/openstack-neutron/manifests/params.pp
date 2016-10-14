@@ -22,8 +22,8 @@ class openstack-neutron::params {
     $NEUTRON_DB_USER = 'neutron'
     $NEUTRON_DB_NAME = 'neutron'
 
-    PROVIDER_INTERFACE_NAME=
-    OVERLAY_INTERFACE_IP_ADDRESS= $ipaddress
+    $PROVIDER_INTERFACE_NAME = 'team0.214'
+    $OVERLAY_INTERFACE_IP_ADDRESS = $ipaddress
 
     # ml2 config parameters 
     $TENANT_NETWORK_TYPES = 'vxlan'
@@ -31,14 +31,14 @@ class openstack-neutron::params {
      
     $neutron_compute_packages = [
         "openstack-neutron-linuxbridge",
-        "etables",
+        "ebtables",
         "ipset"
     ]
     
     $neutron_controller_packages = [ 
         "openstack-neutron",
         "openstack-neutron-ml2",
-        " openstack-neutron-linuxbridge",
+        "openstack-neutron-linuxbridge",
         "ebtables",
         "which"
     ]

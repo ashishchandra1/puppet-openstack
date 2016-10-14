@@ -4,7 +4,6 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
     package {
         $neutron_controller_packages: 
         ensure =>installed,
-        before => File['/etc/neutron/neutron.conf'],
     } -> 
 
     notify {"CREATING neutron.conf FILE":} ->
