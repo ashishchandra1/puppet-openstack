@@ -17,4 +17,11 @@ class openstack-glance::params {
     $packages = [
         "openstack-glance"
     ]
+
+    #### Ceph Configurations
+    $STORES = 'rbd'
+    $CEPH_CONF = '/etc/ceph/ceph.conf'
+    $RBD_STORE_USER = 'glance'
+    $RBD_STORE_POOL = 'images_1'
+    $RBD_STORE_CHUNK_SIZE = '8'
 }

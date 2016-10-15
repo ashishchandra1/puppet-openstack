@@ -3665,6 +3665,16 @@ password = <%= @NOVA_USER_PASSWORD%>
 
 [libvirt]
 
+images_type = <%= @IMAGES_TYPE%>
+images_rbd_pool = <%= @IMAGES_RBD_POOL%>
+images_rbd_ceph_conf = <%= @CEPH_CONF%>
+rbd_user = <%= @RBD_STORE_USER%>
+rbd_secret_uuid = <%= @RBD_SECRET_UUID%>
+disk_cachemodes="network=writeback"
+inject_password = false
+inject_key = false
+inject_partition = -2
+
 #
 # From nova.virt
 #
@@ -4144,10 +4154,10 @@ virt_type=qemu
 
 # Set flag to indicate Neutron will proxy metadata requests and resolve
 # instance ids. (boolean value)
-service_metadata_proxy=True
+#service_metadata_proxy=false
 
 # Shared secret to validate proxies Neutron metadata requests (string value)
-metadata_proxy_shared_secret = <%= @METADATA_SECRET %>
+#metadata_proxy_shared_secret = 
 
 #
 # From nova.network

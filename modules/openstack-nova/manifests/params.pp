@@ -1,5 +1,6 @@
 class openstack-nova::params {
     $NOVA_USER_PASSWORD = '@dmin123'
+    $NEUTRON_USER_PASSWORD = '@dmin123'
     $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
@@ -34,4 +35,13 @@ class openstack-nova::params {
     $compute_packages = [
         "openstack-nova-compute"
     ]
+
+    ##### CEPH CONFIGURATIONS
+
+    $IMAGES_TYPE = 'rbd'
+    $IMAGES_RBD_POOL = 'vms_1'
+    $CEPH_CONF = '/etc/ceph/ceph.conf'
+    $RBD_STORE_USER = 'cinder'
+    $RBD_SECRET_UUID = '457eb676-33da-42ec-9a8c-9293d545c337'
+    
 }

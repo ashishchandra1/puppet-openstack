@@ -6,7 +6,7 @@ class rabbitmq-ha::rabbitmq-ha {
          command => 'rabbitmqctl stop_app'
          } ->
     exec {'join the rabbitmq to the cluster':
-         command => 'rabbitmqctl join_cluster rabbit@controller1'
+         command => 'rabbitmqctl join_cluster rabbit@demo_controller1'
          } ->
     exec {'Start rabbitmq':
          command => 'rabbitmqctl start_app'
