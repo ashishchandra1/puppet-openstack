@@ -1,8 +1,13 @@
 class openstack-keystone::keystone-httpd-operations inherits openstack-keystone::params {
     
     notify {"Initialize Fernet Keys Keystone":} ->
-    exec {"Initialising Fernet Keys":
+    exec {"Fernet Keys Setup":
         command => "keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone",
+        user => 'root',
+    } ->
+    
+     exec {"Fernet Credetial Setup":
+        command => "keystone-manage credential_setup --keystone-user keystone --keystone-group keystone",
         user => 'root',
     } ->
 
@@ -12,6 +17,12 @@ class openstack-keystone::keystone-httpd-operations inherits openstack-keystone:
        group  => root,
        content => template('openstack-keystone/httpd.conf.erb'),
     } ->
+
+    notify {"Creating Symbolic link":} ->
+    file {'/usr/share/keystone/wsgi-keystone.conf':
+        ensure => link,
+        target => '/etc/httpd/conf.d/',
+    }
 
     file { "/etc/httpd/conf.d/wsgi-keystone.conf":
        ensure  => file,
