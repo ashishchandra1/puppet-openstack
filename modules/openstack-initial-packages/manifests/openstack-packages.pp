@@ -1,7 +1,7 @@
 class openstack-initial-packages::openstack-packages inherits openstack-initial-packages::params {
 
     notify {"Installing Openstack Mitaka Packages":} ->
-    package { 'centos-release-openstack-mitaka':
+    package { 'centos-release-openstack-newton':
         ensure => installed,
     } ->
 
