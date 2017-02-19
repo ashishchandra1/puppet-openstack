@@ -1,6 +1,6 @@
 class mariadb-galera::install_mariadb inherits mariadb-galera::params {
-    include mariadb-galera::params
-
+    
+    notify {"Add Mariadb repo": } ->
     yumrepo { 'mariadb':
         baseurl         => "http://yum.mariadb.org/10.0/centos7-amd64",
         enabled         => '1',
@@ -15,7 +15,13 @@ class mariadb-galera::install_mariadb inherits mariadb-galera::params {
         user => 'root',
     } ->
 
-    notify {"Installing Maria DB and galera packages ":} ->
+    notify {"Cleaning yum cache before starting to install packages: } ->
+    exec{"Clean yum cache":
+        command => 'yum clean all',
+        user => 'root',
+    } ->
+
+    notify {"Installing MariaDB and galera packages ":} ->
     package {
         $packages: 
         ensure =>installed,
