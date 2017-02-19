@@ -1,23 +1,32 @@
-class rabbitmq-ha::rabbitmq-install {
-     $RABBIT_USER = 'openstack'
-     $RABBIT_PASSWORD = '2v04VsaRkZfr'
+class rabbitmq-ha::rabbitmq-install inherits rabbitmq-ha::params {
 
      notify {"Installing RabbitMQ Server":} ->
-     package { ['rabbitmq-server']:
-          ensure => present,
+     package {
+        $packages: 
+        ensure =>installed,
      } ->
    
-    file { "/var/lib/rabbitmq/.erlang.cookie":
+     notify {"Injecting .erlang.cookie for RabbitMQ clustering":} -> 
+     file { '/var/lib/rabbitmq/.erlang.cookie':
          ensure  => file,
          owner  => rabbitmq,
          group  => rabbitmq,
          mode   => '400',
          content => template('rabbitmq-ha/erlang.cookie.erb'),
+     } ->
+
+    notify {"Enabling RabbitMQ service to start at reboot": } ->
+    exec {"Enabling RabbitMQ":
+        command => 'systemctl enable rabbitmq-server.service',
+        user => 'root',
+    } ->
+
+    notify {"Starting RabbitMQ Service": } ->
+    exec {"Starting RabbitMQ":
+        command => 'systemctl start rabbitmq-server.service',
+        user => 'root',
     } ->
     
-    exec {'systemctl enable rabbitmq-server.service':} ->
-    exec {'systemctl start rabbitmq-server.service':} ->
-  
     notify {"Add a new openstack user":}->  
     exec { "Adding a new user":
         command => "rabbitmqctl add_user  $RABBIT_USER $RABBIT_PASSWORD",
@@ -30,5 +39,9 @@ class rabbitmq-ha::rabbitmq-install {
         logoutput => true,
     } ->
 
-   exec {'systemctl restart rabbitmq-server.service':}
+   notify {"Restarting RabbitMQ Service to take changes": } ->
+   exec {"Restarting RabbitMQ":
+        command => 'systemctl restart rabbitmq-server.service',
+        user => 'root',
+   }
 }

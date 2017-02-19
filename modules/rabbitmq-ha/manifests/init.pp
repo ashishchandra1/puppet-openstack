@@ -1,10 +1,10 @@
 class rabbitmq-ha {
    case $hostname {
-        demo_controller1: {
+        controller1: {
                 class {'rabbitmq-install':}
              }
 
-          demo_controller2, demo_controller3: {
+        controller2, controller3: {
                 class {'rabbitmq-install':} ->
                 class {'rabbitmq-ha':}
               }
