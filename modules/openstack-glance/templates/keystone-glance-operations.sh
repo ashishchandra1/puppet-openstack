@@ -10,8 +10,8 @@ region="<%= @region %>"
 admin_user_pass="<%= @admin_user_pass %>"
 glance_user_pass="<%= @GLANCE_USER_PASSWORD %>"
 
-export OS_PROJECT_DOMAIN_NAME=default
-export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=admin
 export OS_USERNAME=admin
 export OS_PASSWORD=${admin_user_pass}
@@ -80,7 +80,7 @@ endpoint_id=$(get_keystone_endpoint glance image )
 if [ "$endpoint_id" ]; then
         echo "Found existing endpoint: $endpoint_id"
 else
-   openstack endpoint create --region "$region"  image public http://"$keystone_host":9292
+   openstack endpoint create --region "$region" image public http://"$keystone_host":9292
    openstack endpoint create --region "$region" image internal http://"$keystone_host":9292
    openstack endpoint create --region "$region" image admin http://"$keystone_host":9292
 fi            
