@@ -10,24 +10,29 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-default-storage-engine = innodb
-innodb_file_per_table
-collation-server = utf8_general_ci
-init-connect = 'SET NAMES utf8'
-character-set-server = utf8
-max_connections = 10000
 
 #
 # * Galera-related settings
 #
 [galera]
 # Mandatory settings
-#wsrep_provider=
-#wsrep_cluster_address=
-#binlog_format=row
-#default_storage_engine=InnoDB
-#innodb_autoinc_lock_mode=2
-#bind-address=0.0.0.0
+wsrep_on=ON
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+wsrep_cluster_address="gcomm://<%= @CLUSTER_MEMBERS_LIST %>"
+wsrep_cluster_name='galera_cluster'
+wsrep_node_address='<%= @HOST_IP %>'
+wsrep_node_name='<%= @HOSTNAME %>'
+wsrep_sst_method=rsync
+wsrep_sst_auth=<%= @GALERA_DB_USER %>:<%= @GALERA_DB_PASSWORD %>
+
+binlog_format=row
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
+
+#
+# Allow server to accept connections on all interfaces.
+#
+bind-address=0.0.0.0
 #
 # Optional setting
 #wsrep_slave_threads=1
@@ -41,29 +46,7 @@ max_connections = 10000
 # you can put MariaDB-only options here
 [mariadb]
 
-# This group is only read by MariaDB-10.0 servers.
+# This group is only read by MariaDB-10.1 servers.
 # If you use the same .cnf file for MariaDB of different versions,
 # use this group for options that older servers don't understand
-[mariadb-10.0]
-
-binlog_format=ROW
-default-storage-engine=innodb
-innodb_autoinc_lock_mode=2
-innodb_locks_unsafe_for_binlog=1
-query_cache_size=0
-query_cache_type=0
-bind-address=0.0.0.0
-
-datadir=/var/lib/mysql
-innodb_log_file_size=100M
-innodb_file_per_table
-innodb_flush_log_at_trx_commit=2
-
-wsrep_provider=/usr/lib64/galera/libgalera_smm.so
-wsrep_cluster_address="gcomm://<%= @CLUSTER_MEMBERS_LIST %>"
-wsrep_cluster_name='galera_cluster'
-wsrep_node_address='<%= @HOST_IP %>'
-wsrep_node_name='<%= @HOSTNAME %>'
-wsrep_sst_method=rsync
-wsrep_sst_auth=<%= @GALERA_DB_USER %>:<%= @GALERA_DB_PASSWORD %>
-
+[mariadb-10.1]

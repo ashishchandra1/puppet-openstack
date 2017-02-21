@@ -1,7 +1,7 @@
 class mariadb-galera {
     notify {"MariaDB Galera Cluster Primary Node Installation and Initialization": }
     case $hostname {
-        controller1: {
+        openstack_controller1: {
             class {'mariadb-galera::install_mariadb':} ->
             class {'mariadb-galera::config_galera':} ->
             class {'mariadb-galera::start-primary':}
@@ -10,7 +10,7 @@ class mariadb-galera {
 
     notify {"MariaDB Galera Cluster Member  Nodes Installation and Initialization": }
     case $hostname {  
-        controller2,controller3:{
+        openstack_controller2, openstack_controller3:{
             class {'mariadb-galera::install_mariadb':} ->
             class {'mariadb-galera::config_galera':} ->
             class {'mariadb-galera::start-sec' :}  
