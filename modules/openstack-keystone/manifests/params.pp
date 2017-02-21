@@ -1,8 +1,9 @@
 class openstack-keystone::params {
 
-    $CONTROLLER_HNAME = "controller" 
-    $KEYSTONE_HOST = "controller"
+    $CONTROLLER_HNAME = "openstack_controller" 
+    $KEYSTONE_HOST = "openstack_controller"
     $KEYSTONE_ADMIN_PORT = '35357'
+    $KEYSTONE_USER_PORT = '5000'
     $ADMIN_TOKEN = '@dmin123'
     $region = "regionOne"
     $VERBOSE = 'True' 
