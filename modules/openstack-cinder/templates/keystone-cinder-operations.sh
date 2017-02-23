@@ -2,7 +2,7 @@
 #
 # Create cinder user and service and endpoint.
 
-keystone_host="<%=  @KEYSTONE_HOST %>"
+keystone_host="<%=  @CONTROLLER_HNAME %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @region %>"
@@ -10,8 +10,8 @@ region="<%= @region %>"
 admin_user_pass="<%= @admin_user_pass %>"
 cinder_user_pass="<%= @CINDER_USER_PASSWORD %>"
 
-export OS_PROJECT_DOMAIN_NAME=default
-export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=admin
 export OS_USERNAME=admin
 export OS_TENANT_NAME=admin

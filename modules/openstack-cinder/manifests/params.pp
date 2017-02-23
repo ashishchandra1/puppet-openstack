@@ -1,12 +1,11 @@
 class openstack-cinder::params {
     
-    $CONTROLLER_HNAME = "controller"
-    $RABBIT_HOSTS = "demo_controller1:5672, demo_controller2:5672, demo_controller3:5672"
-    $MEMCACHED_SERVERS = "demo_controller1:11211, demo_controller2:11211, demo_controller3:11211"
+    $CONTROLLER_HNAME = "openstack_controller"
+    $RABBIT_HOSTS = "openstack_controller1:5672, openstack_controller2:5672, openstack_controller3:5672"
+    $MEMCACHED_SERVERS = "openstack_controller1:11211, openstack_controller2:11211, openstack_controller3:11211"
     $RABBIT_USER = 'openstack'
     $RABBIT_PASSWORD = '2v04VsaRkZfr'
     $VERBOSE = 'True'
-    $KEYSTONE_HOST = "controller"
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
     $CINDER_USER_PASSWORD = '@dmin123'
@@ -17,16 +16,14 @@ class openstack-cinder::params {
     $admin_user_pass = "@dmin123"
     $region = "regionOne"
 
-    $MY_CONTROLLER_IP = "192.168.213.100"
+    $MY_CONTROLLER_IP = "192.168.213.40"
 
     $cinder_packages = [
-        "openstack-cinder",
-        "targetcli",
-        "python-keystone"
+        "openstack-cinder"
      ]
 
     ### CEPH_CONFIGURATIONS 
-    $RBD_STORE_POOL = 'volumes_1'
+    $RBD_STORE_POOL = 'os_volumes'
     $RBD_STORE_USER = 'cinder'
     $CEPH_CONF = '/etc/ceph/ceph.conf'
     $RBD_SECRET_UUID = '457eb676-33da-42ec-9a8c-9293d545c337'
