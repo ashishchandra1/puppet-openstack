@@ -1,6 +1,6 @@
 class openstack-nova {
    case $hostname {
-         demo_controller1: {
+         openstack_controller1: {
                 class {'create-nova-db':} -> 
                 class {'keystone_operations':} ->
                 class {'nova-controller-installation':} ->
@@ -8,12 +8,12 @@ class openstack-nova {
                 class {'nova-controller-operations':}
              }
 
-          demo_controller2, demo_controller3: {
+          openstack_controller2, openstack_controller3: {
                 class {'nova-controller-installation':} ->
                 class {'nova-controller-operations':}
               }
 
-          demo_compute1, demo_compute2, compute3, compute4, compute5, compute6, compute7, compute8, compute9: {
+          openstack_compute1, openstack_compute2, openstack_compute3, openstack_compute4, openstack_compute5: {
                 class {'nova-compute::nova-compute-installation':} ->
                 class {'nova-compute::nova-compute-operations':}
               }

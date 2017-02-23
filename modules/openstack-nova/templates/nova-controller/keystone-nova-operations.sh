@@ -2,7 +2,7 @@
 #
 # Create nova user and service.
 
-keystone_host="<%=  @KEYSTONE_HOST %>"
+keystone_host="<%=  @CONTROLLER_HNAME %>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @region %>"
@@ -11,10 +11,11 @@ admin_user_pass="<%= @admin_user_pass %>"
 nova_user_pass="<%= @NOVA_USER_PASSWORD %>"
 
 
-export OS_PROJECT_DOMAIN_NAME=default
-export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_NAME=admin
 export OS_USERNAME=admin
+export OS_TENANT_NAME=admin
 export OS_PASSWORD=${admin_user_pass}
 export OS_AUTH_URL=http://${keystone_host}:${admin_port}/v3
 export OS_IDENTITY_API_VERSION=3
