@@ -1,14 +1,14 @@
 class openstack-nova::nova-compute::nova-compute-operations {
 
- notify {"Enable Nova Compute Service":} ->
-  exec {"Enabled Nova Compute Services":
+ notify {"Enabling Libvirt and Nova Compute Service":} ->
+  exec {"Enable Libvirt and  Nova Compute Services":
     command => 'systemctl enable libvirtd.service openstack-nova-compute.service',
     user => 'root',
   } ->
 
-  notify {"Start Nova Compute Services":} ->
-  exec {"start Nova Compute Services":
-    command => 'systemctl start libvirtd.service openstack-nova-compute.service',
+  notify {"Restarting Libvirt and  Nova Compute Services":} ->
+  exec {"Restart Libvirt and  Nova Compute Services":
+    command => 'systemctl restart libvirtd.service openstack-nova-compute.service',
     user => 'root',
   }
 

@@ -6,7 +6,7 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
         ensure =>installed,
     } -> 
 
-    notify {"CREATING neutron.conf FILE":} ->
+    notify {"Creating and configuring  neutron.conf FILE":} ->
     file { "/etc/neutron/neutron.conf":
         ensure  => file,
         owner  => root,
@@ -14,7 +14,7 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
         content => template('openstack-neutron/neutron-controller/neutron.conf.erb'),
     } ->
 
-    notify {"CREATING ml2_conf.ini FILE":} ->
+    notify {"Creating and configuring  ml2_conf.ini FILE":} ->
     file { "/etc/neutron/plugins/ml2/ml2_conf.ini":
         ensure  => file,
         owner  => root,
@@ -22,15 +22,7 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
         content => template('openstack-neutron/neutron-controller/ml2_conf.ini.erb') 
     } ->
 
-    notify {"Creating Linux Bridge agent ":} ->
-    file { "/etc/neutron/plugins/ml2/linuxbridge_agent.ini":
-        ensure  => file,
-        owner  => root,
-        group  => neutron,
-        content => template('openstack-neutron/neutron-controller/linuxbridge_agent.ini.erb')
-    } ->
-
-    notify {"Configuring L3 agent ":} ->
+    notify {"Creating and configuring l3_agent.ini file":} ->
     file { "/etc/neutron/l3_agent.ini":
         ensure  => file,
         owner  => root,
@@ -38,7 +30,7 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
         content => template('openstack-neutron/neutron-controller/l3_agent.ini.erb')
     } ->
 
-    notify {"Configuring DHCP agent ":} ->
+    notify {"Creating and configuring dhcp_agent.ini file ":} ->
     file { "/etc/neutron/dhcp_agent.ini":
         ensure  => file,
         owner  => root,
@@ -46,7 +38,7 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
         content => template('openstack-neutron/neutron-controller/dhcp_agent.ini.erb')
     } ->
 
-    notify {"Configuring Metadata agent ":} ->
+    notify {"Creating and configuring metadata_agent.ini file ":} ->
     file { "/etc/neutron/metadata_agent.ini":
         ensure  => file,
         owner  => root,

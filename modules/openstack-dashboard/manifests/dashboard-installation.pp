@@ -1,14 +1,8 @@
-class openstack-dashboard::dashboard-installation {
+class openstack-dashboard::dashboard-installation inherits openstack-dashboard::params {
 
-     $CONTROLLER_HNAME = "controller"
-     $ADMIN_TOKEN = '@dmin123'
-     $packages = [
-              "openstack-dashboard"
-     ]
-  
-     notify {"Installing dashboard packages":} ->
+     notify {"Installing Openstack dashboard packages":} ->
      package {
-              $packages:
+              $horizon_packages:
               ensure =>installed,
       } ->
     

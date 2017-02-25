@@ -1,4 +1,4 @@
-class openstack-neutron::keystone inherits openstack-neutron::params {
+class openstack-neutron::keystone_operations inherits openstack-neutron::params {
 
     notify {"Copy file for Keystone neutron operations":} ->
     file { '/tmp/keystone-neutron-operations.sh':

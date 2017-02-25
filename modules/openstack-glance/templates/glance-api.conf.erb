@@ -20,7 +20,7 @@ rbd_store_ceph_conf =<%= @CEPH_CONF%>
 [keystone_authtoken]
 
 auth_uri = http://<%= @CONTROLLER_HNAME%>:5000
-auth_url=http://<%= @CONTROLLER_HNAME%>:35357
+auth_url = http://<%= @CONTROLLER_HNAME%>:35357
 memcached_servers = <%= @MEMCACHED_SERVERS %>
 auth_type = password
 project_domain_name = Default
