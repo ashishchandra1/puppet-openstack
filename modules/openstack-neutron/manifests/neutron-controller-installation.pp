@@ -22,6 +22,15 @@ class openstack-neutron::neutron-controller-installation inherits openstack-neut
         content => template('openstack-neutron/neutron-controller/ml2_conf.ini.erb') 
     } ->
 
+
+    notify {"Creating and configuring openvswitch_agent.ini file":} ->
+    file { "/etc/neutron/plugins/ml2/openvswitch_agent.ini":
+        ensure  => file,
+        owner  => root,
+        group  => neutron,
+        content => template('openstack-neutron/neutron-controller/openvswitch_agent.ini.erb')
+    } ->
+
     notify {"Creating and configuring l3_agent.ini file":} ->
     file { "/etc/neutron/l3_agent.ini":
         ensure  => file,

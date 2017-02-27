@@ -2,7 +2,7 @@
 #
 # Create Neutron user, service and endpoint.
 
-keystone_host="<%=  @KEYSTONE_HOST %>"
+keystone_host="<%=  @CONTROLLER_HNAME%>"
 admin_port="<%= @KEYSTONE_ADMIN_PORT %>"
 admin_token="<%= @ADMIN_TOKEN %>"
 region="<%= @region %>"

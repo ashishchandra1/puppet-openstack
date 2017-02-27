@@ -12,13 +12,5 @@ class openstack-neutron::neutron-compute::neutron-compute-installation inherits 
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-compute/neutron.conf.erb'),
-   } ->
-
-   notify {"Configuring linux bridge ":} ->
-        file { "/etc/neutron/plugins/ml2/linuxbridge_agent.ini":
-        ensure  => file,
-        owner  => root,
-        group  => neutron,
-        content => template('openstack-neutron/neutron-compute/linuxbridge_agent.ini')
-    }
+   }
 }

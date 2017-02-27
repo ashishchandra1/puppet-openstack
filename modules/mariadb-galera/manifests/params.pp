@@ -4,7 +4,7 @@ class mariadb-galera::params {
     $HOST_IP                = $ipaddress 
     $HOSTNAME               = $hostname
     $GALERA_DB_PASSWORD     = '9Rp2491E3n9L'
-    $CLUSTER_MEMBERS_LIST   = "openstack_controller1, openstack_controller2, openstack_controller3" 
+    $CLUSTER_MEMBERS_LIST   = "openstack_controller1,openstack_controller2,openstack_controller3" 
 
     $packages = [ 
         "MariaDB-server",

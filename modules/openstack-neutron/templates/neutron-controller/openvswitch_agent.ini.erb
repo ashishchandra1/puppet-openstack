@@ -1,0 +1,18 @@
+[DEFAULT]
+
+verbose = true
+
+[agent]
+tunnel_types = gre,vxlan
+l2_population = True
+prevent_arp_spoofing = True
+
+[ovs]
+integration_bridge = br-int
+local_ip = <%= @TUNNEL_INTERFACE_IP_ADDRESS %>
+bridge_mappings = physnet1:<%= @DATA_BRIDGE %>,physnet2:<%= @EXT_BRIDGE  %>
+
+
+[securitygroup]
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+enable_security_group = True
