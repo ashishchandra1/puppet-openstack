@@ -1,6 +1,7 @@
 class openstack-neutron::params {
 	
     $NEUTRON_USER_PASSWORD = '@dmin123'
+    $NOVA_USER_PASSWORD = '@dmin123'
     $CONTROLLER_HNAME = "openstack_controller"
     $ADMIN_PASSWORD = '@dmin123'
     $RABBIT_USER = 'openstack'

@@ -1,27 +1,21 @@
 [DEFAULT]
-
 enabled_apis=osapi_compute,metadata
 my_ip=<%= @MY_CONTROLLER_IP %>
 auth_strategy=keystone
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 use_neutron=True
-rpc_backend=rabbit
-#transport_url=rabbit://openstack:<%= @RABBIT_PASSWORD %>@<%= @RABBIT_HOSTS %>
+transport_url=rabbit://openstack:<%= @RABBIT_PASSWORD %>@<%= @CONTROLLER_HNAME%>
 
 [api_database]
-
 connection=mysql+pymysql://nova:<%= @NOVA_DB_PASSWORD %>@<%= @CONTROLLER_HNAME %>/nova_api
 
 [database]
-
 connection=mysql+pymysql://nova:<%= @NOVA_DB_PASSWORD %>@<%= @CONTROLLER_HNAME %>/nova
 
 [glance]
-
 api_servers=http://<%= @CONTROLLER_HNAME%>:9292
 
 [keystone_authtoken]
-
 auth_uri=http://<%= @CONTROLLER_HNAME%>:5000
 auth_url=http://<%= @CONTROLLER_HNAME%>:35357
 memcached_servers=<%= @MEMCACHED_SERVERS%>
@@ -33,7 +27,6 @@ username=nova
 password=<%= @NOVA_USER_PASSWORD %>
 
 [neutron]
-
 url=http://<%= @CONTROLLER_HNAME %>:9696
 auth_url=http://<%= @CONTROLLER_HNAME %>:35357
 auth_type=password
@@ -47,23 +40,13 @@ service_metadata_proxy=True
 metadata_proxy_shared_secret=<%= @METADATA_SECRET %>
 
 [oslo_concurrency]
-
 lock_path=/var/lib/nova/tmp
 
-[oslo_messaging_amqp]
-
 [oslo_messaging_rabbit]
-
 amqp_durable_queues=true
-rabbit_hosts=<%= @RABBIT_HOSTS %>
-rabbit_userid=<%= @RABBIT_USER %>
-rabbit_password=<%= @RABBIT_PASSWORD %>
 rabbit_retry_interval=1
 rabbit_retry_backoff=2
-rabbit_max_retries=0
-rabbit_ha_queues=true
 
 [vnc]
-
 vncserver_listen=<%= @MY_CONTROLLER_IP %>
 vncserver_proxyclient_address=<%= @MY_CONTROLLER_IP %>
