@@ -12,5 +12,13 @@ class openstack-neutron::neutron-compute::neutron-compute-installation inherits 
         owner  => root,
         group  => neutron,
         content => template('openstack-neutron/neutron-compute/neutron.conf.erb'),
-   }
+   } ->
+
+   notify {"Creating and configuring openvswitch_agent.ini file on Compute node":} ->
+   file { "/etc/neutron/plugins/ml2/openvswitch_agent.ini":
+        ensure  => file,
+        owner  => root,
+        group  => neutron,
+        content => template('openstack-neutron/neutron-compute/openvswitch_agent.ini.erb')
+    }
 }

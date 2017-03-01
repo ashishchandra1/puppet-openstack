@@ -1,0 +1,15 @@
+[DEFAULT]
+verbose = true
+
+[agent]
+l2_population = True
+prevent_arp_spoofing = True
+
+[ovs]
+integration_bridge = br-int
+bridge_mappings = physnet1:<%= @DATA_BRIDGE %>
+
+
+[securitygroup]
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+enable_security_group = True
