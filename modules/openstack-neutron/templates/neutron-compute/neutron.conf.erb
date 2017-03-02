@@ -1,6 +1,6 @@
 [DEFAULT]
 auth_strategy = keystone
-transport_url = rabbit://openstack:<%= @RABBIT_PASSWORD %>@<%= @CONTROLLER_HNAME %>
+transport_url = <%= @TRANSPORT_URL%>
 
 [keystone_authtoken]
 auth_uri = http://<%= @CONTROLLER_HNAME%>:5000

@@ -4,12 +4,10 @@ class openstack-nova::params {
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'
     $CONTROLLER_HNAME = "openstack_controller"
-    $RABBIT_USER = 'openstack' 
-    $RABBIT_PASSWORD = '2v04VsaRkZfr' 
     $VERBOSE = "True"
-    $RABBIT_HOSTS = "openstack_controller1:5672, openstack_controller2:5672, openstack_controller3:5672"
-    $MEMCACHED_SERVERS = "openstack_controller1:11211, openstack_controller2:11211, openstack_controller3:11211"
- 
+    $MEMCACHED_SERVERS = "openstack_controller1:11211,openstack_controller2:11211,openstack_controller3:11211"
+
+    $TRANSPORT_URL = "rabbit://openstack:2v04VsaRkZfr@openstack_controller1,openstack:2v04VsaRkZfr@openstack_controller2,openstack:2v04VsaRkZfr@openstack_controller3"
     $METADATA_SECRET = "@dmin123"
     
     $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
@@ -19,7 +17,7 @@ class openstack-nova::params {
     $region = "regionOne"
 
     $MY_CONTROLLER_IP = "192.168.213.40"
-    $MY_COMPUTE_IP = $ipaddress
+    $MY_COMPUTE_IP = $ip_address
 
     $controller_packages = [ 
         "openstack-nova-api",

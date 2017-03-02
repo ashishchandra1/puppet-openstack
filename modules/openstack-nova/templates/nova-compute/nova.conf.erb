@@ -4,7 +4,7 @@ my_ip=<%= @MY_COMPUTE_IP %>
 auth_strategy=keystone
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 use_neutron=True
-transport_url=rabbit://openstack:<%= @RABBIT_PASSWORD %>@<%= @CONTROLLER_HNAME%>
+transport_url=<%= @TRANSPORT_URL%>
 
 [glance]
 api_servers=http://<%= @CONTROLLER_HNAME%>:9292

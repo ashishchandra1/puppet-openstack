@@ -9,7 +9,7 @@ prevent_arp_spoofing = True
 
 [ovs]
 integration_bridge = br-int
-local_ip = <%= @TUNNEL_INTERFACE_IP_ADDRESS %>
+local_ip = <%= @LOCAL_IP_ADDRESS %>
 bridge_mappings = physnet1:<%= @DATA_BRIDGE %>,physnet2:<%= @EXT_BRIDGE  %>
 
 

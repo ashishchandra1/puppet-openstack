@@ -1,10 +1,9 @@
 class openstack-cinder::params {
     
     $CONTROLLER_HNAME = "openstack_controller"
-    $RABBIT_HOSTS = "openstack_controller1:5672, openstack_controller2:5672, openstack_controller3:5672"
-    $MEMCACHED_SERVERS = "openstack_controller1:11211, openstack_controller2:11211, openstack_controller3:11211"
-    $RABBIT_USER = 'openstack'
-    $RABBIT_PASSWORD = '2v04VsaRkZfr'
+
+    $TRANSPORT_URL = "rabbit://openstack:2v04VsaRkZfr@openstack_controller1,openstack:2v04VsaRkZfr@openstack_controller2,openstack:2v04VsaRkZfr@openstack_controller3"
+    $MEMCACHED_SERVERS = "openstack_controller1:11211,openstack_controller2:11211,openstack_controller3:11211"
     $VERBOSE = 'True'
     $KEYSTONE_ADMIN_PORT = '35357'
     $ADMIN_TOKEN = '@dmin123'

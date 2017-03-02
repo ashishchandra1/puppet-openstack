@@ -3,7 +3,7 @@ auth_strategy = keystone
 my_ip = <%= @MY_CONTROLLER_IP%>
 enabled_backends = ceph
 
-transport_url = rabbit://openstack:<%= @RABBIT_PASSWORD %>@<%= @CONTROLLER_HNAME%>
+transport_url = <%= @TRANSPORT_URL%>
 
 glance_api_version = 2
 glance_api_servers = http://<%= @CONTROLLER_HNAME%>:9292

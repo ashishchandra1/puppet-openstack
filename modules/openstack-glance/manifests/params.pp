@@ -5,7 +5,7 @@ class openstack-glance::params {
     
     $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
     $GLANCE_DB_PASSWORD = 'sSQT9735FWFc'
-    $MEMCACHED_SERVERS = "openstack_controller1:11211, openstack_controller2:11211, openstack_controller3:11211"
+    $MEMCACHED_SERVERS = "openstack_controller1:11211,openstack_controller2:11211,openstack_controller3:11211"
 
     $KEYSTONE_HOST = "openstack_controller"
     $KEYSTONE_ADMIN_PORT = '35357'
