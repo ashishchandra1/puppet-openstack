@@ -15,7 +15,7 @@ class openstack-cinder::params {
     $admin_user_pass = "@dmin123"
     $region = "regionOne"
 
-    $MY_CONTROLLER_IP = "192.168.213.40"
+    $MY_CONTROLLER_IP = "192.168.213.100"
 
     $cinder_packages = [
         "openstack-cinder"

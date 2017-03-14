@@ -1,4 +1,10 @@
 [database]
 connection = mysql+pymysql://keystone:<%= @KEYSTONE_DB_PASSWORD%>@<%= @CONTROLLER_HNAME%>/keystone
+
+[memcache]
+servers=openstack_controller1:11211,openstack_controller2:11211,openstack_controller3:11211
+
 [token]
 provider = fernet
+driver = memcache
+

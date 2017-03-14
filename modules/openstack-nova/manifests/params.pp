@@ -16,8 +16,8 @@ class openstack-nova::params {
     $admin_user_pass = "@dmin123"
     $region = "regionOne"
 
-    $MY_CONTROLLER_IP = "192.168.213.40"
-    $MY_COMPUTE_IP = $ip_address
+    $MY_CONTROLLER_IP = "192.168.213.100"
+    $MY_COMPUTE_IP = $ipaddress
 
     $controller_packages = [ 
         "openstack-nova-api",
