@@ -1,19 +1,15 @@
-Puppet script to install Openstack Mitaka in HA mode.
+Puppet script to install Openstack Newton in HA mode.
 
 Hostname Convention:
  
   HAProxy nodes:
-    haproxy1, haproxy2
+    openstack_haproxy1, openstack_haproxy2
   
   Controllers:
-    controller1, controller2, controller3
-   
-  Network Nodes:
-    network1, network2
+    openstack_controller1, openstack_controller2, openstack_controller3
     
   Compute Nodes:
-    compute1, compute2, compute3, compute4, compute5, compute6, compute7, compute8, compute9
-
+    openstack_compute1, openstack_compute2, openstack_compute3, openstack_compute4, openstack_compute5
 Architecture
 =============
 
