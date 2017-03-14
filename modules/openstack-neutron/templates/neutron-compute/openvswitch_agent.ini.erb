@@ -9,7 +9,6 @@ prevent_arp_spoofing = True
 integration_bridge = br-int
 bridge_mappings = physnet1:<%= @DATA_BRIDGE %>
 
-
 [securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 enable_security_group = True
