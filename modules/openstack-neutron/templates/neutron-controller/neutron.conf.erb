@@ -9,11 +9,11 @@ allow_overlapping_ips = True
 notify_nova_on_port_status_changes = True
 notify_nova_on_port_data_changes = True
 
-dhcp_agents_per_network = 3
+dhcp_agents_per_network = <%= @DHCP_AGENTS_PER_NETWORK%>
 allow_automatic_l3agent_failover = True
 l3_ha = True
-max_l3_agents_per_router = 3
-min_l3_agents_per_router = 3
+max_l3_agents_per_router = <%= @MAX_L3_AGENTS_PER_NETWORK%>
+min_l3_agents_per_router = <%= @MIN_L3_AGENTS_PER_NETWORK%>
 
 transport_url = <%= @TRANSPORT_URL%>
 
@@ -49,3 +49,6 @@ lock_path = /var/lib/neutron/tmp
 amqp_durable_queues = true
 rabbit_retry_interval = 1
 rabbit_retry_backoff = 2
+
+[oslo_policy]
+policy_file=/etc/neutron/policy.json

@@ -1,7 +1,7 @@
 [DEFAULT]
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+interface_driver = <%= @INTERFACE_DRIVER %>
 gateway_external_network_id =
-external_network_bridge =
+external_network_bridge = <%= @EXTERNAL_BRIDGE%>
 router_delete_namespaces = True
 ha_confs_path = $state_path/ha_confs
 ha_vrrp_auth_type = PASS

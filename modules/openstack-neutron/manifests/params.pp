@@ -19,21 +19,31 @@ class openstack-neutron::params {
     $MYSQL_ROOT_PASSWORD = '459nvDB91fWU'
     $NEUTRON_DB_PASSWORD = '3w550M3H32KO'
 
+
+    $FIREWALL_DRIVER = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'
+    $INTERFACE_DRIVER= 'neutron.agent.linux.interface.OVSInterfaceDriver'
+
     # OVS operations
     $LOCAL_IP_ADDRESS = $ipaddress
-    $DATA_BRIDGE = 'br-data'
-    $EXT_BRIDGE  = 'br-ex'
-    $COMPUTE_DATA_INTERFACE = 'bond0.212'  
-    $NETWORK_DATA_INTERFACE = 'bond0.212'
-    $NETWORK_EXT_INTERFACE = 'bond0.214'
+    $EXTERNAL_BRIDGE  = 'br-ex'
+    $INTEGRATION_BRIDGE  = 'br-int'
+    $TUNNEL_BRIDGE  = 'br-tun'
+    $EXTERNAL_BRIDGE_INTERFACE = 'bond0.214'
+
+    # DHCP and L3 Agent HA
+    $DHCP_AGENTS_PER_NETWORK = 1
+    $MAX_L3_AGENTS_PER_NETWORK = 1
+    $MIN_L3_AGENTS_PER_NETWORK = 1
     
     # ml2 config parameters 
     $DATA_VLAN_RANGES = 'physnet1:800:804'
     $EXT_VLAN_RANGES = 'physnet2'
     $TYPE_DRIVERS = 'local,flat,vlan,gre,vxlan'
-    $TENANT_NETWORK_TYPES = 'vlan'
+    $TENANT_NETWORK_TYPES = 'vxlan'
     $MECHANISM_DRIVERS = 'openvswitch,linuxbridge'
-    $NETWORK_VLAN_RANGES = 'physnet1:800:804,physnet2'
+    $VNI_RANGES = '10:100'
+    $VXLAN_GROUP = '224.0.0.1'
+
      
     $neutron_compute_packages = [
         "openstack-neutron-openvswitch",

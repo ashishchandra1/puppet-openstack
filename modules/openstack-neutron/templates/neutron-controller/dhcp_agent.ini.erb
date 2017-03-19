@@ -1,5 +1,9 @@
 [DEFAULT]
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+interface_driver = <%= @INTERFACE_DRIVER %>
+resync_interval = 30
 dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-enable_isolated_metadata = True
-verbose = True
+enable_isolated_metadata = False
+enable_metadata_network = False
+root_helper=sudo neutron-rootwrap /etc/neutron/rootwrap.conf
+state_path=/var/lib/neutron
+debug = False

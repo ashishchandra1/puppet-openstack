@@ -6,10 +6,10 @@ mechanism_drivers = <%= @MECHANISM_DRIVERS  %>
 
 [ml2_type_flat]
 
-[ml2_type_vlan]
-network_vlan_ranges = <%= @NETWORK_VLAN_RANGES %>
+[ml2_type_vxlan]
+vni_ranges = <%= @VNI_RANGES %>
+vxlan_group = <%= @VXLAN_GROUP %>
 
 [securitygroup]
 enable_security_group = True
-firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-enable_ipset = True
+firewall_driver = <%= @FIREWALL_DRIVER %>
