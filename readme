@@ -8,8 +8,11 @@ Hostname Convention:
   Controllers:
     openstack_controller1, openstack_controller2, openstack_controller3
     
+  Network Node:
+    Openstack_network1, Openstack_network2
+    
   Compute Nodes:
-    openstack_compute1, openstack_compute2, openstack_compute3, openstack_compute4, openstack_compute5
+    openstack_compute1, openstack_compute2, openstack_compute3, openstack_compute4, openstack_compute5, openstack_compute6 and so on
 Architecture
 =============
 
